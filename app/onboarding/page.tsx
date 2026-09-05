@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { ChevronLeft, HeartCrack, Moon, Sunrise, Sun, HelpCircle } from 'lucide-react';
+import { ChevronLeft, X, HeartCrack, Waves, CircleDashed, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles } from 'lucide-react';
 
 type Respuestas = {
   situacion?: string;
@@ -44,6 +44,13 @@ function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
         <ChevronLeft size={22} aria-hidden="true" />
       </button>
       <BarraProgreso paso={paso} />
+      <a
+        href="/"
+        aria-label="Salir del escaneo"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--text-secondary)] [touch-action:manipulation]"
+      >
+        <X size={20} aria-hidden="true" />
+      </a>
     </div>
   );
 }
@@ -70,6 +77,7 @@ function PantallaPregunta({
   onElegir: (valor: string) => void;
   onAtras?: () => void;
 }) {
+  const reduce = useReducedMotion();
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [otraAbierta, setOtraAbierta] = useState(false);
   const [textoOtra, setTextoOtra] = useState('');
@@ -83,10 +91,10 @@ function PantallaPregunta({
     <div className="flex min-h-dvh flex-col px-5">
       <Header paso={paso} onAtras={onAtras} />
       <motion.div
-        initial={{ opacity: 0, x: 40 }}
+        initial={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -24 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        exit={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
+        transition={{ duration: reduce ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
         className="mt-10 flex-1"
       >
         <h1 className="text-balance text-[30px] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)] [font-family:var(--font-display)]">
@@ -103,9 +111,9 @@ function PantallaPregunta({
                 <motion.button
                   key={op.label}
                   type="button"
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.06 }}
+                  transition={{ delay: reduce ? 0 : i * 0.06 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => elegir(op.label)}
                   className={`flex h-14 w-full items-center gap-3 rounded-[var(--radius-card)] border px-4 text-left text-[16px] font-medium transition-colors [touch-action:manipulation] ${
@@ -173,43 +181,45 @@ function PantallaReconocimiento({
   onContinuar: () => void;
   onAtras?: () => void;
 }) {
+  const reduce = useReducedMotion();
+  const d = (n: number) => (reduce ? 0 : n);
   return (
     <div className="flex min-h-dvh flex-col px-5">
       <Header paso={paso} onAtras={onAtras} />
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: reduce ? 1 : 0 }}
         animate={{ opacity: 1 }}
         className="mt-16 flex flex-1 flex-col items-center text-center"
       >
         <motion.span
-          initial={{ scale: 0.7, opacity: 0 }}
+          initial={reduce ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: d(0.1) }}
           className="respira-marco flex size-16 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--accent)_14%,transparent)]"
         >
-          <Moon size={30} color="var(--accent)" aria-hidden={true} />
+          <MoonStar size={30} color="var(--accent)" aria-hidden={true} />
         </motion.span>
         <motion.h1
-          initial={{ opacity: 0, y: 8 }}
+          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: d(0.2) }}
           className="mt-6 text-balance text-[26px] font-bold leading-[1.15] text-[var(--text-primary)] [font-family:var(--font-display)]"
         >
           {titulo}
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0, y: 8 }}
+          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: d(0.3) }}
           className="mt-4 max-w-[320px] text-[16px] leading-relaxed text-[var(--text-secondary)]"
         >
           {cuerpo}
         </motion.p>
       </motion.div>
       <motion.button
-        initial={{ opacity: 0, y: 8 }}
+        initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
+        transition={{ delay: d(0.4) }}
         type="button"
         whileTap={{ scale: 0.97 }}
         onClick={onContinuar}
@@ -261,11 +271,12 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
 }
 
 function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
+  const reduce = useReducedMotion();
   const zona = respuestas.zona ?? 'tu cuerpo';
   return (
     <div className="flex min-h-dvh flex-col px-5 pt-10">
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-1 flex-col items-center text-center"
       >
@@ -275,8 +286,22 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
         <h1 className="mt-3 text-balance text-[30px] font-bold leading-[1.1] text-[var(--text-primary)] [font-family:var(--font-display)]">
           Hoy tu tensión vive en {zona.toLowerCase()}
         </h1>
-        <div className="respira-marco mt-8 flex size-40 items-center justify-center rounded-full border-4 border-[var(--accent)]">
-          <span className="text-[40px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
+        <div className="respira-marco relative mt-8 flex size-40 items-center justify-center">
+          <svg width="160" height="160" viewBox="0 0 160 160" className="-rotate-90" role="img" aria-label="72 por ciento de tensión detectada">
+            <circle cx="80" cy="80" r="70" fill="none" strokeWidth="10" stroke="color-mix(in oklab, var(--accent) 16%, transparent)" />
+            <circle
+              cx="80"
+              cy="80"
+              r="70"
+              fill="none"
+              strokeWidth="10"
+              strokeLinecap="round"
+              stroke="var(--accent)"
+              strokeDasharray={2 * Math.PI * 70}
+              strokeDashoffset={2 * Math.PI * 70 * (1 - 0.72)}
+            />
+          </svg>
+          <span className="absolute text-[40px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
             72%
           </span>
         </div>
@@ -293,9 +318,9 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
       </motion.div>
 
       <motion.a
-        initial={{ opacity: 0, y: 8 }}
+        initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: reduce ? 0 : 0.2 }}
         whileTap={{ scale: 0.97 }}
         href="/paywall"
         className="mb-[max(24px,env(safe-area-inset-bottom))] flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
@@ -357,8 +382,8 @@ export default function Onboarding() {
             subcopy="Esto define tu primer ejercicio de hoy"
             opciones={[
               { icon: HeartCrack, label: 'Pecho' },
-              { icon: HelpCircle, label: 'Garganta' },
-              { icon: HelpCircle, label: 'Estómago' },
+              { icon: MessageCircleHeart, label: 'Garganta' },
+              { icon: Waves, label: 'Estómago' },
               { icon: HelpCircle, label: 'No estoy segura' },
             ]}
             onElegir={(v) => {
@@ -376,7 +401,7 @@ export default function Onboarding() {
             opciones={[
               { icon: Sunrise, label: 'Al despertar' },
               { icon: Sun, label: 'Durante el día' },
-              { icon: Moon, label: 'Antes de dormir' },
+              { icon: BedDouble, label: 'Antes de dormir' },
               { icon: Moon, label: 'De madrugada (3 AM)' },
             ]}
             onElegir={(v) => {
@@ -406,10 +431,10 @@ export default function Onboarding() {
             paso={4}
             pregunta="¿Qué te gustaría lograr en 30 días?"
             opciones={[
-              { label: 'Dejar de contactar a mi ex' },
-              { label: 'Dormir sin darle vueltas' },
-              { label: 'Sentir calma todos los días' },
-              { label: 'Entender mi carta natal' },
+              { icon: HeartCrack, label: 'Dejar de contactar a mi ex' },
+              { icon: BedDouble, label: 'Dormir sin darle vueltas' },
+              { icon: Waves, label: 'Sentir calma todos los días' },
+              { icon: Sparkles, label: 'Entender mi carta natal' },
             ]}
             otraCosa
             onElegir={(v) => {
