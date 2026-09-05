@@ -95,7 +95,15 @@ solo evitan links rotos — no son la construcción real de esas etapas.
     secciones consecutivas con el mismo fondo → borde superior agregado a `MensajeContraste`;
     4º uso de Hairline sobre el máximo de 3 recomendado por el kit → cambiado a borde simple;
     badge de trial con bajo contraste → unificado a fondo sólido.
-  Relanzada una 5ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
+  - 5ª ronda (29/40, 15/20 — confirmó explícitamente que los 4 fixes de la ronda anterior quedaron
+    bien implementados): sticky CTA mobile sin forma de cerrarse → agregado botón "X" de
+    descarte; el hero y el primer frame del carrusel repetían la misma imagen (hoy.png) → se quitó
+    el frame duplicado del carrusel (ahora empieza en "Bienvenida"); la fase lunar (8 puntos de
+    12px) era ilegible como tal → rehecha con `conic-gradient` (cada punto es una porción de
+    círculo llena según su fase, mucho más legible, con pulso "respira" en la fase llena); faltaba
+    un momento "vivo" propio y un ancla de navegación en el scroll largo → agregado botón flotante
+    "volver arriba" (aparece al salir del hero).
+  Relanzada una 6ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
   `docs/revisiones/landing-veredicto.md` diga "Veredicto: LISTA" con Usabilidad ≥36/40 y
   Craft ≥16/20.
 - `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este

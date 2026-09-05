@@ -14,15 +14,19 @@ import { Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
    (astrología + ciclos), independiente del indicador lineal que usa la pantalla
    de Duelo dentro de la app. */
 function FaseLunar() {
-  const fases = [0.02, 0.2, 0.45, 0.7, 0.9, 1, 0.7, 0.4];
+  // Fase lunar en CSS puro: conic-gradient que "llena" cada círculo según su
+  // iluminación — se lee de un vistazo como una fase creciente/menguante.
+  const fases = [0.06, 0.25, 0.45, 0.7, 0.9, 1, 0.75, 0.35];
+  const llena = 5;
   return (
-    <div className="mb-4 flex items-center justify-center gap-2" aria-hidden="true">
+    <div className="mb-5 flex items-center justify-center gap-3" aria-hidden="true">
       {fases.map((f, i) => (
         <span
           key={i}
-          className="size-3 rounded-full"
+          className={`size-5 rounded-full border border-[color-mix(in_oklab,var(--accent)_45%,transparent)] ${i === llena ? 'respira-marco' : ''}`}
           style={{
-            background: `linear-gradient(90deg, var(--accent) ${f * 100}%, color-mix(in oklab, var(--text-tertiary) 30%, transparent) ${f * 100}%)`,
+            background: `conic-gradient(var(--accent) ${f * 360}deg, var(--surface-2) ${f * 360}deg)`,
+            boxShadow: i === llena ? '0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)' : undefined,
           }}
         />
       ))}

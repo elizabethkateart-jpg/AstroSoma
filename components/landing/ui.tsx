@@ -8,7 +8,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion, type Variants } from 'motion/react';
-import { Check } from 'lucide-react';
+import { ArrowUp, Check, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 /* ── <Accent> — la palabra que vende, en el acento del kit ─────────────────── */
@@ -191,6 +191,7 @@ export function StickyCtaMobile({
   const [ofertaVisible, setOfertaVisible] = useState(false);
   const [ofertaVista, setOfertaVista] = useState(false);
   const [finalVisible, setFinalVisible] = useState(false);
+  const [descartada, setDescartada] = useState(false);
 
   useEffect(() => {
     const observar = (id: string, onChange: (visible: boolean) => void): IntersectionObserver | null => {
@@ -219,7 +220,7 @@ export function StickyCtaMobile({
     };
   }, [heroId, ofertaId, ctaFinalId]);
 
-  const visible = !heroVisible && !ofertaVisible && !finalVisible;
+  const visible = !heroVisible && !ofertaVisible && !finalVisible && !descartada;
 
   return (
     <AnimatePresence>
@@ -229,16 +230,64 @@ export function StickyCtaMobile({
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: reduce ? 0 : 88, opacity: 0 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)] px-4 pt-2 pb-[max(12px,env(safe-area-inset-bottom))] md:hidden"
+          className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)] px-4 pt-2 pb-[max(12px,env(safe-area-inset-bottom))] md:hidden"
         >
           <motion.a
             whileTap={{ scale: 0.97 }}
             href={ofertaVista ? href : `#${ofertaId}`}
-            className="flex h-12 w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
+            className="flex h-12 flex-1 items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
           >
             {ofertaVista ? labelComercial : labelPre}
           </motion.a>
+          <button
+            type="button"
+            onClick={() => setDescartada(true)}
+            aria-label="Cerrar"
+            className="flex size-12 shrink-0 items-center justify-center rounded-[var(--radius-button)] text-[var(--text-secondary)] [touch-action:manipulation]"
+          >
+            <X size={20} strokeWidth={2} aria-hidden="true" />
+          </button>
         </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ── <VolverArriba> — botón flotante de "volver arriba" (heurística 3: control
+   y libertad), aparece tras salir del hero. Desktop y mobile. ── */
+export function VolverArriba() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const e = entries[0];
+        if (e) setVisible(!e.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.2 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Volver arriba"
+          className="fixed bottom-24 right-4 z-30 flex size-11 items-center justify-center rounded-full border border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)] text-[var(--text-primary)] shadow-[var(--shadow-2)] [touch-action:manipulation] md:bottom-8"
+        >
+          <ArrowUp size={18} strokeWidth={2.2} aria-hidden="true" />
+        </motion.button>
       )}
     </AnimatePresence>
   );

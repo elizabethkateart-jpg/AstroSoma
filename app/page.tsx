@@ -16,7 +16,7 @@ import { Garantia } from '@/components/landing/Garantia';
 import { Faq } from '@/components/landing/Faq';
 import { CtaFinal } from '@/components/landing/CtaFinal';
 import { FooterLegal } from '@/components/landing/FooterLegal';
-import { StickyCtaMobile } from '@/components/landing/ui';
+import { StickyCtaMobile, VolverArriba } from '@/components/landing/ui';
 
 const CTA_HREF = '/onboarding';
 const CTA_LABEL = 'Descubrir mi zona de tensión gratis';
@@ -95,7 +95,6 @@ export default function LandingAstroSoma() {
       <AppPorDentro
         tituloMarked="Tu ritual de cada noche, [acento]ya decidido[/acento]"
         frames={[
-          { label: 'Tu escaneo de hoy', nombrePantalla: 'Hoy', src: '/mockups/hoy.png', alt: 'Vista previa de diseño: pantalla principal con tu zona de tensión de hoy' },
           { label: 'Cómo te pregunta al empezar', nombrePantalla: 'Bienvenida', src: '/mockups/onboarding.png', alt: 'Vista previa de diseño: pregunta de bienvenida del onboarding' },
           { label: 'Tu ejercicio de 3 minutos', nombrePantalla: 'Mecanismo', src: '/mockups/mecanismo.png', alt: 'Vista previa de diseño: ejercicio de respiración en curso' },
           { label: 'Tu Programa de Ruptura, día a día', nombrePantalla: 'Duelo', src: '/mockups/duelo.png', alt: 'Vista previa de diseño: programa de ruptura de 30 días' },
@@ -212,6 +211,7 @@ export default function LandingAstroSoma() {
       />
 
       <StickyCtaMobile labelComercial={CTA_LABEL} href={CTA_HREF} />
+      <VolverArriba />
     </div>
   );
 }
