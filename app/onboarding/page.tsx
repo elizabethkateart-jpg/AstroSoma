@@ -24,9 +24,12 @@ const TOTAL_PREGUNTAS = 4;
    mismo disco-sombra-sobre-disco-iluminado de la landing (MensajeContraste.tsx),
    aplicado aquí como avance del onboarding en vez de decoración aislada. */
 function LunaProgreso({ frac }: { frac: number }) {
-  const desplazamiento = Math.round(frac * 28);
+  // Piso de 12%: incluso en 0 preguntas respondidas se ve una fracción iluminada,
+  // para que el indicador se lea como "progreso en 0%" y no como un ícono roto.
+  const fracVisible = Math.max(0.12, frac);
+  const desplazamiento = Math.round(fracVisible * 28);
   return (
-    <span className="relative block size-7 shrink-0 overflow-hidden rounded-full bg-[var(--accent)]">
+    <span className="relative block size-7 shrink-0 overflow-hidden rounded-full border border-[color-mix(in_oklab,var(--accent)_45%,transparent)] bg-[var(--accent)]">
       <motion.span
         className="absolute top-0 size-7 rounded-full bg-[var(--bg)]"
         animate={{ left: desplazamiento }}
@@ -53,8 +56,47 @@ function BarraProgreso({ paso }: { paso: number }) {
   );
 }
 
+function ModalSalir({ onCancelar, onSalir }: { onCancelar: () => void; onSalir: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-end justify-center bg-[color-mix(in_oklab,var(--bg)_70%,transparent)] px-5 pb-8 backdrop-blur-sm sm:items-center"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 16 }}
+        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-sm rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)] p-5 text-center"
+      >
+        <h2 className="text-[19px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
+          ¿Salir ahora?
+        </h2>
+        <p className="mt-2 text-[14px] text-[var(--text-secondary)]">Tus respuestas no se guardan.</p>
+        <button
+          type="button"
+          onClick={onCancelar}
+          className="mt-5 flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
+        >
+          Seguir aquí
+        </button>
+        <button
+          type="button"
+          onClick={onSalir}
+          className="mt-3 flex h-11 w-full items-center justify-center text-[14px] text-[var(--text-tertiary)] underline [touch-action:manipulation]"
+        >
+          Salir sin guardar
+        </button>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
   const router = useRouter();
+  const [modalAbierto, setModalAbierto] = useState(false);
   return (
     <div className="flex items-center gap-3 pt-4">
       <button
@@ -69,15 +111,16 @@ function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
       <button
         type="button"
         aria-label="Salir del escaneo"
-        onClick={() => {
-          if (window.confirm('¿Salir ahora? Tus respuestas no se guardan.')) {
-            router.push('/');
-          }
-        }}
+        onClick={() => setModalAbierto(true)}
         className="flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--text-secondary)] [touch-action:manipulation]"
       >
         <X size={20} aria-hidden="true" />
       </button>
+      <AnimatePresence>
+        {modalAbierto && (
+          <ModalSalir onCancelar={() => setModalAbierto(false)} onSalir={() => router.push('/')} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -122,7 +165,7 @@ function PantallaPregunta({
         animate={{ opacity: 1, x: 0 }}
         exit={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
         transition={{ duration: reduce ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-1 flex-col justify-center"
+        className="flex flex-1 flex-col justify-start pt-[15vh]"
       >
         <h1 className="text-balance text-[30px] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)] [font-family:var(--font-display)]">
           {pregunta}
@@ -216,7 +259,7 @@ function PantallaReconocimiento({
       <motion.div
         initial={{ opacity: reduce ? 1 : 0 }}
         animate={{ opacity: 1 }}
-        className="flex flex-1 flex-col items-center justify-center text-center"
+        className="flex flex-1 flex-col items-center justify-start pt-[12vh] text-center"
       >
         <motion.span
           initial={reduce ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
@@ -298,6 +341,27 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
   );
 }
 
+/* Conteo del número héroe sincronizado con el trazo del anillo (baseline de
+   movimiento del proyecto: los datos clave cuentan hacia arriba, nunca aparecen
+   estáticos). Respeta reduced-motion mostrando el valor final de inmediato. */
+function ConteoNumero({ hasta, reduce }: { hasta: number; reduce: boolean | null }) {
+  const [valor, setValor] = useState(reduce ? hasta : 0);
+  useEffect(() => {
+    if (reduce) return;
+    const duracionMs = 1100;
+    const inicio = performance.now();
+    let frame: number;
+    const tick = (ahora: number) => {
+      const t = Math.min(1, (ahora - inicio) / duracionMs);
+      setValor(Math.round(t * hasta));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [hasta, reduce]);
+  return <>{valor}</>;
+}
+
 function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
   const reduce = useReducedMotion();
   const zona = respuestas.zona ?? 'tu cuerpo';
@@ -331,8 +395,8 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
               transition={{ duration: reduce ? 0 : 1.1, ease: [0.16, 1, 0.3, 1], delay: reduce ? 0 : 0.2 }}
             />
           </svg>
-          <span className="absolute text-[40px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
-            72%
+          <span className="absolute text-[40px] font-bold tabular-nums text-[var(--text-primary)] [font-family:var(--font-display)]">
+            <ConteoNumero hasta={72} reduce={reduce} />%
           </span>
         </div>
         <p className="mt-3 text-[13px] text-[var(--text-secondary)]">tensión detectada — lista para liberar</p>
