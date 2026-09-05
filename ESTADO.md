@@ -110,11 +110,21 @@ solo evitan links rotos — no son la construcción real de esas etapas.
     se ven crecientes/gibosas reconocibles); altura del botón de StickyCtaMobile (48px) no
     coincidía con el resto de los CTA (52px) → unificada; contraste fondo/superficie muy sutil en
     scroll largo → subido `--surface` de `#2E2013` a `#392616`.
-  Relanzada una 7ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
-  `docs/revisiones/landing-veredicto.md` diga "Veredicto: LISTA" con Usabilidad ≥36/40 y
-  Craft ≥16/20. Si esta ronda tampoco converge, se pausan las rondas automáticas y se le presenta
-  el estado actual al usuario para decidir cómo seguir (las puntuaciones vienen oscilando 29-34/
-  13-15 con ruido de evaluación independiente pese a mejoras reales confirmadas cada ronda).
+  - 7ª ronda (32/40, 14/20 — confirmó que los fixes de fase lunar/altura CTA/contraste de la
+    ronda anterior quedaron bien): quedan 2 hallazgos de mayor esfuerzo sin resolver (ring "72%"
+    del hero como SVG animado en vez de PNG; anclas de navegación a Precios/FAQ en el header) y
+    3 accionables rápidos, de los cuales se corrigieron 2 en esta pasada: claim de salud sin
+    respaldo clínico ("insomnio crónico y ansiedad diaria", contradecía la propia FAQ) → reescrito
+    como consecuencia conductual concreta; fase lunar con discos de 20px difícil de distinguir en
+    fases intermedias → subida a 32px. El tercer accionable (usar `--surface-2` en algún bloque
+    intermedio de FAQ/Garantía) queda pendiente.
+  **PAUSA DE RONDAS AUTOMÁTICAS tras 7 revisiones independientes.** Las puntuaciones oscilaron
+  29-34/40 (usabilidad) y 13-15/20 (craft) sin bajar nunca de una ronda a la siguiente en el
+  código verificado — cada revisor confirmó que los fixes anteriores seguían bien — pero tampoco
+  cruzaron el umbral (≥36/40 y ≥16/20) de forma consistente. Los 2 defectos de mayor esfuerzo que
+  faltan (ring animado en SVG, anclas de navegación) requieren trabajo estructural mayor que un
+  ajuste de copy/color. Se presenta el estado actual al usuario para decidir cómo seguir en vez de
+  seguir lanzando rondas automáticas sin llegar a una convergencia clara.
 - `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este
   proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
   conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;

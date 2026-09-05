@@ -24,7 +24,7 @@
 
 ## 3. AGITACIÓN
 - `Cada noche que pasa sin liberar esa tensión, [b]se acumula más estrés en tu cuerpo[/b].`
-- `En un año, ese nudo sin resolver puede convertirse en [acento]insomnio crónico y ansiedad diaria[/acento].`
+- `En un año, ese nudo sin resolver son [acento]365 noches más dándole vueltas y mensajes que no quisiste mandar[/acento].` (corregido tras hallazgo del revisor: la versión anterior era un claim de salud sin respaldo clínico que contradecía la propia FAQ "no es tratamiento médico")
 - `Otra app de horóscopos no lo arregla: [b]más miedo no es alivio[/b].`
 - Contraste: Hoy → "Opresión en el pecho y ganas de revisar sus redes a las 3 AM."
   En 6 meses si nada cambia → "El mismo nudo — solo que ahora ya perdiste 6 meses de paz."

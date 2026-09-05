@@ -19,19 +19,19 @@ import { Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
 function FaseLunar() {
   const fases = [0.06, 0.25, 0.45, 0.7, 0.9, 1, 0.75, 0.35];
   const llena = 5;
-  const diametro = 20;
+  const diametro = 32;
   return (
-    <div className="mb-5 flex items-center justify-center gap-3" aria-hidden="true">
+    <div className="mb-5 flex items-center justify-center gap-4" aria-hidden="true">
       {fases.map((f, i) => {
         const desplazamiento = Math.round(f * diametro);
         return (
           <span
             key={i}
-            className={`relative block size-5 overflow-hidden rounded-full bg-[var(--accent)] ${i === llena ? 'respira-marco' : ''}`}
-            style={{ boxShadow: i === llena ? '0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)' : undefined }}
+            className={`relative block size-8 overflow-hidden rounded-full bg-[var(--accent)] ${i === llena ? 'respira-marco' : ''}`}
+            style={{ boxShadow: i === llena ? '0 0 14px color-mix(in oklab, var(--accent) 60%, transparent)' : undefined }}
           >
             <span
-              className="absolute top-0 size-5 rounded-full bg-[var(--surface-2)]"
+              className="absolute top-0 size-8 rounded-full bg-[var(--surface-2)]"
               style={{ left: `${desplazamiento}px` }}
             />
           </span>

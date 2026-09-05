@@ -62,7 +62,7 @@ export default function LandingAstroSoma() {
       <Agitacion
         frases={[
           'Cada noche que pasa sin liberar esa tensión, [b]se acumula más estrés en tu cuerpo[/b].',
-          'En un año, ese nudo sin resolver puede convertirse en [acento]insomnio crónico y ansiedad diaria[/acento].',
+          'En un año, ese nudo sin resolver son [acento]365 noches más dándole vueltas y mensajes que no quisiste mandar[/acento].',
           'Otra app de horóscopos no lo arregla: [b]más miedo no es alivio[/b].',
         ]}
         contraste={{
