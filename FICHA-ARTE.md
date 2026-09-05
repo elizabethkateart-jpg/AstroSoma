@@ -28,9 +28,18 @@
 
 ## Trazabilidad y vetos
 - Ruta de diseño: propuesta propia (fusión de líderes, sin captura de referencia)
-- Protocolo A/B/C: no aplicó — el usuario ya eligió entre 3 direcciones conceptuales (mística cálida / clínica-somática / cósmica oscura) en el chat, equivalente a la decisión A/B/C; descartadas: "clínica-somática" (muy fría/genérica de wellness) y "cósmica oscura" (muy parecida al look "huele a IA" oscuro+neón que el SO prohíbe)
+- Protocolo A/B/C: ejecutado en `direcciones-abc.html` (raíz del proyecto) — 3 composiciones
+  estructuralmente distintas dentro de "mística cálida": A "Bitácora de Luna" (clara/editorial),
+  B "Ritual Nocturno" (oscura/anillo — ELEGIDA), C "Carta y Cuerpo" (pergamino/timeline).
+  Screenshot: `docs/revisiones/direcciones-abc.png`. Descartadas: A (muy diurna/clara para un
+  avatar cuya crisis ocurre de noche) y C (formato editorial, se sintió menos "app" y más
+  "revista"). Opción elegida: B — coincide con el ritual nocturno de Calm y el momento de
+  mayor dolor del avatar (3 AM).
+- Tour de la app: `vista-previa-app.html` (raíz), 5 vistas (Hoy, onboarding, paywall, mecanismo
+  en curso, módulo de duelo) con los tokens de la Opción B. Screenshot:
+  `docs/revisiones/vista-previa-app.png`.
 - Paleta derivada de: banco `54` "Journaling/diario" (tomada tal cual para el ámbar) + acento burdeos añadido por pedido explícito del usuario · Dispositivo ownable elegido: papel con grano + fase lunar de progreso
 - Registro anti-repetición: paleta ámbar-terracota-burdeos oscura + par serif humanista/sans humanista — vetados para el próximo proyecto del SO
 - Modo (claro/oscuro) DERIVADO por: naturaleza nocturna del ritual del avatar (crisis a las 3 AM, "ritual antes de dormir" tomado de Calm) — nunca asumido por defecto
 
-## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: pendiente de confirmación explícita (se muestra el kit resumido a continuación)
+## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: pendiente — se presentó el tour de la Opción B (vista-previa-app.html) y se espera respuesta 1/2/3

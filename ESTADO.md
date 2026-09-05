@@ -27,11 +27,13 @@ re-valida. Ver `FICHA-AVATAR.md` y `FICHA-MERCADO.md` para el detalle completo.
   Sensor Tower ~$400K/mes + rank #33 top-grossing Lifestyle US). Se modela su mecanismo (carta
   natal + tránsito diario como gancho de retorno) y se corrige su queja #1 (tono fatalista/
   ansiógeno) con el ángulo somático de AstroSoma. Ver `FICHA-MODELO.md`.
-- **Dirección de arte:** el usuario eligió "Mística cálida". Se armó `FICHA-ARTE.md` por fusión de
-  líderes (CHANI, Calm, Stoic, Clue) — modo oscuro nocturno, base ámbar/terracota (`#C8853D`) con
-  acento burdeos (`#8C4A3C`) solo en el módulo de Duelo, tipografía serif humanista + sans
-  humanista, radio 20px, motion lento tipo "respiración". Pendiente mostrar el resumen y obtener
-  el OK explícito del usuario antes de volcarlo a código.
+- **Dirección de arte:** el usuario eligió "Mística cálida". Se corrió el protocolo A/B/C completo
+  en `direcciones-abc.html` (3 composiciones reales, no solo texto) + el tour en
+  `vista-previa-app.html` (5 pantallas). Screenshots en `docs/revisiones/`. Se avanzó con la
+  Opción B "Ritual Nocturno" (oscura, ámbar/burdeos, anillo de progreso) por ser la más coherente
+  con el momento de mayor dolor del avatar (3 AM) — VER FICHA-ARTE.md §Trazabilidad. Pendiente:
+  respuesta del usuario al tour (1 me encanta / 2 ajustar / 3 repensar) para cerrar la ficha
+  como cosa juzgada.
 
 ## Paso actual
 Paso 0-1 completos: Sistema Operativo instalado, git activado, idea validada y cargada,

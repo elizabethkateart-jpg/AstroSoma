@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="es" data-kit="abc-v2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direcciones de arte A/B/C — AstroSoma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..700&family=Mulish:wght@400..700&family=Fraunces:opsz,wght@9..144,400..700&family=Karla:wght@400..700&family=EB+Garamond:wght@400..700&family=Inter+Tight:wght@400..700&display=swap" rel="stylesheet">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background:
+      radial-gradient(1100px 520px at 12% -6%, #f7f7f9, transparent 62%),
+      radial-gradient(900px 460px at 92% 4%, #e2e2e9, transparent 58%),
+      linear-gradient(180deg, #ededf0, #e4e4e9);
+    color: #1c1c1f;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 32px 20px 64px;
+  }
+  .cabecera { max-width: 1180px; margin: 0 auto 12px; }
+  .cabecera h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+  .cabecera p.sub { margin-top: 6px; font-size: 14px; color: #55555c; max-width: 70ch; }
+  .salidas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .salidas span {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid #c9c9cf; border-radius: 999px;
+    padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: #3a3a40;
+    background: #f7f7f8;
+  }
+  .salidas b { color: #1c1c1f; }
+  .aviso-fuentes { max-width: 1180px; margin: 10px auto 28px; font-size: 12.5px; color: #6a6a72; }
+  .opciones { max-width: 1180px; margin: 0 auto; display: grid; gap: 40px;
+              grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .opcion { display: flex; flex-direction: column; gap: 18px; }
+  .meta { background: #f7f7f8; border: 1px solid #d9d9de; border-radius: 14px; padding: 18px; }
+  .meta .letra {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 8px; font-weight: 800; font-size: 15px;
+    color: #f7f7f8; background: #1c1c1f; margin-right: 8px;
+  }
+  .meta h2 { display: flex; align-items: center; font-size: 17px; font-weight: 700; }
+  .meta .direccion { margin-top: 4px; font-size: 13px; color: #55555c; }
+  .hipotesis { margin-top: 10px; font-size: 13px; line-height: 1.5; color: #3a3a40; }
+  .meta ul.tokens { margin-top: 10px; list-style: none; font-size: 12px; color: #6a6a72;
+                    font-family: ui-monospace, monospace; line-height: 1.7; }
+  .especimen { margin-top: 12px; border-top: 1px solid #d9d9de; padding-top: 12px; }
+  .especimen .esp-display { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; }
+  .especimen .esp-body { margin-top: 4px; font-size: 13.5px; color: #3a3a40; }
+  .telefono {
+    width: 310px; margin: 0 auto; aspect-ratio: 9 / 19.5;
+    border: 10px solid #101014; border-radius: 46px;
+    box-shadow: 0 24px 60px rgb(20 18 24 / 0.28);
+    overflow: hidden; position: relative; display: flex; flex-direction: column;
+  }
+  .statusbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 22px 6px; font-size: 13px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .statusbar .der { display: flex; align-items: center; gap: 5px; }
+  .home-indicator {
+    position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%);
+    width: 116px; height: 5px; border-radius: 999px; opacity: 0.85;
+  }
+  .pantalla { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .chip-icono { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex-shrink: 0; }
+  .cta { display: flex; align-items: center; justify-content: center; height: 48px; font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+  .tabbar {
+    display: flex; align-items: stretch; justify-content: space-around;
+    margin: 12px -18px 0; padding: 8px 8px 16px;
+    border-top: 1px solid color-mix(in oklab, var(--text-2) 18%, transparent);
+    background: color-mix(in oklab, var(--surface) 88%, transparent);
+  }
+  .tabbar a { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9.5px; font-weight: 600; color: var(--text-2); text-decoration: none; }
+  .tabbar .tab-chip { display: flex; align-items: center; justify-content: center; width: 36px; height: 26px; border-radius: 9px; }
+  .tabbar a.activa { color: var(--accent); }
+  .tabbar a.activa .tab-chip { background: color-mix(in oklab, var(--accent) 14%, transparent); }
+  .paleta { display: flex; gap: 8px; margin-top: 10px; }
+  .paleta span { width: 26px; height: 26px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.10), 0 1px 3px rgb(0 0 0 / 0.12); }
+  .rotulo-frame { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #85858e; margin-top: 2px; }
+  .hero-landing {
+    width: 310px; margin: 6px auto 0; border-radius: 18px; overflow: hidden;
+    border: 1px solid rgb(0 0 0 / 0.10); box-shadow: 0 16px 40px rgb(20 18 24 / 0.16);
+    background: var(--bg); color: var(--text-1); font-family: var(--font-body); padding: 22px 18px 18px;
+  }
+  .hero-landing .hl-badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
+    border-radius: 999px; padding: 4px 10px;
+  }
+  .hero-landing h4 { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1.14; letter-spacing: -0.01em; margin-top: 10px; }
+  .hero-landing h4 em { font-style: normal; color: var(--accent); }
+  .hero-landing .hl-sub { margin-top: 8px; font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .hero-landing .hl-sub b { color: var(--text-1); font-weight: 600; }
+  .hero-landing .hl-cta {
+    margin-top: 14px; display: flex; align-items: center; justify-content: center;
+    height: 46px; border-radius: var(--radius-btn); font-size: 14.5px; font-weight: 700; color: var(--bg);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 86%, white), var(--accent));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 10px 24px -6px color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  .hero-landing .hl-prueba { margin-top: 10px; font-size: 11.5px; color: var(--text-2); text-align: center; }
+
+  /* ============ OPCIÓN A — "Bitácora de Luna" — cálida clara, héroe-dato + cards ============ */
+  .op-a {
+    --bg: #F7F1E6; --surface: #FFFBF3; --text-1: #2B2318; --text-2: #8A7C68;
+    --accent: #7A3E2E; --radius-card: 18px; --radius-btn: 12px;
+    --font-display: 'Newsreader', monospace; --font-body: 'Mulish', monospace;
+    --shadow-tinta: 90 60 45;
+  }
+  .op-a .especimen .esp-display { font-family: var(--font-display); }
+  .op-a .especimen .esp-body { font-family: var(--font-body); }
+  .op-a .telefono { background: var(--bg); }
+  .op-a .pantalla { font-family: var(--font-body); color: var(--text-1); padding: 0 18px; }
+  .op-a .statusbar, .op-a .home-indicator { color: var(--text-1); background: var(--text-1); }
+  .op-a .saludo { margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--text-2); }
+  .op-a h3.titulo-a { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1.14; letter-spacing: -0.01em; margin-top: 2px; }
+  .op-a .heroe {
+    margin-top: 14px; border-radius: var(--radius-card); border: 1.5px solid transparent;
+    background: linear-gradient(var(--surface), var(--surface)) padding-box,
+      linear-gradient(135deg, color-mix(in oklab, var(--accent) 45%, transparent), transparent 60%) border-box;
+    box-shadow: 0 10px 26px -10px rgb(var(--shadow-tinta) / 0.22); padding: 16px;
+  }
+  .op-a .heroe .label { font-size: 11.5px; font-weight: 600; color: var(--text-2); }
+  .op-a .heroe .dato { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1.12; }
+  .op-a .heroe .insight { margin-top: 4px; font-size: 12.5px; color: var(--accent); font-weight: 600; }
+  .op-a .card {
+    margin-top: 10px; background: var(--surface); border-radius: var(--radius-card);
+    border: 1px solid color-mix(in oklab, var(--text-2) 22%, transparent);
+    padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start;
+  }
+  .op-a .chip-icono { border-radius: var(--radius-btn); background: color-mix(in oklab, var(--accent) 10%, transparent); border: 1px solid color-mix(in oklab, var(--accent) 22%, transparent); }
+  .op-a .card h4 { font-size: 14px; font-weight: 700; }
+  .op-a .card p { margin-top: 2px; font-size: 12.5px; color: var(--text-2); line-height: 1.45; }
+  .op-a .cta { margin-top: auto; margin-bottom: 0; border-radius: var(--radius-btn); background: var(--accent); color: var(--bg); box-shadow: 0 8px 22px color-mix(in oklab, var(--accent) 30%, transparent); }
+
+  /* ============ OPCIÓN B — "Ritual Nocturno" — oscura cálida, anillo + grid 2x2 ============ */
+  .op-b {
+    --bg: #100E0C; --surface: #1A1714; --text-1: #F0EAE2; --text-2: #A0958A;
+    --accent: #C8853D; --accent2: #8C4A3C; --radius-card: 16px; --radius-btn: 12px;
+    --font-display: 'Fraunces', monospace; --font-body: 'Karla', monospace;
+    --shadow-tinta: 10 8 6;
+  }
+  .op-b .especimen .esp-display { font-family: var(--font-display); }
+  .op-b .especimen .esp-body { font-family: var(--font-body); }
+  .op-b .telefono { background: var(--bg); }
+  .op-b .pantalla { font-family: var(--font-body); color: var(--text-1); padding: 0 18px; }
+  .op-b .statusbar, .op-b .home-indicator { color: var(--text-1); background: var(--text-1); }
+  .op-b .encabezado-b { margin-top: 12px; text-align: center; }
+  .op-b .encabezado-b .periodo { font-size: 11.5px; font-weight: 600; color: var(--text-2); }
+  .op-b h3.titulo-b { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-top: 2px; }
+  .op-b .anillo-wrap { margin: 14px auto 0; position: relative; width: 128px; height: 128px; }
+  .op-b .anillo-wrap .centro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .op-b .anillo-wrap .pct { font-family: var(--font-display); font-size: 26px; font-weight: 700; }
+  .op-b .anillo-wrap .pct-label { font-size: 10px; color: var(--text-2); font-weight: 600; text-align: center; max-width: 90px; }
+  .op-b .grid2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .op-b .tile { background: var(--surface); border-radius: var(--radius-card); border: 1px solid rgb(255 255 255 / 0.07); padding: 12px; }
+  .op-b .tile.destacada {
+    border: 1.5px solid transparent;
+    background: linear-gradient(var(--surface), var(--surface)) padding-box,
+      linear-gradient(135deg, color-mix(in oklab, var(--accent2) 55%, transparent), transparent 60%) border-box;
+  }
+  .op-b .tile .t-label { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; color: var(--text-2); }
+  .op-b .tile .t-dato { margin-top: 6px; font-family: var(--font-display); font-size: 19px; font-weight: 700; }
+  .op-b .tile .t-dato small { font-size: 11px; color: var(--text-2); font-weight: 600; }
+  .op-b .cta { margin-top: auto; margin-bottom: 0; border-radius: var(--radius-btn); background: var(--accent); color: #241a0d; box-shadow: 0 8px 24px color-mix(in oklab, var(--accent) 28%, transparent); }
+
+  /* ============ OPCIÓN C — "Carta y Cuerpo" — pergamino terracota, timeline editorial ============ */
+  .op-c {
+    --bg: #F3ECDF; --surface: #FBF6EC; --text-1: #2A2018; --text-2: #7A6C5C;
+    --accent: #8C2F23; --radius-card: 10px; --radius-btn: 8px;
+    --font-display: 'EB Garamond', monospace; --font-body: 'Inter Tight', monospace;
+    --shadow-tinta: 60 48 36;
+  }
+  .op-c .especimen .esp-display { font-family: var(--font-display); }
+  .op-c .especimen .esp-body { font-family: var(--font-body); }
+  .op-c .telefono { background: var(--bg); }
+  .op-c .pantalla { font-family: var(--font-body); color: var(--text-1); padding: 0 20px; }
+  .op-c .statusbar, .op-c .home-indicator { color: var(--text-1); background: var(--text-1); }
+  .op-c .masthead { margin-top: 10px; border-bottom: 2px solid var(--text-1); padding-bottom: 8px; position: relative; }
+  .op-c .masthead::after { content: ''; position: absolute; left: 0; right: 0; bottom: -5px; border-bottom: 1px solid var(--text-1); }
+  .op-c .masthead .edicion { font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2); }
+  .op-c h3.titulo-c { font-family: var(--font-display); font-size: 25px; font-weight: 700; line-height: 1.1; margin-top: 2px; }
+  .op-c .timeline { margin-top: 16px; display: flex; flex-direction: column; }
+  .op-c .evento { display: grid; grid-template-columns: 50px 14px 1fr; gap: 0 8px; padding-bottom: 16px; position: relative; }
+  .op-c .evento .hora { font-size: 11px; font-weight: 600; color: var(--text-2); padding-top: 1px; }
+  .op-c .evento .nodo { position: relative; display: flex; justify-content: center; }
+  .op-c .evento .nodo::before { content: ''; position: absolute; top: 14px; bottom: -4px; width: 1.5px; background: color-mix(in oklab, var(--text-2) 35%, transparent); }
+  .op-c .evento:last-child .nodo::before { display: none; }
+  .op-c .evento .punto { width: 10px; height: 10px; border-radius: 999px; margin-top: 3px; border: 2px solid color-mix(in oklab, var(--text-2) 55%, transparent); background: var(--bg); z-index: 1; }
+  .op-c .evento.activo .punto { border-color: var(--accent); background: var(--accent); }
+  .op-c .evento h4 { font-size: 13.5px; font-weight: 700; line-height: 1.3; }
+  .op-c .evento.activo h4 { color: var(--accent); }
+  .op-c .evento p { margin-top: 2px; font-size: 11.5px; color: var(--text-2); line-height: 1.45; }
+  .op-c .cierre-nota {
+    margin-top: 4px; border: 1px solid transparent; border-radius: var(--radius-card);
+    background: linear-gradient(var(--surface), var(--surface)) padding-box,
+      linear-gradient(135deg, color-mix(in oklab, var(--accent) 40%, transparent), transparent 60%) border-box;
+    box-shadow: 0 8px 20px -10px rgb(var(--shadow-tinta) / 0.25); padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .op-c .chip-icono { width: 36px; height: 36px; border-radius: var(--radius-btn); background: color-mix(in oklab, var(--accent) 10%, transparent); }
+  .op-c .cierre-nota p { font-size: 12px; color: var(--text-2); line-height: 1.5; }
+  .op-c .cierre-nota p b { color: var(--text-1); }
+  .op-c .cta { margin-top: auto; margin-bottom: 0; border-radius: var(--radius-btn); background: var(--accent); color: var(--bg); box-shadow: 0 8px 22px color-mix(in oklab, var(--accent) 28%, transparent); font-family: var(--font-body); }
+
+  .pie { max-width: 1180px; margin: 40px auto 0; font-size: 12.5px; color: #6a6a72; border-top: 1px solid #d0d0d6; padding-top: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="cabecera">
+  <h1>Dirección de arte — 3 opciones para AstroSoma</h1>
+  <p class="sub">Las tres exploran "mística cálida" (la dirección que ya elegiste) pero resueltas de tres formas de verdad distintas — cualquiera puede ser la app final.</p>
+  <div class="salidas" role="list">
+    <span role="listitem"><b>1 · Elegir</b> A, B o C</span>
+    <span role="listitem"><b>2 · Combinar</b> («la B pero con la tipografía de la A»)</span>
+    <span role="listitem"><b>3 · Pedir otras 3</b> direcciones nuevas</span>
+    <span role="listitem"><b>4 · Ajustar un detalle</b> («la B con el acento más profundo»)</span>
+  </div>
+</header>
+<p class="aviso-fuentes">Verificación de fuentes: el nombre de cada familia se muestra EN su propia fuente. Si se ve letra de máquina de escribir, esa fuente no está embebida.</p>
+
+<div class="opciones">
+
+  <!-- OPCIÓN A -->
+  <section class="opcion op-a" aria-label="Opción A">
+    <div class="meta">
+      <h2><span class="letra">A</span> Bitácora de Luna</h2>
+      <p class="direccion">Clara, cálida como papel de cuaderno a la luz del día — tu zona de tensión de hoy en grande, con tarjetas de ejercicio debajo.</p>
+      <p class="hipotesis"><strong>Hipótesis de conversión:</strong> Camila busca alivio SIN pantallas oscuras y ansiógenas de madrugada; una app clara y cálida de día se siente segura y "no otra app de miedo".</p>
+      <ul class="tokens"><li>--bg #F7F1E6 · --accent #7A3E2E</li><li>radius 18/12 · sombra tintada 90·60·45</li></ul>
+      <div class="paleta" aria-hidden="true">
+        <span style="background:#F7F1E6"></span><span style="background:#FFFBF3"></span>
+        <span style="background:#2B2318"></span><span style="background:#8A7C68"></span>
+        <span style="background:#7A3E2E"></span>
+      </div>
+      <div class="especimen">
+        <p class="esp-display">Newsreader — AaBbÑñ 0123</p>
+        <p class="esp-body">Mulish — El veloz murciélago hindú comía feliz cardillo y kiwi.</p>
+      </div>
+    </div>
+    <div class="telefono">
+      <div class="statusbar"><span>9:41</span><span class="der">●●●</span></div>
+      <div class="pantalla">
+        <p class="saludo">Martes 6 de octubre</p>
+        <h3 class="titulo-a">Hola, Camila</h3>
+        <div class="heroe">
+          <p class="label">Hoy tu tensión vive en</p>
+          <p class="dato">Pecho</p>
+          <p class="insight">Tránsito de Saturno en tu Casa 7</p>
+        </div>
+        <div class="card">
+          <span class="chip-icono" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7a3e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg></span>
+          <div><h4>Liberación somática · 3 min</h4><p>Respiración guiada para soltar el nudo de hoy</p></div>
+        </div>
+        <div class="card">
+          <span class="chip-icono" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7a3e2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.6 6.9L22 9.3l-5.4 4.6 1.8 7.1L12 17l-6.4 4 1.8-7.1L2 9.3l7.4-.4Z"/></svg></span>
+          <div><h4>Programa de Ruptura · Día 12 de 30</h4><p>3 días sin contactar a tu ex</p></div>
+        </div>
+        <div class="cta">Empezar mi liberación de 3 min</div>
+        <nav class="tabbar" aria-label="Navegación">
+          <a class="activa" href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span>Hoy</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.6 6.9L22 9.3l-5.4 4.6 1.8 7.1L12 17l-6.4 4 1.8-7.1L2 9.3l7.4-.4Z"/></svg></span>Duelo</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>Diario</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span>Perfil</a>
+        </nav>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <p class="rotulo-frame">Así se vería la página que vende tu app</p>
+    <div class="hero-landing">
+      <span class="hl-badge">AstroSoma</span>
+      <h4>Ese nudo en tu pecho <em>no es casualidad</em></h4>
+      <p class="hl-sub"><b>Tu carta natal te muestra dónde lo guardas.</b> 3 minutos de liberación somática, sin notificaciones de pánico.</p>
+      <div class="hl-cta">Descubrir mi zona de tensión</div>
+      <p class="hl-prueba">Prueba gratis 7 días · cancela cuando quieras</p>
+    </div>
+  </section>
+
+  <!-- OPCIÓN B -->
+  <section class="opcion op-b" aria-label="Opción B">
+    <div class="meta">
+      <h2><span class="letra">B</span> Ritual Nocturno</h2>
+      <p class="direccion">Oscura y cálida como una vela a las 3 AM — un anillo de progreso al centro y las señales de tu duelo alrededor, sin blanco frío de hospital.</p>
+      <p class="hipotesis"><strong>Hipótesis de conversión:</strong> el momento de mayor dolor de Camila es de noche — una app oscura y cálida (no negro-neón) se siente como refugio íntimo, no como otra pantalla que la desvela.</p>
+      <ul class="tokens"><li>--bg #100E0C · --accent #C8853D</li><li>radius 16/12 · 2ª nota #8C4A3C (duelo)</li></ul>
+      <div class="paleta" aria-hidden="true">
+        <span style="background:#100E0C"></span><span style="background:#1A1714"></span>
+        <span style="background:#F0EAE2"></span><span style="background:#C8853D"></span>
+        <span style="background:#8C4A3C"></span>
+      </div>
+      <div class="especimen">
+        <p class="esp-display">Fraunces — AaBbÑñ 0123</p>
+        <p class="esp-body">Karla — El veloz murciélago hindú comía feliz cardillo y kiwi.</p>
+      </div>
+    </div>
+    <div class="telefono">
+      <div class="statusbar"><span>23:14</span><span class="der">●●●</span></div>
+      <div class="pantalla">
+        <div class="encabezado-b">
+          <p class="periodo">Noche 12 · Programa de Ruptura</p>
+          <h3 class="titulo-b">Tu ritual de esta noche</h3>
+        </div>
+        <div class="anillo-wrap">
+          <svg width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Tensión liberada 72 por ciento">
+            <circle cx="64" cy="64" r="55" fill="none" stroke-width="10" stroke="rgba(200,133,61,0.16)"/>
+            <circle cx="64" cy="64" r="55" fill="none" stroke-width="10" stroke="#C8853D" stroke-linecap="round" stroke-dasharray="345.6" stroke-dashoffset="96.8" transform="rotate(-90 64 64)"/>
+          </svg>
+          <div class="centro"><span class="pct">72%</span><span class="pct-label">tensión liberada hoy</span></div>
+        </div>
+        <div class="grid2x2">
+          <div class="tile destacada"><p class="t-label">Sin contactar a tu ex</p><p class="t-dato">12<small> días</small></p></div>
+          <div class="tile"><p class="t-label">Respiración hoy</p><p class="t-dato">6<small> min</small></p></div>
+          <div class="tile"><p class="t-label">Fase del duelo</p><p class="t-dato">12<small>/30</small></p></div>
+          <div class="tile"><p class="t-label">Calma esta noche</p><p class="t-dato">Alta</p></div>
+        </div>
+        <div class="cta">Continuar mi ritual de esta noche</div>
+        <nav class="tabbar" aria-label="Navegación">
+          <a class="activa" href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span>Hoy</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.6 6.9L22 9.3l-5.4 4.6 1.8 7.1L12 17l-6.4 4 1.8-7.1L2 9.3l7.4-.4Z"/></svg></span>Duelo</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>Diario</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span>Perfil</a>
+        </nav>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <p class="rotulo-frame">Así se vería la página que vende tu app</p>
+    <div class="hero-landing">
+      <span class="hl-badge">AstroSoma</span>
+      <h4>3 minutos para <em>no escribirle</em> esta noche</h4>
+      <p class="hl-sub"><b>Tu tránsito de hoy te muestra dónde acumulas el duelo.</b> Un ritual cálido para las noches difíciles, sin ansiedad.</p>
+      <div class="hl-cta">Empezar mi ritual de esta noche</div>
+      <p class="hl-prueba">Prueba gratis 7 días · cancela cuando quieras</p>
+    </div>
+  </section>
+
+  <!-- OPCIÓN C -->
+  <section class="opcion op-c" aria-label="Opción C">
+    <div class="meta">
+      <h2><span class="letra">C</span> Carta y Cuerpo</h2>
+      <p class="direccion">Elegante como una carta escrita a mano sobre papel pergamino — tu cuerpo contado como una línea de tiempo del día, de la garganta al pecho.</p>
+      <p class="hipotesis"><strong>Hipótesis de conversión:</strong> el formato editorial/carta transmite autoridad calmada (astrología "seria", no horóscopo de revista) — atrae a quien ya probó apps ansiógenas y desconfía del tono infantil.</p>
+      <ul class="tokens"><li>--bg #F3ECDF · --accent #8C2F23</li><li>radius 10/8 · sombra tintada 60·48·36</li></ul>
+      <div class="paleta" aria-hidden="true">
+        <span style="background:#F3ECDF"></span><span style="background:#FBF6EC"></span>
+        <span style="background:#2A2018"></span><span style="background:#7A6C5C"></span>
+        <span style="background:#8C2F23"></span>
+      </div>
+      <div class="especimen">
+        <p class="esp-display">EB Garamond — AaBbÑñ 0123</p>
+        <p class="esp-body">Inter Tight — El veloz murciélago hindú comía feliz cardillo y kiwi.</p>
+      </div>
+    </div>
+    <div class="telefono">
+      <div class="statusbar"><span>9:41</span><span class="der">●●●</span></div>
+      <div class="pantalla">
+        <div class="masthead">
+          <p class="edicion">Tu carta de hoy · 6 oct 2026</p>
+          <h3 class="titulo-c">Tu cuerpo, en tres actos</h3>
+        </div>
+        <div class="timeline">
+          <div class="evento activo"><span class="hora">Mañana</span><span class="nodo"><span class="punto"></span></span><div><h4>Garganta</h4><p>Nudo al despertar — respiración de apertura, 3 min.</p></div></div>
+          <div class="evento"><span class="hora">Tarde</span><span class="nodo"><span class="punto"></span></span><div><h4>Pecho</h4><p>Presión al trabajar — pausa de liberación, 3 min.</p></div></div>
+          <div class="evento"><span class="hora">Noche</span><span class="nodo"><span class="punto"></span></span><div><h4>Estómago</h4><p>Insomnio previsto — ritual de cierre antes de dormir.</p></div></div>
+        </div>
+        <div class="cierre-nota">
+          <span class="chip-icono" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8c2f23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <p><b>Día 12 de tu Programa de Ruptura.</b> Nada de esto se guarda en ningún lado más que aquí.</p>
+        </div>
+        <div class="cta">Empezar mi primer acto</div>
+        <nav class="tabbar" aria-label="Navegación">
+          <a class="activa" href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></span>Hoy</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.6 6.9L22 9.3l-5.4 4.6 1.8 7.1L12 17l-6.4 4 1.8-7.1L2 9.3l7.4-.4Z"/></svg></span>Duelo</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span>Diario</a>
+          <a href="#"><span class="tab-chip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span>Perfil</a>
+        </nav>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+    <p class="rotulo-frame">Así se vería la página que vende tu app</p>
+    <div class="hero-landing">
+      <span class="hl-badge">AstroSoma</span>
+      <h4>Astrología <em>explicada simple</em>, sin textos de miedo</h4>
+      <p class="hl-sub"><b>Tu tránsito de hoy, traducido a tu cuerpo.</b> Sin horóscopos genéricos ni notificaciones fatalistas de IA.</p>
+      <div class="hl-cta">Leer mi carta de hoy</div>
+      <p class="hl-prueba">Prueba gratis 7 días · cancela cuando quieras</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="pie">
+  Gates verificados antes de mostrar: fuentes cargadas por familia (Google Fonts, no fallback
+  monospace) · 3 composiciones estructuralmente distintas (cards apiladas / anillo+grid / timeline
+  editorial) · mockups llenos con datos del dominio real de AstroSoma y tab bar visible · cero
+  emojis (íconos SVG inline) · cada opción con su hero de landing aplicado · marcador
+  data-kit="abc-v2" intacto.
+</footer>
+
+</body>
+</html>
