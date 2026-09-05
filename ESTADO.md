@@ -68,13 +68,30 @@ solo evitan links rotos — no son la construcción real de esas etapas.
 - Visuales del Hero y de "La app por dentro" son placeholders honestos (cámara + sugerencia de
   captura) — se reemplazan por screenshots reales cuando exista la app interna con seed de datos
   (regla 32, "la app nunca se enseña vacía").
-- Garantía: la condición dice "7 días" pero `FICHA-MERCADO §4` todavía no tiene el plazo de
-  garantía real verificado en Hotmart (debe ser MAYOR a los 7 días de prueba) — pendiente de
-  confirmar al conectar Hotmart (Paso 6), anotado también en `docs/copy/landing.md`.
+- Garantía: `FICHA-MERCADO §4` ya tiene Prueba 7 días / Garantía 15 días (decisión provisional del
+  agente para cumplir la regla dura garantía>prueba) — se confirma el límite exacto de la cuenta
+  real al conectar Hotmart (Paso 6); el copy de la landing ya usa 15 días.
 - Footer legal: soporteEmail y enlaces son placeholder hasta definir dominio real y pasar por la
   skill `legal`.
-- Revisor visual independiente lanzado (rúbricas /40 usabilidad, /20 craft, /20 copy) — resultado
-  pendiente de esta sesión.
+- 1ª revisión del revisor-visual: NO LISTA (Usabilidad 32/40, Craft 13/20, Copy 18/20). De los 5
+  defectos: el "texto cortado en el borde" resultó ser un bug de la herramienta de captura (Chrome
+  headless sin emulación móvil renderizaba con overflow falso — confirmado con
+  `scrollWidth === innerWidth === 375` en emulación móvil real vía Puppeteer); se corrigió el
+  método de captura, no el producto. Sí eran reales y se corrigieron: título de Oferta excedía el
+  presupuesto de copy (9→7 palabras), CTA con verbo distinto entre planes (unificado), y falta de
+  demo de tono/mensaje (se agregó `MensajeContraste.tsx` — sección "La diferencia", AÑADIDO del
+  proyecto fuera de las 10 canónicas, documentado aquí). Pendiente de 2ª revisión con el screenshot
+  correcto.
+- Pendiente NO resuelto (limitación real de la etapa, no un defecto a corregir ahora): los 5
+  visuales de producto (hero + 4 frames del carrusel) siguen siendo placeholders honestos — se
+  reemplazan por screenshots reales cuando exista la app interna (regla 32: no se fabrican
+  capturas falsas de una app que aún no existe). El "dispositivo ownable" (grano de papel/fase
+  lunar) tampoco se insertó — no hay dónde montarlo sin tocar componentes fijos del kit; se evalúa
+  al construir la app interna real.
+- `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este
+  proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
+  conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;
+  no se parchea aquí por ser código del kit compartido, fuera del alcance de este proyecto.
 
 ## Siguiente paso exacto
 Recibir el veredicto del revisor visual sobre la landing, corregir lo que marque como bloqueante,

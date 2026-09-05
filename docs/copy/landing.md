@@ -46,14 +46,25 @@
   Mecanismo (tu ejercicio de 3 minutos) · Duelo (tu Programa de Ruptura día a día)
 
 ## 6. OFERTA
-- tituloMarked: `Empieza gratis. Sigue por [acento]menos de $0.30 al día[/acento]`
+- tituloMarked: `Empieza gratis. Sigue por [acento]$0.30 al día[/acento]` (7 palabras, presupuesto 8)
 - trialDias: 7 — traza a FICHA-MERCADO §4
 - Anual $49.99/año ($4.17/mes) — MÁS POPULAR · Mensual $8.99/mes — traza a FICHA-MERCADO §1
+- ctaLabel unificado con el verbo del hero en ambos planes (anual = CTA_LABEL; mensual = misma
+  promesa + aclaración de plan) — evita diluir la única acción primaria (hallazgo del revisor)
+
+## 6bis. LA DIFERENCIA (añadido del proyecto, no es una de las 10 secciones canónicas)
+- Componente `MensajeContraste.tsx`, entre "La app por dentro" y "Oferta"
+- Contrasta el tono típico de la competencia ("Mercurio retrógrado... cuidado hoy") con el tono
+  de AstroSoma ("tu tránsito acumula tensión en el pecho... 3 minutos para soltarla")
+  — traza a: objeción #1 de FICHA-AVATAR ("las apps de astrología solo me asustan") + pedido
+  explícito de la ficha de mostrar una demo de mensaje real como diferenciador
 
 ## 7. GARANTÍA
 - nombre: `la Garantía del Primer Alivio`
-- condicionMarked: `Si en 7 días el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], escribes un correo y te devolvemos todo. Sin preguntas.`
-  — ⚠️ pendiente: confirmar con Hotmart real que la garantía puede durar >7 días de prueba (regla dura de `18`/`FICHA-MERCADO §4` — hoy documentado como pendiente)
+- condicionMarked: `Si en 15 días el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], escribes un correo y te devolvemos todo. Sin preguntas.`
+  — Prueba 7 días / Garantía 15 días (FICHA-MERCADO §4, regla dura garantía > prueba). El plazo de
+  15 días es una decisión provisional del agente dentro del rango típico de Hotmart (7-30 días);
+  se confirma el límite exacto de la cuenta real al conectar Hotmart en el Paso 6.
 
 ## 8. FAQ — objeciones de FICHA-AVATAR en orden de fuerza
 1. `¿Esto reemplaza terapia o tratamiento médico?` — objeción de seguridad/riesgo #1 de producto

@@ -30,8 +30,12 @@
 ## 4. PRUEBA Y GARANTÍA
 - Plazos de prueba que admite la pasarela: pendiente de verificar en Hotmart real (Paso 6) — el PDF propone 7 días
 - Plazos de garantía/reembolso que admite: pendiente de verificar en Hotmart (política estándar Hotmart: 7 días naturales / "garantía incondicional" según producto)
-- Prueba elegida: 7 días · Garantía elegida: pendiente — debe ser MAYOR a 7 días (a definir al conectar Hotmart)
-- Comprobación: garantía __ > prueba 7 → PENDIENTE de fijar hasta verificar límites reales de Hotmart
+- Prueba elegida: 7 días · Garantía elegida: 15 días
+- Comprobación: garantía 15 > prueba 7 → SÍ. Decisión provisional del agente (Hotmart soporta
+  garantías configurables típicamente de 7-30 días; 15 dispara la regla dura sin depender de un
+  dato aún no verificado). Se confirma el límite exacto de la cuenta real al conectar Hotmart en
+  el Paso 6 — si el límite real de la cuenta es menor a 15, se ajusta este valor y el copy antes
+  de abrir tráfico de pago (gate de `61-INTEGRIDAD-DE-LANZAMIENTO.md`).
 - ¿Desde cuándo cuenta el plazo de garantía?: pendiente de confirmar con Hotmart
 
 ## 5. CONVERSIÓN ESPERABLE

@@ -10,6 +10,7 @@ import { Problema } from '@/components/landing/Problema';
 import { Agitacion } from '@/components/landing/Agitacion';
 import { Solucion } from '@/components/landing/Solucion';
 import { AppPorDentro } from '@/components/landing/AppPorDentro';
+import { MensajeContraste } from '@/components/landing/MensajeContraste';
 import { Oferta } from '@/components/landing/Oferta';
 import { Garantia } from '@/components/landing/Garantia';
 import { Faq } from '@/components/landing/Faq';
@@ -92,9 +93,13 @@ export default function LandingAstroSoma() {
         ctaHref={CTA_HREF}
       />
 
+      {/* AÑADIDO DEL PROYECTO — demo de tono pedida por FICHA-AVATAR.md, entre la prueba
+          visual y el precio (ver ESTADO.md) */}
+      <MensajeContraste />
+
       {/* 6. OFERTA */}
       <Oferta
-        tituloMarked="Empieza gratis. Sigue por [acento]menos de $0.30 al día[/acento]"
+        tituloMarked="Empieza gratis. Sigue por [acento]$0.30 al día[/acento]"
         trialDias={7}
         stack={{
           lineas: [
@@ -112,7 +117,7 @@ export default function LandingAstroSoma() {
           totalAnual: 'Se cobra $49.99/año',
           ahorro: 'Ahorra 54%',
           descomposicionDia: 'menos de $0.14 al día',
-          ctaLabel: 'Empezar mis 7 días gratis',
+          ctaLabel: CTA_LABEL,
           ctaHref: CTA_HREF,
           features: [
             'Escaneo somático ilimitado cada día',
@@ -124,7 +129,7 @@ export default function LandingAstroSoma() {
         mensual={{
           nombre: 'Mensual',
           precioMes: '$8.99',
-          ctaLabel: 'Elegir mensual',
+          ctaLabel: 'Descubrir mi zona de tensión (mensual)',
           ctaHref: CTA_HREF,
           features: [
             'Escaneo somático ilimitado cada día',
@@ -138,7 +143,7 @@ export default function LandingAstroSoma() {
       {/* 7. GARANTÍA */}
       <Garantia
         nombre="la Garantía del Primer Alivio"
-        condicionMarked="Si en 7 días el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], escribes un correo y te devolvemos todo. Sin preguntas."
+        condicionMarked="Si en 15 días el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], escribes un correo y te devolvemos todo. Sin preguntas."
         pisoLegal="Respaldada por la garantía Hotmart de 7 días"
       />
 
