@@ -18,7 +18,7 @@
 - Compilación: spring bounce 0.15 (suave, sin rebote juguetón) · duración base 320ms (ritmo de respiración, más lento que un app de productividad) · exclamaciones máx 1/pantalla · celebración nivel N1 (sutil — un fade cálido, no confetti) · radio tendencial 20px (suave, orgánico)
 
 ## Brand kit final
-- Fondo: `#100E0C` (modo oscuro — ritual nocturno, coherente con la escena de la 1AM/3AM del avatar) · Superficie: `#1A1714` · Hundido: `#0B0A08` · Texto 1º: `#F0EAE2` · Texto 2º: `#A0958A`
+- Fondo: `#211609` (café oscuro — ajustado a pedido del usuario, más cálido que negro puro; ritual nocturno, coherente con la escena de la 1AM/3AM del avatar) · Superficie: `#2E2013` · Hundido: `#160E05` · Texto 1º: `#F0EAE2` · Texto 2º: `#A9977F`
 - Acento: `#C8853D` (ámbar candela — tomado del banco 54 "Journaling/diario"; SOLO en CTAs, progreso y momentos de logro) · 2ª nota: `#8C4A3C` (burdeos — porqué: pedido explícito del usuario en la dirección "mística cálida"; se usa solo en el módulo de Duelo/Ruptura para diferenciar ese contexto emocional del resto de la app)
 - Semánticos: éxito `#7A9E6E` (verde salvia, no verde chillón) · error `#B85C4D` (terracota-rojo, coherente con la paleta) · aviso `#D4A24C`
 - Display: serif humanista cálida (ej. familia tipo Fraunces/Lora — se confirma candidata final en la sesión de código) pesos 400/600 · Body: sans humanista (ej. tipo Inter/Karla) pesos 400/500 · Escala: display 32px / title 22px / body 16px / label 13px
@@ -42,4 +42,4 @@
 - Registro anti-repetición: paleta ámbar-terracota-burdeos oscura + par serif humanista/sans humanista — vetados para el próximo proyecto del SO
 - Modo (claro/oscuro) DERIVADO por: naturaleza nocturna del ritual del avatar (crisis a las 3 AM, "ritual antes de dormir" tomado de Calm) — nunca asumido por defecto
 
-## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: pendiente — se presentó el tour de la Opción B (vista-previa-app.html) y se espera respuesta 1/2/3
+## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: pendiente — se ajustó el fondo de negro puro a café oscuro (`#211609`) a pedido del usuario; se re-generó el tour y se espera confirmación final 1/2/3
