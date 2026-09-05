@@ -6,7 +6,7 @@
 // loading "armando tu plan" (B) + resultado personalizado. Categoría bienestar/hábito → 4-8
 // pasos de alto rendimiento (02B).
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ChevronLeft, X, HeartCrack, Waves, CircleDashed, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles } from 'lucide-react';
 
@@ -19,15 +19,35 @@ type Respuestas = {
 
 const TOTAL_PREGUNTAS = 4;
 
-function BarraProgreso({ paso }: { paso: number }) {
-  const pct = Math.max(8, Math.round((paso / TOTAL_PREGUNTAS) * 100));
+/* Dispositivo ownable de FICHA-ARTE.md: fase lunar como indicador de progreso —
+   mismo disco-sombra-sobre-disco-iluminado de la landing (MensajeContraste.tsx),
+   aplicado aquí como avance del onboarding en vez de decoración aislada. */
+function LunaProgreso({ frac }: { frac: number }) {
+  const desplazamiento = Math.round(frac * 28);
   return (
-    <div className="h-[3px] w-full rounded-full bg-[color-mix(in_oklab,var(--text-tertiary)_18%,transparent)]">
-      <motion.div
-        className="h-full rounded-full bg-[var(--accent)]"
-        animate={{ width: `${pct}%` }}
+    <span className="relative block size-7 shrink-0 overflow-hidden rounded-full bg-[var(--accent)]">
+      <motion.span
+        className="absolute top-0 size-7 rounded-full bg-[var(--bg)]"
+        animate={{ left: desplazamiento }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       />
+    </span>
+  );
+}
+
+function BarraProgreso({ paso }: { paso: number }) {
+  const frac = Math.min(1, paso / TOTAL_PREGUNTAS);
+  const pct = Math.max(8, Math.round(frac * 100));
+  return (
+    <div className="flex flex-1 items-center gap-3">
+      <div className="h-[3px] flex-1 rounded-full bg-[color-mix(in_oklab,var(--text-tertiary)_18%,transparent)]">
+        <motion.div
+          className="h-full rounded-full bg-[var(--accent)]"
+          animate={{ width: `${pct}%` }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </div>
+      <LunaProgreso frac={frac} />
     </div>
   );
 }
@@ -44,13 +64,18 @@ function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
         <ChevronLeft size={22} aria-hidden="true" />
       </button>
       <BarraProgreso paso={paso} />
-      <a
-        href="/"
+      <button
+        type="button"
         aria-label="Salir del escaneo"
+        onClick={() => {
+          if (window.confirm('¿Salir ahora? Tus respuestas no se guardan.')) {
+            window.location.href = '/';
+          }
+        }}
         className="flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--text-secondary)] [touch-action:manipulation]"
       >
         <X size={20} aria-hidden="true" />
-      </a>
+      </button>
     </div>
   );
 }
@@ -95,7 +120,7 @@ function PantallaPregunta({
         animate={{ opacity: 1, x: 0 }}
         exit={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
         transition={{ duration: reduce ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-10 flex-1"
+        className="flex flex-1 flex-col justify-center pb-20"
       >
         <h1 className="text-balance text-[30px] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)] [font-family:var(--font-display)]">
           {pregunta}
@@ -236,7 +261,7 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
   const pasos = ['Leyendo tu carta natal...', 'Ubicando tu zona de tensión...', 'Armando tu ejercicio de 3 minutos...'];
   const [activo, setActivo] = useState(0);
 
-  useState(() => {
+  useEffect(() => {
     const t1 = setTimeout(() => setActivo(1), reduce ? 200 : 900);
     const t2 = setTimeout(() => setActivo(2), reduce ? 400 : 1800);
     const t3 = setTimeout(onListo, reduce ? 600 : 2700);
@@ -245,7 +270,8 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
       clearTimeout(t2);
       clearTimeout(t3);
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center px-5 text-center">
@@ -289,7 +315,7 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
         <div className="respira-marco relative mt-8 flex size-40 items-center justify-center">
           <svg width="160" height="160" viewBox="0 0 160 160" className="-rotate-90" role="img" aria-label="72 por ciento de tensión detectada">
             <circle cx="80" cy="80" r="70" fill="none" strokeWidth="10" stroke="color-mix(in oklab, var(--accent) 16%, transparent)" />
-            <circle
+            <motion.circle
               cx="80"
               cy="80"
               r="70"
@@ -298,7 +324,9 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
               strokeLinecap="round"
               stroke="var(--accent)"
               strokeDasharray={2 * Math.PI * 70}
-              strokeDashoffset={2 * Math.PI * 70 * (1 - 0.72)}
+              initial={{ strokeDashoffset: 2 * Math.PI * 70 }}
+              animate={{ strokeDashoffset: 2 * Math.PI * 70 * (1 - 0.72) }}
+              transition={{ duration: reduce ? 0 : 1.1, ease: [0.16, 1, 0.3, 1], delay: reduce ? 0 : 0.2 }}
             />
           </svg>
           <span className="absolute text-[40px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
