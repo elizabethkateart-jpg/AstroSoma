@@ -6,7 +6,7 @@
 // loading "armando tu plan" (B) + resultado personalizado. Categoría bienestar/hábito → 4-8
 // pasos de alto rendimiento (02B).
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ChevronLeft, X, HeartCrack, Waves, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -152,6 +152,7 @@ function PantallaPregunta({
   const [otraAbierta, setOtraAbierta] = useState(false);
   const [textoOtra, setTextoOtra] = useState('');
   const [hintOtra, setHintOtra] = useState(false);
+  const inputOtraRef = useRef<HTMLInputElement>(null);
 
   function elegir(valor: string) {
     setSeleccion(valor);
@@ -224,10 +225,12 @@ function PantallaPregunta({
                 onElegir(textoOtra.trim());
               } else {
                 setHintOtra(true);
+                inputOtraRef.current?.focus();
               }
             }}
           >
             <input
+              ref={inputOtraRef}
               autoFocus
               value={textoOtra}
               onChange={(e) => {
@@ -235,10 +238,14 @@ function PantallaPregunta({
                 if (hintOtra) setHintOtra(false);
               }}
               placeholder="Escribe con tus palabras..."
+              aria-describedby={hintOtra ? 'hint-otra-cosa' : undefined}
+              aria-invalid={hintOtra}
               className="h-14 w-full rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--text-tertiary)_30%,transparent)] bg-[var(--surface)] px-4 text-[16px] text-[var(--text-primary)] outline-none focus-visible:border-[var(--accent)]"
             />
             {hintOtra && (
-              <p className="mt-2 text-[13px] text-[var(--accent)]">Escribe algo para continuar</p>
+              <p id="hint-otra-cosa" role="alert" className="mt-2 text-[13px] text-[var(--accent)]">
+                Escribe algo para continuar
+              </p>
             )}
             <button
               type="submit"
@@ -296,7 +303,7 @@ function PantallaReconocimiento({
           initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: d(0.3) }}
-          className="mt-4 max-w-[320px] text-[16px] leading-relaxed text-[var(--text-secondary)]"
+          className="mt-4 max-w-[335px] text-[16px] leading-snug text-[var(--text-secondary)]"
         >
           {cuerpo}
         </motion.p>
@@ -325,9 +332,13 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
 
   useEffect(() => {
     if (error) return;
+    // TODO(Paso 6 — servicios externos): reemplazar por la llamada real que arma
+    // el escaneo; el catch de esa llamada es quien debe llamar a setError(true).
+    // El flag ?simular_error=1 deja probar la pantalla de error mientras tanto.
+    const falla = new URLSearchParams(window.location.search).get('simular_error') === '1';
     const t1 = setTimeout(() => setActivo(1), reduce ? 200 : 900);
     const t2 = setTimeout(() => setActivo(2), reduce ? 400 : 1800);
-    const t3 = setTimeout(onListo, reduce ? 600 : 2700);
+    const t3 = setTimeout(() => (falla ? setError(true) : onListo()), reduce ? 600 : 2700);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -554,8 +565,8 @@ export default function Onboarding() {
             titulo="Ese nudo no es casualidad"
             cuerpo={
               respuestas.situacion?.includes('ruptura')
-                ? 'No es falta de voluntad: es tu cuerpo acumulando lo que tu cabeza no suelta. El Escaneo Somático te muestra dónde y cómo soltarlo.'
-                : 'Esa tensión tiene un patrón. El Escaneo Somático te muestra dónde vive y cómo soltarla.'
+                ? 'Tu cuerpo guarda lo que tu cabeza no suelta. Aquí vas a soltarlo.'
+                : 'Esa tensión tiene un patrón. Hoy vas a soltarla.'
             }
             onContinuar={avanzar}
             onAtras={retroceder}
@@ -585,7 +596,7 @@ export default function Onboarding() {
             key="reco2"
             paso={4}
             titulo="Ya diste el paso que la mayoría evita"
-            cuerpo="Nombrar dónde te duele y qué quieres lograr es justo lo que otras apps nunca preguntan. Tu Escaneo Somático ya se está armando."
+            cuerpo="Nombrar tu dolor y tu meta es lo que otras apps nunca preguntan."
             onContinuar={avanzar}
             onAtras={retroceder}
           />
