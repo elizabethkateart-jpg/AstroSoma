@@ -42,15 +42,23 @@
 
 ## 5. LA APP POR DENTRO
 - tituloMarked: `Tu ritual de cada noche, [acento]ya decidido[/acento]`
-- Frames: Hoy (tu escaneo de hoy) · Onboarding (cómo te pregunta al empezar) ·
-  Mecanismo (tu ejercicio de 3 minutos) · Duelo (tu Programa de Ruptura día a día)
+- Frames: Hoy (tu escaneo de hoy) · Bienvenida (cómo te pregunta al empezar) ·
+  Mecanismo (tu ejercicio de 3 minutos) · Duelo (tu Programa de Ruptura día a día) ·
+  Plan (así eliges tu plan)
+- Visuales: mockups estáticos reales en `public/mockups/*.png` (generados desde el tour de
+  dirección de arte ya aprobado, `vista-previa-app.html`), con badge "Vista previa de diseño" en
+  el hero — no son screenshots de la app funcionando, son el mismo diseño ya aprobado por el
+  usuario en la Sesión de identidad visual. Se reemplazan por screenshots reales de la app cuando
+  exista (regla 32).
 
 ## 6. OFERTA
 - tituloMarked: `Empieza gratis. Sigue por [acento]$0.30 al día[/acento]` (7 palabras, presupuesto 8)
 - trialDias: 7 — traza a FICHA-MERCADO §4
 - Anual $49.99/año ($4.17/mes) — MÁS POPULAR · Mensual $8.99/mes — traza a FICHA-MERCADO §1
-- ctaLabel unificado con el verbo del hero en ambos planes (anual = CTA_LABEL; mensual = misma
-  promesa + aclaración de plan) — evita diluir la única acción primaria (hallazgo del revisor)
+- ctaLabel idéntico a CTA_LABEL en ambos planes (anual y mensual) — la diferenciación es solo
+  visual (badge "MÁS POPULAR"), nunca de texto — evita diluir la única acción primaria
+- Nota redundante del stack ("Hoy: $4.17/mes...") eliminada — ese dato ya lo muestra la card Anual
+  inmediatamente debajo (hallazgo del revisor, 2ª ronda)
 
 ## 6bis. LA DIFERENCIA (añadido del proyecto, no es una de las 10 secciones canónicas)
 - Componente `MensajeContraste.tsx`, entre "La app por dentro" y "Oferta"

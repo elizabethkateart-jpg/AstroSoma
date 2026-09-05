@@ -73,13 +73,24 @@ solo evitan links rotos — no son la construcción real de esas etapas.
   real al conectar Hotmart (Paso 6); el copy de la landing ya usa 15 días.
 - Footer legal: soporteEmail y enlaces son placeholder hasta definir dominio real y pasar por la
   skill `legal`.
-- `[veredicto:landing]` EN CURSO — 1ª revisión del revisor-visual dio NO LISTA (Usabilidad 32/40,
-  Craft 13/20, Copy 18/20); tras corregir los hallazgos reales (ver abajo) se relanzó una 2ª
-  revisión con el screenshot correcto, todavía sin resultado al cerrar esta sesión. `ESTADO.md` NO
-  declara la landing como "lista" hasta que `docs/revisiones/landing-veredicto.md` diga
-  "Veredicto: LISTA" con Usabilidad ≥36/40 y Craft ≥16/20. Siguiente sesión: leer ese archivo antes
-  de avanzar; si sigue NO LISTA, corregir lo que falte y relanzar de nuevo.
-- Detalle de la 1ª revisión: NO LISTA (Usabilidad 32/40, Craft 13/20, Copy 18/20). De los 5
+- `[veredicto:landing]` EN CURSO — 2ª revisión dio NO LISTA otra vez (Usabilidad 32/40, Craft
+  14/20, Copy 18/20) por 5 hallazgos, todos corregidos en esta 3ª ronda:
+  1. "Onboarding" en inglés crudo en el placeholder → ahora dice "Bienvenida".
+  2. Identidad ownable (grano de papel, fase lunar) ausente → agregado grano sutil global
+     (`app/globals.css`, filtro SVG de ruido, opacidad 0.05) + motivo de fase lunar de 8 círculos
+     en `MensajeContraste.tsx`.
+  3. Los 5 visuales seguían siendo placeholders grises → se generaron mockups estáticos reales
+     (`public/mockups/*.png`, `scripts/dev-tools/generar-mockups-tour.mjs`) a partir del tour de
+     dirección de arte YA APROBADO (`vista-previa-app.html`), con badge "Vista previa de diseño"
+     — no pretenden ser screenshots de una app funcionando, son el mismo diseño ya validado.
+  4. CTA del plan Mensual seguía con texto distinto → ahora usa el mismo `CTA_LABEL` exacto que
+     el resto de la página.
+  5. Nota redundante bajo el stack de Oferta → eliminada.
+  Relanzada una 3ª revisión con el screenshot corregido (incluye fix de un bug de captura:
+  las imágenes del carrusel usan `loading="lazy"` y no cargaban en un screenshot de página
+  completa sin forzar su carga primero — ver `scripts/dev-tools/capturar-landing-375.mjs`).
+  `ESTADO.md` NO declara la landing como "lista" hasta que `docs/revisiones/landing-veredicto.md`
+  diga "Veredicto: LISTA" con Usabilidad ≥36/40 y Craft ≥16/20. De los 5
   defectos: el "texto cortado en el borde" resultó ser un bug de la herramienta de captura (Chrome
   headless sin emulación móvil renderizaba con overflow falso — confirmado con
   `scrollWidth === innerWidth === 375` en emulación móvil real vía Puppeteer); se corrigió el

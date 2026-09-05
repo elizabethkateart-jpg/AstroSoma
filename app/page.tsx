@@ -33,7 +33,18 @@ export default function LandingAstroSoma() {
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}
         socialProof={<span>Prueba gratis 7 días · cancela cuando quieras</span>}
-        visualPlaceholderSugerencia="captura del escaneo mostrando 'Pecho' como zona de tensión de hoy"
+        visual={
+          <div className="relative">
+            <img
+              src="/mockups/hoy.png"
+              alt="Vista previa de diseño de la pantalla principal de AstroSoma"
+              className="h-full w-full object-cover"
+            />
+            <span className="absolute left-3 top-3 rounded-full bg-[color-mix(in_oklab,var(--bg)_70%,transparent)] px-3 py-1 text-xs font-semibold text-[var(--text-primary)]">
+              Vista previa de diseño
+            </span>
+          </div>
+        }
       />
 
       {/* 2. PROBLEMA */}
@@ -84,10 +95,11 @@ export default function LandingAstroSoma() {
       <AppPorDentro
         tituloMarked="Tu ritual de cada noche, [acento]ya decidido[/acento]"
         frames={[
-          { label: 'Tu escaneo de hoy', nombrePantalla: 'Hoy' },
-          { label: 'Cómo te pregunta al empezar', nombrePantalla: 'Onboarding' },
-          { label: 'Tu ejercicio de 3 minutos', nombrePantalla: 'Mecanismo' },
-          { label: 'Tu Programa de Ruptura, día a día', nombrePantalla: 'Duelo' },
+          { label: 'Tu escaneo de hoy', nombrePantalla: 'Hoy', src: '/mockups/hoy.png', alt: 'Vista previa de diseño: pantalla principal con tu zona de tensión de hoy' },
+          { label: 'Cómo te pregunta al empezar', nombrePantalla: 'Bienvenida', src: '/mockups/onboarding.png', alt: 'Vista previa de diseño: pregunta de bienvenida del onboarding' },
+          { label: 'Tu ejercicio de 3 minutos', nombrePantalla: 'Mecanismo', src: '/mockups/mecanismo.png', alt: 'Vista previa de diseño: ejercicio de respiración en curso' },
+          { label: 'Tu Programa de Ruptura, día a día', nombrePantalla: 'Duelo', src: '/mockups/duelo.png', alt: 'Vista previa de diseño: programa de ruptura de 30 días' },
+          { label: 'Así eliges tu plan', nombrePantalla: 'Plan', src: '/mockups/paywall.png', alt: 'Vista previa de diseño: pantalla de planes y precio' },
         ]}
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}
@@ -108,7 +120,6 @@ export default function LandingAstroSoma() {
             { resultado: 'Diario privado cifrado', valor: '$19' },
           ],
           totalTachado: '$155',
-          nota: 'Hoy: $4.17/mes (se cobra $49.99/año)',
         }}
         anual={{
           nombre: 'Anual',
@@ -129,7 +140,7 @@ export default function LandingAstroSoma() {
         mensual={{
           nombre: 'Mensual',
           precioMes: '$8.99',
-          ctaLabel: 'Descubrir mi zona de tensión (mensual)',
+          ctaLabel: CTA_LABEL,
           ctaHref: CTA_HREF,
           features: [
             'Escaneo somático ilimitado cada día',
