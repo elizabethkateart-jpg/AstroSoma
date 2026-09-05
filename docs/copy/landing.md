@@ -69,7 +69,7 @@
 
 ## 7. GARANTÍA
 - nombre: `la Garantía del Primer Alivio`
-- condicionMarked: `7 días de prueba gratis y, si después de tu primer cobro el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], 15 días más para pedir tu reembolso completo. Sin preguntas.`
+- condicionMarked: `7 días de prueba gratis y, si tras tu cobro el Escaneo Somático no te da [b]alivio real[/b], 15 días para tu reembolso. Sin preguntas.` (recortado a 25 palabras, presupuesto 30)
   — Prueba 7 días / Garantía 15 días (FICHA-MERCADO §4, regla dura garantía > prueba). Frase
   unificada en Garantía, FAQ ítem 5 y el recap del CTA final tras hallazgo del revisor (3 números
   sueltos sin relación explicada = confusión en el momento de mayor fricción de compra). El plazo

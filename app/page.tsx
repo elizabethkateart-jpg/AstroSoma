@@ -62,7 +62,7 @@ export default function LandingAstroSoma() {
       <Agitacion
         frases={[
           'Cada noche que pasa sin liberar esa tensión, [b]se acumula más estrés en tu cuerpo[/b].',
-          'En un año, ese nudo sin resolver son [acento]365 noches más dándole vueltas y mensajes que no quisiste mandar[/acento].',
+          'En un año, ese nudo sin resolver son [acento]365 noches dándole vueltas y mensajes que no quisiste mandar[/acento].',
           'Otra app de horóscopos no lo arregla: [b]más miedo no es alivio[/b].',
         ]}
         contraste={{
@@ -153,7 +153,7 @@ export default function LandingAstroSoma() {
       {/* 7. GARANTÍA */}
       <Garantia
         nombre="la Garantía del Primer Alivio"
-        condicionMarked="7 días de prueba gratis y, si después de tu primer cobro el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], 15 días más para pedir tu reembolso completo. Sin preguntas."
+        condicionMarked="7 días de prueba gratis y, si tras tu cobro el Escaneo Somático no te da [b]alivio real[/b], 15 días para tu reembolso. Sin preguntas."
         pisoLegal="Respaldada por la política de reembolsos de Hotmart"
       />
 
