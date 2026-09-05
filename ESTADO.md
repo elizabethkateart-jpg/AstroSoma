@@ -23,6 +23,10 @@ re-valida. Ver `FICHA-AVATAR.md` y `FICHA-MERCADO.md` para el detalle completo.
   restringidos + disclaimer de autocuidado, no tratamiento); posible cancelación post-duelo
   (transición del módulo de duelo a hábito diario de salud somática); costo de IA (límite de 3
   registros/día en vez de chat abierto).
+- **App modelo elegida:** Co–Star Personalized Astrology (revenue verificado por 2 señales:
+  Sensor Tower ~$400K/mes + rank #33 top-grossing Lifestyle US). Se modela su mecanismo (carta
+  natal + tránsito diario como gancho de retorno) y se corrige su queja #1 (tono fatalista/
+  ansiógeno) con el ángulo somático de AstroSoma. Ver `FICHA-MODELO.md`.
 
 ## Paso actual
 Paso 0-1 completos: Sistema Operativo instalado, git activado, idea validada y cargada,
