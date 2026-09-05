@@ -151,6 +151,7 @@ function PantallaPregunta({
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [otraAbierta, setOtraAbierta] = useState(false);
   const [textoOtra, setTextoOtra] = useState('');
+  const [hintOtra, setHintOtra] = useState(false);
 
   function elegir(valor: string) {
     setSeleccion(valor);
@@ -165,7 +166,7 @@ function PantallaPregunta({
         animate={{ opacity: 1, x: 0 }}
         exit={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
         transition={{ duration: reduce ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-1 flex-col justify-start pt-[15vh]"
+        className="flex flex-1 flex-col justify-start pt-[8vh]"
       >
         <h1 className="text-balance text-[30px] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)] [font-family:var(--font-display)]">
           {pregunta}
@@ -215,23 +216,37 @@ function PantallaPregunta({
             )}
           </div>
         ) : (
-          <div className="mt-8">
+          <form
+            className="mt-8"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (textoOtra.trim()) {
+                onElegir(textoOtra.trim());
+              } else {
+                setHintOtra(true);
+              }
+            }}
+          >
             <input
               autoFocus
               value={textoOtra}
-              onChange={(e) => setTextoOtra(e.target.value)}
+              onChange={(e) => {
+                setTextoOtra(e.target.value);
+                if (hintOtra) setHintOtra(false);
+              }}
               placeholder="Escribe con tus palabras..."
               className="h-14 w-full rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--text-tertiary)_30%,transparent)] bg-[var(--surface)] px-4 text-[16px] text-[var(--text-primary)] outline-none focus-visible:border-[var(--accent)]"
             />
+            {hintOtra && (
+              <p className="mt-2 text-[13px] text-[var(--accent)]">Escribe algo para continuar</p>
+            )}
             <button
-              type="button"
-              disabled={!textoOtra.trim()}
-              onClick={() => onElegir(textoOtra.trim())}
-              className="mt-4 flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] disabled:opacity-50 [touch-action:manipulation]"
+              type="submit"
+              className="mt-4 flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
             >
               Continuar
             </button>
-          </div>
+          </form>
         )}
       </motion.div>
     </div>
@@ -259,7 +274,7 @@ function PantallaReconocimiento({
       <motion.div
         initial={{ opacity: reduce ? 1 : 0 }}
         animate={{ opacity: 1 }}
-        className="flex flex-1 flex-col items-center justify-start pt-[12vh] text-center"
+        className="mt-[8vh] flex flex-col items-center text-center"
       >
         <motion.span
           initial={reduce ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
@@ -293,10 +308,11 @@ function PantallaReconocimiento({
         type="button"
         whileTap={{ scale: 0.97 }}
         onClick={onContinuar}
-        className="mb-[max(24px,env(safe-area-inset-bottom))] flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
+        className="mt-10 flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
       >
         Continuar
       </motion.button>
+      <div className="flex-1" />
     </div>
   );
 }
@@ -305,8 +321,10 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
   const reduce = useReducedMotion();
   const pasos = ['Leyendo tu carta natal...', 'Ubicando tu zona de tensión...', 'Armando tu ejercicio de 3 minutos...'];
   const [activo, setActivo] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (error) return;
     const t1 = setTimeout(() => setActivo(1), reduce ? 200 : 900);
     const t2 = setTimeout(() => setActivo(2), reduce ? 400 : 1800);
     const t3 = setTimeout(onListo, reduce ? 600 : 2700);
@@ -316,7 +334,30 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
       clearTimeout(t3);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error]);
+
+  if (error) {
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center px-5 text-center">
+        <h1 className="text-[20px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
+          No pudimos armar tu escaneo
+        </h1>
+        <p className="mt-2 max-w-[280px] text-[14px] text-[var(--text-secondary)]">
+          Revisa tu conexión e intenta de nuevo. Tus respuestas siguen guardadas.
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            setActivo(0);
+            setError(false);
+          }}
+          className="mt-6 flex h-[52px] items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] px-8 text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
+        >
+          Reintentar
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center px-5 text-center">
@@ -370,7 +411,7 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
       <motion.div
         initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-1 flex-col items-center text-center"
+        className="flex flex-col items-center text-center"
       >
         <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
           Tu escaneo de hoy
@@ -417,10 +458,11 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
         transition={{ delay: reduce ? 0 : 0.2 }}
         whileTap={{ scale: 0.97 }}
         href="/paywall"
-        className="mb-[max(24px,env(safe-area-inset-bottom))] flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
+        className="mt-10 flex h-[52px] w-full items-center justify-center rounded-[var(--radius-button)] bg-[var(--accent)] text-[16px] font-semibold text-[var(--bg)] [touch-action:manipulation]"
       >
         Ver mi plan de liberación
       </motion.a>
+      <div className="flex-1" />
     </div>
   );
 }
@@ -510,11 +552,11 @@ export default function Onboarding() {
             key="reco1"
             paso={3}
             titulo="Ese nudo no es casualidad"
-            cuerpo={`No es falta de voluntad: es tu cuerpo acumulando lo que tu cabeza no suelta. ${
+            cuerpo={
               respuestas.situacion?.includes('ruptura')
-                ? 'Cada vez que revisas su perfil, tu sistema nervioso solo busca alivio de esa tensión.'
-                : 'Esa tensión tiene un patrón, y hoy vamos a mostrarte dónde vive exactamente.'
-            } El Escaneo Somático te muestra ese punto exacto y te da el ejercicio para soltarlo.`}
+                ? 'No es falta de voluntad: es tu cuerpo acumulando lo que tu cabeza no suelta. El Escaneo Somático te muestra dónde y cómo soltarlo.'
+                : 'Esa tensión tiene un patrón. El Escaneo Somático te muestra dónde vive y cómo soltarla.'
+            }
             onContinuar={avanzar}
             onAtras={retroceder}
           />
@@ -543,7 +585,7 @@ export default function Onboarding() {
             key="reco2"
             paso={4}
             titulo="Ya diste el paso que la mayoría evita"
-            cuerpo="Nombrar dónde te duele y qué quieres lograr es exactamente lo que la mayoría de las apps de astrología nunca te preguntan. Tu Escaneo Somático se construye ahora mismo con eso."
+            cuerpo="Nombrar dónde te duele y qué quieres lograr es justo lo que otras apps nunca preguntan. Tu Escaneo Somático ya se está armando."
             onContinuar={avanzar}
             onAtras={retroceder}
           />
