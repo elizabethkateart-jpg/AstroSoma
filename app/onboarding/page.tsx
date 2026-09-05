@@ -8,7 +8,8 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { ChevronLeft, X, HeartCrack, Waves, CircleDashed, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles } from 'lucide-react';
+import { ChevronLeft, X, HeartCrack, Waves, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type Respuestas = {
   situacion?: string;
@@ -53,6 +54,7 @@ function BarraProgreso({ paso }: { paso: number }) {
 }
 
 function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
+  const router = useRouter();
   return (
     <div className="flex items-center gap-3 pt-4">
       <button
@@ -69,7 +71,7 @@ function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
         aria-label="Salir del escaneo"
         onClick={() => {
           if (window.confirm('¿Salir ahora? Tus respuestas no se guardan.')) {
-            window.location.href = '/';
+            router.push('/');
           }
         }}
         className="flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--text-secondary)] [touch-action:manipulation]"
@@ -120,7 +122,7 @@ function PantallaPregunta({
         animate={{ opacity: 1, x: 0 }}
         exit={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
         transition={{ duration: reduce ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-1 flex-col justify-center pb-20"
+        className="flex flex-1 flex-col justify-center"
       >
         <h1 className="text-balance text-[30px] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)] [font-family:var(--font-display)]">
           {pregunta}
@@ -214,7 +216,7 @@ function PantallaReconocimiento({
       <motion.div
         initial={{ opacity: reduce ? 1 : 0 }}
         animate={{ opacity: 1 }}
-        className="mt-16 flex flex-1 flex-col items-center text-center"
+        className="flex flex-1 flex-col items-center justify-center text-center"
       >
         <motion.span
           initial={reduce ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
@@ -388,7 +390,7 @@ export default function Onboarding() {
         {paso === 'pregunta-situacion' && (
           <PantallaPregunta
             key="situacion"
-            paso={1}
+            paso={0}
             pregunta="¿Qué está pasando en tu vida ahora mismo?"
             opciones={[
               { icon: HeartCrack, label: 'Estoy pasando una ruptura o pérdida' },
@@ -405,7 +407,7 @@ export default function Onboarding() {
         {paso === 'pregunta-zona' && (
           <PantallaPregunta
             key="zona"
-            paso={2}
+            paso={1}
             pregunta="¿Dónde sientes la tensión ahora mismo?"
             subcopy="Esto define tu primer ejercicio de hoy"
             opciones={[
@@ -424,7 +426,7 @@ export default function Onboarding() {
         {paso === 'pregunta-momento' && (
           <PantallaPregunta
             key="momento"
-            paso={3}
+            paso={2}
             pregunta="¿Cuándo te pega más fuerte?"
             opciones={[
               { icon: Sunrise, label: 'Al despertar' },
@@ -456,7 +458,7 @@ export default function Onboarding() {
         {paso === 'pregunta-meta' && (
           <PantallaPregunta
             key="meta"
-            paso={4}
+            paso={3}
             pregunta="¿Qué te gustaría lograr en 30 días?"
             opciones={[
               { icon: HeartCrack, label: 'Dejar de contactar a mi ex' },
