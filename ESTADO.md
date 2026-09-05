@@ -27,13 +27,12 @@ re-valida. Ver `FICHA-AVATAR.md` y `FICHA-MERCADO.md` para el detalle completo.
   Sensor Tower ~$400K/mes + rank #33 top-grossing Lifestyle US). Se modela su mecanismo (carta
   natal + tránsito diario como gancho de retorno) y se corrige su queja #1 (tono fatalista/
   ansiógeno) con el ángulo somático de AstroSoma. Ver `FICHA-MODELO.md`.
-- **Dirección de arte:** el usuario eligió "Mística cálida". Se corrió el protocolo A/B/C completo
-  en `direcciones-abc.html` (3 composiciones reales, no solo texto) + el tour en
-  `vista-previa-app.html` (5 pantallas). Screenshots en `docs/revisiones/`. Se avanzó con la
-  Opción B "Ritual Nocturno" (oscura, ámbar/burdeos, anillo de progreso) por ser la más coherente
-  con el momento de mayor dolor del avatar (3 AM) — VER FICHA-ARTE.md §Trazabilidad. Pendiente:
-  respuesta del usuario al tour (1 me encanta / 2 ajustar / 3 repensar) para cerrar la ficha
-  como cosa juzgada.
+- **Dirección de arte — CERRADA (cosa juzgada):** "Mística cálida" → Opción B "Ritual Nocturno"
+  del protocolo A/B/C (`direcciones-abc.html` + tour en `vista-previa-app.html`, screenshots en
+  `docs/revisiones/`). Ajustada 2 veces a pedido del usuario: fondo de negro puro a café oscuro
+  (`#211609`) y acento ámbar aclarado a beige-dorado (`#C4A177`). Aprobada ("me encanta") el
+  2026-09-04. `FICHA-ARTE.md` es la fuente de verdad de tokens — se vuelca a `globals.css` cuando
+  arranque el código real.
 
 ## Paso actual
 Paso 0-1 completos: Sistema Operativo instalado, git activado, idea validada y cargada,
@@ -64,6 +63,6 @@ Landing, onboarding, paywall, login, app interna, servicios externos. Todo pendi
   los primeros usuarios reales cuando existan.
 
 ## Siguiente paso exacto
-Preguntar al usuario su preferencia de dirección visual (única decisión que requiere su gusto) y
-luego construir la página de ventas (Paso 1 de la Secuencia Maestra), siguiendo la estructura
-canónica de `19-PAGINA-DE-VENTAS.md` con el copy derivado de `FICHA-AVATAR.md`.
+Construir la página de ventas (Paso 1 de la Secuencia Maestra), siguiendo la estructura canónica
+de `19-PAGINA-DE-VENTAS.md` con el copy derivado de `FICHA-AVATAR.md` y los tokens ya cerrados de
+`FICHA-ARTE.md` (Opción B, café oscuro + beige-dorado).

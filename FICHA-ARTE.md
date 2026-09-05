@@ -42,4 +42,4 @@
 - Registro anti-repetición: paleta ámbar-terracota-burdeos oscura + par serif humanista/sans humanista — vetados para el próximo proyecto del SO
 - Modo (claro/oscuro) DERIVADO por: naturaleza nocturna del ritual del avatar (crisis a las 3 AM, "ritual antes de dormir" tomado de Calm) — nunca asumido por defecto
 
-## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: pendiente — se ajustó el fondo de negro puro a café oscuro (`#211609`) a pedido del usuario; se re-generó el tour y se espera confirmación final 1/2/3
+## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: SÍ — tour confirmado ("me encanta") tras 2 ajustes (fondo a café oscuro `#211609`, acento aclarado a beige-dorado `#C4A177`). COSA JUZGADA: no se re-decide a mitad de proyecto.
