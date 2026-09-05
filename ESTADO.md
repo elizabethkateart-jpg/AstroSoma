@@ -35,34 +35,48 @@ re-valida. Ver `FICHA-AVATAR.md` y `FICHA-MERCADO.md` para el detalle completo.
   arranque el código real.
 
 ## Paso actual
-Paso 0-1 completos: Sistema Operativo instalado, git activado, idea validada y cargada,
-`FICHA-AVATAR.md` y `FICHA-MERCADO.md` completas (Sesión 1).
+Paso 1 (Landing) construida y en verificación. Stack: Next.js 16 App Router + TypeScript +
+Tailwind v4 + motion + lucide-react (decidido por el agente — "duda → Next.js" del 51, ya que
+AstroSoma combina landing/SEO con la app). Kit canónico de `plantillas-codigo/landing/` copiado a
+`components/landing/`, tematizado con `FICHA-ARTE.md`, copy en `docs/copy/landing.md` trazado a
+`FICHA-AVATAR.md`. Mecanismo bautizado: **el Escaneo Somático**.
 
 ## Pantallas creadas
-Ninguna todavía.
+- `/` — Landing de ventas (10 secciones canónicas completas: Hero, Problema, Agitación, Solución,
+  App por dentro, Oferta, Garantía, FAQ, CTA final, Footer legal). `app/page.tsx`.
+- Placeholders creados para que ningún link rompa (contenido real pendiente en su etapa):
+  `/onboarding`, `/entrar`, `/privacidad`, `/terminos`, `/reembolsos`, `/aviso-ia`.
 
 ## Protagonista de cada pantalla
-N/A — no se ha llegado a diseño de pantallas.
+- Landing (`/`): protagonista = la promesa de alivio físico en 3 minutos (Escaneo Somático);
+  acción primaria = CTA "Descubrir mi zona de tensión gratis" → `/onboarding`.
 
 ## Acción primaria de cada pantalla
-N/A
+- Landing: CTA repetido en hero/mid-page/oferta/CTA final/sticky mobile, todos al mismo destino
+  `/onboarding` (Modelo 2, onboarding-first, de `02C`).
 
 ## Qué NO se construyó aún
-Landing, onboarding, paywall, login, app interna, servicios externos. Todo pendiente, en ese orden
-(regla de la Secuencia Maestra — no se salta al dashboard).
+Onboarding real, paywall, login, app interna, servicios externos. Los placeholders de esas rutas
+solo evitan links rotos — no son la construcción real de esas etapas.
 
 ## Riesgos/pendientes
 - `FICHA-MERCADO.md` tiene varios campos "NO ENCONTRADO" (medios de pago LATAM, conversión típica
   del nicho, plazos exactos de garantía de Hotmart) — se completan al conectar Hotmart real (Paso 6).
-- Falta decidir dirección de arte / referencia visual (pregunta pendiente al usuario).
-- Falta decidir framework técnico (Vite vs Next) — se decide antes de crear la landing.
 - El VoC de la ficha de avatar tiene solo 5 frases literales con URL propia (todas en inglés, de
   Reddit sobre Co-Star/The Pattern); el resto de dolores/deseos en español son inferencias de
-  avatar bien fundamentadas pero no citas textuales con fuente propia. Válido para avanzar por
-  decisión explícita de aceptar la idea ya validada, pero conviene reforzar con VoC en español de
-  los primeros usuarios reales cuando existan.
+  avatar bien fundamentadas pero no citas textuales con fuente propia.
+- Visuales del Hero y de "La app por dentro" son placeholders honestos (cámara + sugerencia de
+  captura) — se reemplazan por screenshots reales cuando exista la app interna con seed de datos
+  (regla 32, "la app nunca se enseña vacía").
+- Garantía: la condición dice "7 días" pero `FICHA-MERCADO §4` todavía no tiene el plazo de
+  garantía real verificado en Hotmart (debe ser MAYOR a los 7 días de prueba) — pendiente de
+  confirmar al conectar Hotmart (Paso 6), anotado también en `docs/copy/landing.md`.
+- Footer legal: soporteEmail y enlaces son placeholder hasta definir dominio real y pasar por la
+  skill `legal`.
+- Revisor visual independiente lanzado (rúbricas /40 usabilidad, /20 craft, /20 copy) — resultado
+  pendiente de esta sesión.
 
 ## Siguiente paso exacto
-Construir la página de ventas (Paso 1 de la Secuencia Maestra), siguiendo la estructura canónica
-de `19-PAGINA-DE-VENTAS.md` con el copy derivado de `FICHA-AVATAR.md` y los tokens ya cerrados de
-`FICHA-ARTE.md` (Opción B, café oscuro + beige-dorado).
+Recibir el veredicto del revisor visual sobre la landing, corregir lo que marque como bloqueante,
+y presentar el Reporte de Puerta de la etapa Landing al usuario para su OK antes de pasar a
+Onboarding (Paso 2 de la Secuencia Maestra).
