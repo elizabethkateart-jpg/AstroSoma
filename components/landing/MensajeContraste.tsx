@@ -8,9 +8,10 @@
 import { motion } from 'motion/react';
 import { Hairline, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
 
-/* Dispositivo ownable de FICHA-ARTE.md: fase lunar como motivo de progreso —
-   8 fases, la mitad ya "llena" (acento), coherente con el indicador de avance
-   del Programa de Ruptura (día 12/30) que usa la misma app. */
+/* Dispositivo ownable de FICHA-ARTE.md: fase lunar como firma visual de marca —
+   8 fases, de creciente a llena y de vuelta. Motivo decorativo propio de AstroSoma
+   (astrología + ciclos), independiente del indicador lineal que usa la pantalla
+   de Duelo dentro de la app. */
 function FaseLunar() {
   const fases = [0.02, 0.2, 0.45, 0.7, 0.9, 1, 0.7, 0.4];
   return (

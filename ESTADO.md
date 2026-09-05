@@ -89,8 +89,25 @@ solo evitan links rotos — no son la construcción real de esas etapas.
   Relanzada una 3ª revisión con el screenshot corregido (incluye fix de un bug de captura:
   las imágenes del carrusel usan `loading="lazy"` y no cargaban en un screenshot de página
   completa sin forzar su carga primero — ver `scripts/dev-tools/capturar-landing-375.mjs`).
-  `ESTADO.md` NO declara la landing como "lista" hasta que `docs/revisiones/landing-veredicto.md`
-  diga "Veredicto: LISTA" con Usabilidad ≥36/40 y Craft ≥16/20. De los 5
+  3ª revisión: NO LISTA otra vez pero subiendo (Usabilidad 34/40, Craft 14/20) — confirmó los 5
+  fixes anteriores y encontró 5 nuevos, todos corregidos en esta 4ª ronda:
+  1. Motion signature de marca ("el Escaneo Somático respira") no existía en ningún componente →
+     agregada animación `respirar` (opacity+scale, 4s, ease-in-out, respeta reduced-motion) en
+     `app/globals.css`, aplicada al marco del hero.
+  2. Grano de papel imperceptible → BUG real encontrado al depurar: el `mix-blend-mode` estaba en
+     un pseudo-elemento DEBAJO del contenido en el z-index (no arriba), así que no se mezclaba con
+     nada visible — se movió a `body::after` con z-index alto (999) para que blend sí incluya el
+     contenido, y se subió opacidad a 0.3 tras verificar visualmente con capturas de depuración
+     (0.05-0.18 no se percibían ni siquiera renderizando correctamente).
+  3. El motivo de fase lunar se presentaba en el código como reflejo del indicador del módulo de
+     Duelo, pero ese mockup usa una barra lineal → se corrigió el comentario: la fase lunar es una
+     firma de marca propia, independiente del indicador interno.
+  4. Sin `:focus-visible` en toda la landing → agregado global (outline 2px acento).
+  5. Título de Oferta ("$0.30 al día") no coincidía con ninguna card visible → alineado a "$0.14
+     al día" (el dato real del plan Anual recomendado).
+  Relanzada una 4ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
+  `docs/revisiones/landing-veredicto.md` diga "Veredicto: LISTA" con Usabilidad ≥36/40 y
+  Craft ≥16/20. De los 5
   defectos: el "texto cortado en el borde" resultó ser un bug de la herramienta de captura (Chrome
   headless sin emulación móvil renderizaba con overflow falso — confirmado con
   `scrollWidth === innerWidth === 375` en emulación móvil real vía Puppeteer); se corrigió el

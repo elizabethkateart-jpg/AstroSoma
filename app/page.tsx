@@ -34,7 +34,7 @@ export default function LandingAstroSoma() {
         ctaHref={CTA_HREF}
         socialProof={<span>Prueba gratis 7 días · cancela cuando quieras</span>}
         visual={
-          <div className="relative">
+          <div className="respira-marco relative">
             <img
               src="/mockups/hoy.png"
               alt="Vista previa de diseño de la pantalla principal de AstroSoma"
@@ -111,7 +111,7 @@ export default function LandingAstroSoma() {
 
       {/* 6. OFERTA */}
       <Oferta
-        tituloMarked="Empieza gratis. Sigue por [acento]$0.30 al día[/acento]"
+        tituloMarked="Empieza gratis. Sigue por [acento]$0.14 al día[/acento]"
         trialDias={7}
         stack={{
           lineas: [
