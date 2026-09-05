@@ -59,7 +59,7 @@ AstroSoma combina landing/SEO con la app). Kit canónico de `plantillas-codigo/l
 Onboarding real, paywall, login, app interna, servicios externos. Los placeholders de esas rutas
 solo evitan links rotos — no son la construcción real de esas etapas.
 
-## Riesgos/pendientes
+## Problemas conocidos
 - `FICHA-MERCADO.md` tiene varios campos "NO ENCONTRADO" (medios de pago LATAM, conversión típica
   del nicho, plazos exactos de garantía de Hotmart) — se completan al conectar Hotmart real (Paso 6).
 - El VoC de la ficha de avatar tiene solo 5 frases literales con URL propia (todas en inglés, de
