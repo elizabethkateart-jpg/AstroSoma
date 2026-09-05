@@ -19,7 +19,7 @@
 :root {
   /* ── SUPERFICIES (3 niveles: base / elevada / hundida) — FICHA-ARTE.md AstroSoma, Opción B "Ritual Nocturno" ── */
   --bg: #211609;              /* café oscuro (ajustado de negro puro a pedido del usuario) */
-  --surface: #2e2013;         /* superficie elevada — cards */
+  --surface: #392616;         /* superficie elevada — cards (contraste subido tras hallazgo del revisor) */
   --surface-2: #160e05;       /* hundido */
 
   /* ── TEXTO ── */

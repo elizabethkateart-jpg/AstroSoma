@@ -13,23 +13,30 @@ import { Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
    8 fases, de creciente a llena y de vuelta. Motivo decorativo propio de AstroSoma
    (astrología + ciclos), independiente del indicador lineal que usa la pantalla
    de Duelo dentro de la app. */
+/* Fase lunar en CSS puro con dos círculos superpuestos (técnica de eclipse):
+   un disco "sombra" (--surface-2) se desliza sobre el disco iluminado (--accent),
+   igual que el terminador real de la luna — no un gráfico de pastel. */
 function FaseLunar() {
-  // Fase lunar en CSS puro: conic-gradient que "llena" cada círculo según su
-  // iluminación — se lee de un vistazo como una fase creciente/menguante.
   const fases = [0.06, 0.25, 0.45, 0.7, 0.9, 1, 0.75, 0.35];
   const llena = 5;
+  const diametro = 20;
   return (
     <div className="mb-5 flex items-center justify-center gap-3" aria-hidden="true">
-      {fases.map((f, i) => (
-        <span
-          key={i}
-          className={`size-5 rounded-full border border-[color-mix(in_oklab,var(--accent)_45%,transparent)] ${i === llena ? 'respira-marco' : ''}`}
-          style={{
-            background: `conic-gradient(var(--accent) ${f * 360}deg, var(--surface-2) ${f * 360}deg)`,
-            boxShadow: i === llena ? '0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)' : undefined,
-          }}
-        />
-      ))}
+      {fases.map((f, i) => {
+        const desplazamiento = Math.round(f * diametro);
+        return (
+          <span
+            key={i}
+            className={`relative block size-5 overflow-hidden rounded-full bg-[var(--accent)] ${i === llena ? 'respira-marco' : ''}`}
+            style={{ boxShadow: i === llena ? '0 0 10px color-mix(in oklab, var(--accent) 60%, transparent)' : undefined }}
+          >
+            <span
+              className="absolute top-0 size-5 rounded-full bg-[var(--surface-2)]"
+              style={{ left: `${desplazamiento}px` }}
+            />
+          </span>
+        );
+      })}
     </div>
   );
 }

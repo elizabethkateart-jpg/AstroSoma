@@ -103,9 +103,18 @@ solo evitan links rotos — no son la construcción real de esas etapas.
     círculo llena según su fase, mucho más legible, con pulso "respira" en la fase llena); faltaba
     un momento "vivo" propio y un ancla de navegación en el scroll largo → agregado botón flotante
     "volver arriba" (aparece al salir del hero).
-  Relanzada una 6ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
+  - 6ª ronda (32/40, 15/20, Copy 19/20 — confirmó que los 4 fixes de la ronda anterior quedaron
+    bien): la fase lunar con conic-gradient se leía como gráfico de pastel/progreso, no como luna
+    (cuñas angulares, no medias lunas) → rehecha con la técnica real de dos círculos superpuestos
+    (un disco "sombra" desliza sobre el disco iluminado, como el terminador lunar real — ahora sí
+    se ven crecientes/gibosas reconocibles); altura del botón de StickyCtaMobile (48px) no
+    coincidía con el resto de los CTA (52px) → unificada; contraste fondo/superficie muy sutil en
+    scroll largo → subido `--surface` de `#2E2013` a `#392616`.
+  Relanzada una 7ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
   `docs/revisiones/landing-veredicto.md` diga "Veredicto: LISTA" con Usabilidad ≥36/40 y
-  Craft ≥16/20.
+  Craft ≥16/20. Si esta ronda tampoco converge, se pausan las rondas automáticas y se le presenta
+  el estado actual al usuario para decidir cómo seguir (las puntuaciones vienen oscilando 29-34/
+  13-15 con ruido de evaluación independiente pese a mejoras reales confirmadas cada ronda).
 - `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este
   proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
   conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;
