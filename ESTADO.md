@@ -44,20 +44,26 @@ AstroSoma combina landing/SEO con la app). Kit canónico de `plantillas-codigo/l
 ## Pantallas creadas
 - `/` — Landing de ventas (10 secciones canónicas completas: Hero, Problema, Agitación, Solución,
   App por dentro, Oferta, Garantía, FAQ, CTA final, Footer legal). `app/page.tsx`.
+- `/onboarding` — Flujo real de 8 pantallas (4 preguntas + 2 reconocimientos + loading + resultado).
+  `app/onboarding/page.tsx`.
 - Placeholders creados para que ningún link rompa (contenido real pendiente en su etapa):
-  `/onboarding`, `/entrar`, `/privacidad`, `/terminos`, `/reembolsos`, `/aviso-ia`.
+  `/entrar`, `/privacidad`, `/terminos`, `/reembolsos`, `/aviso-ia`, `/paywall`.
 
 ## Protagonista de cada pantalla
 - Landing (`/`): protagonista = la promesa de alivio físico en 3 minutos (Escaneo Somático);
   acción primaria = CTA "Descubrir mi zona de tensión gratis" → `/onboarding`.
+- Onboarding (`/onboarding`): protagonista = el usuario auto-diagnosticándose (situación, zona de
+  tensión, momento del día, meta) y viendo su resultado personalizado antes de pagar.
 
 ## Acción primaria de cada pantalla
 - Landing: CTA repetido en hero/mid-page/oferta/CTA final/sticky mobile, todos al mismo destino
   `/onboarding` (Modelo 2, onboarding-first, de `02C`).
+- Onboarding: una decisión por pantalla (auto-avance en preguntas de selección única); la pantalla
+  final tiene un solo CTA "Ver mi plan de liberación" → `/paywall`.
 
 ## Qué NO se construyó aún
-Onboarding real, paywall, login, app interna, servicios externos. Los placeholders de esas rutas
-solo evitan links rotos — no son la construcción real de esas etapas.
+Paywall real, login, app interna, servicios externos. El placeholder de `/paywall` solo evita un
+link roto — no es la construcción real de esa etapa.
 
 ## Problemas conocidos
 - `FICHA-MERCADO.md` tiene varios campos "NO ENCONTRADO" (medios de pago LATAM, conversión típica
