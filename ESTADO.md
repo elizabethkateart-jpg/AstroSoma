@@ -118,13 +118,14 @@ solo evitan links rotos — no son la construcción real de esas etapas.
     como consecuencia conductual concreta; fase lunar con discos de 20px difícil de distinguir en
     fases intermedias → subida a 32px. El tercer accionable (usar `--surface-2` en algún bloque
     intermedio de FAQ/Garantía) queda pendiente.
-  **PAUSA DE RONDAS AUTOMÁTICAS tras 7 revisiones independientes.** Las puntuaciones oscilaron
-  29-34/40 (usabilidad) y 13-15/20 (craft) sin bajar nunca de una ronda a la siguiente en el
-  código verificado — cada revisor confirmó que los fixes anteriores seguían bien — pero tampoco
-  cruzaron el umbral (≥36/40 y ≥16/20) de forma consistente. Los 2 defectos de mayor esfuerzo que
-  faltan (ring animado en SVG, anclas de navegación) requieren trabajo estructural mayor que un
-  ajuste de copy/color. Se presenta el estado actual al usuario para decidir cómo seguir en vez de
-  seguir lanzando rondas automáticas sin llegar a una convergencia clara.
+  **DECISIÓN DEL USUARIO (2026-09-04): avanzar a Onboarding con el nivel actual.** Tras 7
+  revisiones independientes (29-34/40 usabilidad, 13-15/20 craft, sin bajar nunca en código
+  verificado pero sin cruzar el umbral ≥36/≥16 de forma consistente) se presentó el estado al
+  usuario con 3 opciones — eligió aceptar el nivel actual y seguir a Onboarding, dejando la
+  landing para pulir más adelante con tráfico real. `[veredicto:landing]` queda NO LISTA en
+  `docs/revisiones/landing-veredicto.md` a propósito — es una decisión de negocio documentada, no
+  un olvido. Pendientes de mayor esfuerzo que quedan para una vuelta futura: ring "72%" del hero
+  como SVG animado (hoy PNG estático) y anclas de navegación a Precios/FAQ en el header.
 - `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este
   proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
   conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;
