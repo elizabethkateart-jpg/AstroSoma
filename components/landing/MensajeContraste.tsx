@@ -3,10 +3,11 @@
 // AÑADIDO DEL PROYECTO (no es una de las 10 secciones canónicas — se documenta en ESTADO.md):
 // demo concreta de tono, pedida explícitamente por FICHA-AVATAR.md ("demo de un mensaje real"
 // como diferenciador ante un mercado saturado de 14 apps). Usa SOLO piezas del kit (SectionShell,
-// Kicker, Hairline, useReveal) — ningún hex/fuente propio.
+// Kicker, useReveal) — ningún hex/fuente propio. Borde superior propio (no Hairline: el kit ya
+// usa 3 hairlines en Solución/Oferta/Garantía, el máximo recomendado por vista).
 
 import { motion } from 'motion/react';
-import { Hairline, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
+import { Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
 
 /* Dispositivo ownable de FICHA-ARTE.md: fase lunar como firma visual de marca —
    8 fases, de creciente a llena y de vuelta. Motivo decorativo propio de AstroSoma
@@ -32,7 +33,11 @@ function FaseLunar() {
 export function MensajeContraste() {
   const { contenedor, item } = useReveal();
   return (
-    <SectionShell elevacion="base" ariaLabel="La diferencia de tono">
+    <SectionShell
+      elevacion="base"
+      ariaLabel="La diferencia de tono"
+      className="border-t border-[color-mix(in_oklab,var(--text-tertiary)_15%,transparent)]"
+    >
       <motion.div variants={contenedor} initial="hidden" whileInView="visible" viewport={VIEWPORT_ONCE}>
         <motion.div variants={item} className="mx-auto max-w-xl text-center">
           <FaseLunar />
@@ -51,14 +56,14 @@ export function MensajeContraste() {
               &ldquo;Mercurio retrógrado en tu casa 7 anuncia conflictos y traiciones. Cuidado hoy.&rdquo;
             </p>
           </div>
-          <Hairline surface="surface" className="p-4">
+          <div className="rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--accent)_35%,transparent)] bg-[var(--surface)] p-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--accent)]">
               AstroSoma
             </p>
             <p className="mt-2 text-sm leading-snug text-[var(--text-primary)] italic">
               &ldquo;Hoy tu tránsito acumula tensión en el pecho. Aquí tienes 3 minutos para soltarla.&rdquo;
             </p>
-          </Hairline>
+          </div>
         </motion.div>
       </motion.div>
     </SectionShell>

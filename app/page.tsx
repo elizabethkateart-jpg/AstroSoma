@@ -154,8 +154,8 @@ export default function LandingAstroSoma() {
       {/* 7. GARANTÍA */}
       <Garantia
         nombre="la Garantía del Primer Alivio"
-        condicionMarked="Si en 15 días el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], escribes un correo y te devolvemos todo. Sin preguntas."
-        pisoLegal="Respaldada por la garantía Hotmart de 7 días"
+        condicionMarked="7 días de prueba gratis y, si después de tu primer cobro el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], 15 días más para pedir tu reembolso completo. Sin preguntas."
+        pisoLegal="Respaldada por la política de reembolsos de Hotmart"
       />
 
       {/* 8. FAQ */}
@@ -184,7 +184,7 @@ export default function LandingAstroSoma() {
           {
             pregunta: '¿Qué pasa si no me sirve?',
             respuestaMarked:
-              'Tienes 7 días de prueba y la Garantía del Primer Alivio: [b]un correo y te devolvemos todo[/b].',
+              'Tienes 7 días de prueba gratis y, si no te sirve, 15 días más desde tu primer cobro para pedir el reembolso completo: [b]un correo y te devolvemos todo[/b].',
           },
         ]}
       />
@@ -195,7 +195,7 @@ export default function LandingAstroSoma() {
         futurePacingMarked="Esta noche haces tu primer escaneo, sientes dónde vive el dolor, y en minutos empiezas a soltarlo."
         ctaLabel={CTA_LABEL}
         ctaHref={CTA_HREF}
-        recap="Garantía del Primer Alivio · 7 días gratis"
+        recap="7 días gratis + 15 días de garantía"
         psMarked="PS: AstroSoma traduce tu carta natal en el Escaneo Somático — 3 minutos que te muestran dónde vive tu dolor y cómo soltarlo. Hoy entras con 7 días gratis."
       />
 

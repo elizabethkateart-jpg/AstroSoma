@@ -69,10 +69,12 @@
 
 ## 7. GARANTÍA
 - nombre: `la Garantía del Primer Alivio`
-- condicionMarked: `Si en 15 días el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], escribes un correo y te devolvemos todo. Sin preguntas.`
-  — Prueba 7 días / Garantía 15 días (FICHA-MERCADO §4, regla dura garantía > prueba). El plazo de
-  15 días es una decisión provisional del agente dentro del rango típico de Hotmart (7-30 días);
-  se confirma el límite exacto de la cuenta real al conectar Hotmart en el Paso 6.
+- condicionMarked: `7 días de prueba gratis y, si después de tu primer cobro el Escaneo Somático no te ayuda a sentir [b]alivio físico real[/b], 15 días más para pedir tu reembolso completo. Sin preguntas.`
+  — Prueba 7 días / Garantía 15 días (FICHA-MERCADO §4, regla dura garantía > prueba). Frase
+  unificada en Garantía, FAQ ítem 5 y el recap del CTA final tras hallazgo del revisor (3 números
+  sueltos sin relación explicada = confusión en el momento de mayor fricción de compra). El plazo
+  de 15 días es una decisión provisional del agente dentro del rango típico de Hotmart (7-30
+  días); se confirma el límite exacto de la cuenta real al conectar Hotmart en el Paso 6.
 
 ## 8. FAQ — objeciones de FICHA-AVATAR en orden de fuerza
 1. `¿Esto reemplaza terapia o tratamiento médico?` — objeción de seguridad/riesgo #1 de producto

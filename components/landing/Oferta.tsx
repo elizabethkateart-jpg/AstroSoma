@@ -53,7 +53,7 @@ export interface OfertaProps {
 
 function TrialBadge({ dias }: { dias: number }) {
   return (
-    <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[color-mix(in_oklab,var(--accent)_13%,transparent)] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--accent)]">
+    <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[var(--accent)] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--bg)]">
       <Star size={12} strokeWidth={2.5} aria-hidden="true" />
       {dias} días gratis
     </span>

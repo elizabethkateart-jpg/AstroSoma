@@ -65,63 +65,39 @@ solo evitan links rotos — no son la construcción real de esas etapas.
 - El VoC de la ficha de avatar tiene solo 5 frases literales con URL propia (todas en inglés, de
   Reddit sobre Co-Star/The Pattern); el resto de dolores/deseos en español son inferencias de
   avatar bien fundamentadas pero no citas textuales con fuente propia.
-- Visuales del Hero y de "La app por dentro" son placeholders honestos (cámara + sugerencia de
-  captura) — se reemplazan por screenshots reales cuando exista la app interna con seed de datos
-  (regla 32, "la app nunca se enseña vacía").
-- Garantía: `FICHA-MERCADO §4` ya tiene Prueba 7 días / Garantía 15 días (decisión provisional del
+- Garantía: `FICHA-MERCADO §4` tiene Prueba 7 días / Garantía 15 días (decisión provisional del
   agente para cumplir la regla dura garantía>prueba) — se confirma el límite exacto de la cuenta
-  real al conectar Hotmart (Paso 6); el copy de la landing ya usa 15 días.
+  real al conectar Hotmart (Paso 6). El copy de la landing (Garantía, FAQ, CTA final) usa una
+  única frase unificada: "7 días de prueba + 15 días de reembolso tras el cobro".
 - Footer legal: soporteEmail y enlaces son placeholder hasta definir dominio real y pasar por la
   skill `legal`.
-- `[veredicto:landing]` EN CURSO — 2ª revisión dio NO LISTA otra vez (Usabilidad 32/40, Craft
-  14/20, Copy 18/20) por 5 hallazgos, todos corregidos en esta 3ª ronda:
-  1. "Onboarding" en inglés crudo en el placeholder → ahora dice "Bienvenida".
-  2. Identidad ownable (grano de papel, fase lunar) ausente → agregado grano sutil global
-     (`app/globals.css`, filtro SVG de ruido, opacidad 0.05) + motivo de fase lunar de 8 círculos
-     en `MensajeContraste.tsx`.
-  3. Los 5 visuales seguían siendo placeholders grises → se generaron mockups estáticos reales
-     (`public/mockups/*.png`, `scripts/dev-tools/generar-mockups-tour.mjs`) a partir del tour de
-     dirección de arte YA APROBADO (`vista-previa-app.html`), con badge "Vista previa de diseño"
-     — no pretenden ser screenshots de una app funcionando, son el mismo diseño ya validado.
-  4. CTA del plan Mensual seguía con texto distinto → ahora usa el mismo `CTA_LABEL` exacto que
-     el resto de la página.
-  5. Nota redundante bajo el stack de Oferta → eliminada.
-  Relanzada una 3ª revisión con el screenshot corregido (incluye fix de un bug de captura:
-  las imágenes del carrusel usan `loading="lazy"` y no cargaban en un screenshot de página
-  completa sin forzar su carga primero — ver `scripts/dev-tools/capturar-landing-375.mjs`).
-  3ª revisión: NO LISTA otra vez pero subiendo (Usabilidad 34/40, Craft 14/20) — confirmó los 5
-  fixes anteriores y encontró 5 nuevos, todos corregidos en esta 4ª ronda:
-  1. Motion signature de marca ("el Escaneo Somático respira") no existía en ningún componente →
-     agregada animación `respirar` (opacity+scale, 4s, ease-in-out, respeta reduced-motion) en
-     `app/globals.css`, aplicada al marco del hero.
-  2. Grano de papel imperceptible → BUG real encontrado al depurar: el `mix-blend-mode` estaba en
-     un pseudo-elemento DEBAJO del contenido en el z-index (no arriba), así que no se mezclaba con
-     nada visible — se movió a `body::after` con z-index alto (999) para que blend sí incluya el
-     contenido, y se subió opacidad a 0.3 tras verificar visualmente con capturas de depuración
-     (0.05-0.18 no se percibían ni siquiera renderizando correctamente).
-  3. El motivo de fase lunar se presentaba en el código como reflejo del indicador del módulo de
-     Duelo, pero ese mockup usa una barra lineal → se corrigió el comentario: la fase lunar es una
-     firma de marca propia, independiente del indicador interno.
-  4. Sin `:focus-visible` en toda la landing → agregado global (outline 2px acento).
-  5. Título de Oferta ("$0.30 al día") no coincidía con ninguna card visible → alineado a "$0.14
-     al día" (el dato real del plan Anual recomendado).
-  Relanzada una 4ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
+- Visuales del Hero y del carrusel "La app por dentro": son mockups estáticos reales
+  (`public/mockups/*.png`, generados del tour de dirección de arte ya aprobado por el usuario,
+  con badge "Vista previa de diseño") — NO son screenshots de una app funcionando todavía; se
+  reemplazan por capturas reales cuando exista la app interna con su seed de datos (regla 32).
+- `[veredicto:landing]` EN CURSO — 4 rondas de revisor-visual + corrección, resumen:
+  - 1ª ronda (32/40, 13/20): defecto de "texto cortado" resultó ser un bug de la herramienta de
+    captura (Chrome headless sin emulación móvil daba overflow falso — confirmado
+    `scrollWidth===innerWidth===375` con emulación real vía Puppeteer), no del producto. Reales y
+    corregidos: presupuesto de copy de Oferta, CTA con verbo distinto entre planes, falta de demo
+    de tono (se agregó `MensajeContraste.tsx`, sección "La diferencia", AÑADIDO fuera de las 10
+    canónicas).
+  - 2ª ronda (32/40, 14/20): "Onboarding" en inglés crudo → "Bienvenida"; identidad ownable
+    ausente → grano + fase lunar agregados; 5 visuales seguían de placeholder → mockups reales
+    wireados; CTA mensual desalineado → unificado; nota redundante de Oferta → eliminada.
+  - 3ª ronda (34/40, 14/20): faltaba la motion signature de marca → animación `respirar` en el
+    hero; el grano no se veía → BUG real (mix-blend-mode en pseudo-elemento por debajo del
+    contenido, corregido a `body::after` z-index alto + opacidad 0.3 verificada visualmente);
+    comentario de fase lunar corregido (firma de marca, no espejo del módulo de Duelo); agregado
+    `:focus-visible` global; título de Oferta alineado al precio real mostrado.
+  - 4ª ronda (30/40, 13/20 — bajó por ruido normal de evaluación independiente, confirmó que los
+    fixes anteriores quedaron bien): plazos de garantía contradictorios → unificados; dos
+    secciones consecutivas con el mismo fondo → borde superior agregado a `MensajeContraste`;
+    4º uso de Hairline sobre el máximo de 3 recomendado por el kit → cambiado a borde simple;
+    badge de trial con bajo contraste → unificado a fondo sólido.
+  Relanzada una 5ª revisión. `ESTADO.md` NO declara la landing como "lista" hasta que
   `docs/revisiones/landing-veredicto.md` diga "Veredicto: LISTA" con Usabilidad ≥36/40 y
-  Craft ≥16/20. De los 5
-  defectos: el "texto cortado en el borde" resultó ser un bug de la herramienta de captura (Chrome
-  headless sin emulación móvil renderizaba con overflow falso — confirmado con
-  `scrollWidth === innerWidth === 375` en emulación móvil real vía Puppeteer); se corrigió el
-  método de captura, no el producto. Sí eran reales y se corrigieron: título de Oferta excedía el
-  presupuesto de copy (9→7 palabras), CTA con verbo distinto entre planes (unificado), y falta de
-  demo de tono/mensaje (se agregó `MensajeContraste.tsx` — sección "La diferencia", AÑADIDO del
-  proyecto fuera de las 10 canónicas, documentado aquí). Pendiente de 2ª revisión con el screenshot
-  correcto.
-- Pendiente NO resuelto (limitación real de la etapa, no un defecto a corregir ahora): los 5
-  visuales de producto (hero + 4 frames del carrusel) siguen siendo placeholders honestos — se
-  reemplazan por screenshots reales cuando exista la app interna (regla 32: no se fabrican
-  capturas falsas de una app que aún no existe). El "dispositivo ownable" (grano de papel/fase
-  lunar) tampoco se insertó — no hay dónde montarlo sin tocar componentes fijos del kit; se evalúa
-  al construir la app interna real.
+  Craft ≥16/20.
 - `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este
   proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
   conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;
