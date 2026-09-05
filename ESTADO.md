@@ -136,8 +136,21 @@ link roto — no es la construcción real de esa etapa.
   proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
   conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;
   no se parchea aquí por ser código del kit compartido, fuera del alcance de este proyecto.
+- `[veredicto:onboarding]` NO LISTA tras 6 rondas de revisor-visual + corrección (30-32/40
+  usabilidad, oscilando; 15-16/20 craft, ya cruzó el umbral en la 5ª ronda). Corregidos en el
+  camino: `<a>`→`Link`/`useRouter` (bug real de build), centrado vertical, semántica de progreso,
+  modal propio de salida (reemplaza `window.confirm`), conteo animado del "72%", grano de papel
+  más perceptible, piso mínimo de la luna de progreso, CTA nunca disabled con hint accesible
+  (`aria-describedby`+foco), y un disparador real (aunque simulado) para el estado de error del
+  loading. Quedan 2 hallazgos de mayor esfuerzo sin resolver: (1) espacio vacío bajo el CTA en
+  reconocimientos/resultado — se intentó 2 veces, mejoró pero no desapareció; (2) sin forma de
+  editar una respuesta previa desde el resultado antes de pasar a `/paywall`. Igual que con la
+  landing, se pausan las rondas automáticas para consultar al usuario en vez de seguir iterando
+  sin convergencia clara.
 
 ## Siguiente paso exacto
-Recibir el veredicto del revisor visual sobre la landing, corregir lo que marque como bloqueante,
-y presentar el Reporte de Puerta de la etapa Landing al usuario para su OK antes de pasar a
-Onboarding (Paso 2 de la Secuencia Maestra).
+Esperando decisión del usuario sobre el onboarding (mismas 3 opciones que se usaron para la
+landing: seguir iterando / aceptar el nivel actual y avanzar a Paywall / verlo primero). Una vez
+decidido, actualizar este archivo con la decisión y, si se avanza, construir el Paywall (Paso 3
+de la Secuencia Maestra) derivado de `FICHA-MERCADO.md` (Anual $49.99, Mensual $8.99, trial 7
+días, garantía 15 días) con el mismo kit de tokens ya aprobado.
