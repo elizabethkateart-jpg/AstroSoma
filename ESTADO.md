@@ -1,156 +1,157 @@
 # ESTADO.md — AstroSoma
 
 ## Resumen del proyecto
-App: **AstroSoma** (marca posible "Beyond: AstroSoma"). Guía diaria de salud somática y astrología
-médica: identifica en qué zona del cuerpo se acumula tensión física/emocional (duelo, ruptura,
-estrés) según la carta natal, y da ejercicios de liberación somática de 3-5 minutos. Diferenciador:
-cero notificaciones fatalistas de IA, mecanismo somático concreto, privacidad total.
+App: **AstroSoma**. Guía diaria de salud somática y astrología: identifica en qué zona del cuerpo
+se acumula tensión física/emocional (duelo, ruptura, estrés, malestar físico constante) según la
+carta natal, y da ejercicios de liberación somática de 3 minutos ("el Escaneo Somático").
+Diferenciador: cero notificaciones fatalistas de IA, mecanismo somático concreto, privacidad total.
 
-Idea validada con investigación previa (prompt del curso) aportada en `ASTROSOMA.pdf` — no se
-re-valida. Ver `FICHA-AVATAR.md` y `FICHA-MERCADO.md` para el detalle completo.
+Idea validada con investigación previa (prompt del curso) en `ASTROSOMA.pdf` — no se re-valida.
+Ver `FICHA-AVATAR.md`, `FICHA-MERCADO.md`, `FICHA-MODELO.md`, `FICHA-ARTE.md` para el detalle.
 
-## Decisiones ya tomadas por el agente (con evidencia)
-- **Modelo de monetización:** Freemium con suscripción $8.99/mes o $49.99/año + Pase Único de
-  Temporada de Duelo $14.99. Prueba gratis 7 días. Decidido en el propio documento de validación,
-  comparado contra After ($12.99/mes) como ancla. Ver `FICHA-MERCADO.md` §1.
-  Si prefieres otro precio o modelo, dímelo — se puede ajustar antes de tocar el paywall real.
-- **Pasarela de venta:** Hotmart (estándar del SO para LATAM).
-- **Funciones núcleo v1 (del documento):** escaneo somático basado en tránsitos natales, módulo de
-  Duelo/Ruptura (programa guiado 14 y 30 días), ejercicios de liberación somática de 3 min, diario
-  privado cifrado. NO se construye aún: sinastría de pareja, chat de IA ilimitado, marketplace de
-  astrólogos, red social interna.
-- **Riesgos de producto ya identificados y su mitigación:** IA no da diagnóstico médico (prompts
-  restringidos + disclaimer de autocuidado, no tratamiento); posible cancelación post-duelo
-  (transición del módulo de duelo a hábito diario de salud somática); costo de IA (límite de 3
-  registros/día en vez de chat abierto).
-- **App modelo elegida:** Co–Star Personalized Astrology (revenue verificado por 2 señales:
-  Sensor Tower ~$400K/mes + rank #33 top-grossing Lifestyle US). Se modela su mecanismo (carta
-  natal + tránsito diario como gancho de retorno) y se corrige su queja #1 (tono fatalista/
-  ansiógeno) con el ángulo somático de AstroSoma. Ver `FICHA-MODELO.md`.
-- **Dirección de arte — CERRADA (cosa juzgada):** "Mística cálida" → Opción B "Ritual Nocturno"
-  del protocolo A/B/C (`direcciones-abc.html` + tour en `vista-previa-app.html`, screenshots en
-  `docs/revisiones/`). Ajustada 2 veces a pedido del usuario: fondo de negro puro a café oscuro
-  (`#211609`) y acento ámbar aclarado a beige-dorado (`#C4A177`). Aprobada ("me encanta") el
-  2026-09-04. `FICHA-ARTE.md` es la fuente de verdad de tokens — se vuelca a `globals.css` cuando
-  arranque el código real.
+## Decisiones ya tomadas (cosa juzgada — no redecidir)
+- **Monetización:** Freemium — Anual $49.99/año ($4.17/mes) o Mensual $8.99/mes, 7 días de prueba
+  gratis + 15 días de garantía tras el cobro. Ver `FICHA-MERCADO.md` §1.
+- **Pasarela de venta:** Hotmart — el usuario aún no tiene cuenta (pospuesto a propósito).
+- **Funciones núcleo v1:** escaneo somático por tránsitos natales, "Programa de Sanación" de 30
+  días, ejercicio de respiración de 3 min (único tipo por ahora), diario privado cifrado.
+- **App modelo:** Co–Star Personalized Astrology — mismo mecanismo (carta + tránsito diario),
+  corrigiendo su queja #1 (tono fatalista) con el ángulo somático.
+- **Dirección de arte — azul marino** (adenda 2026-09-09, detalle en `FICHA-ARTE.md`): `--bg
+  #0F2436`, `--surface #1B3A4D`, `--accent #C4A177` (dorado), `--accent-2 #D08B5E`. Display:
+  Cormorant Garamond. Logo oficial del usuario (`Isotipo.tsx` en toda la app, `LogoCompleto.tsx`
+  con wordmark solo en footer — el nombre visible sigue siendo "AstroSoma").
+- **Auth:** magic link/OTP por email (combo enlace+código) + OAuth Google secundario. Passkeys
+  recién tras la primera victoria dentro de la app.
+- **Retención:** gatillo (abrir Hoy) → acción (escaneo + 3 min) → recompensa (% liberado) →
+  inversión (racha, Programa día N/30).
+- **Dos rutas de onboarding, aditivas** (2026-09-14): duelo/ruptura (original) + salud somática
+  sin duelo (nueva) — ninguna reemplaza a la otra, ver FICHA-AVATAR.md "Segundo avatar".
+- **Sin comunidad/red social dentro de la app** (2026-09-15) — choca con la promesa de privacidad
+  total y exige moderación que una operación de una persona no sostiene. Descartado a propósito.
+- **Carta natal NO se amplía a otras lecturas todavía** (compatibilidad/personalidad/trabajo,
+  2026-09-20) — mantener el diferenciador de UNA sola cosa (dónde vive la tensión hoy), no competir
+  de frente con Co-Star/The Pattern. Base técnica ya existe; retomar solo con usuarios pagando
+  pidiéndolo.
 
-## Paso actual
-Paso 1 (Landing) construida y en verificación. Stack: Next.js 16 App Router + TypeScript +
-Tailwind v4 + motion + lucide-react (decidido por el agente — "duda → Next.js" del 51, ya que
-AstroSoma combina landing/SEO con la app). Kit canónico de `plantillas-codigo/landing/` copiado a
-`components/landing/`, tematizado con `FICHA-ARTE.md`, copy en `docs/copy/landing.md` trazado a
-`FICHA-AVATAR.md`. Mecanismo bautizado: **el Escaneo Somático**.
+## Paso actual — Paso 6 en curso (Supabase conectado, Hotmart pendiente)
+App interna navegable de punta a punta, con datos y login reales (ya no simulados) contra un
+proyecto real de Supabase (`eteofnqhkvhcgtghextc`, `ca-central-1`). Revisión visual: ver
+"Problemas conocidos" (ninguna de las 4 pantallas del dinero tiene veredicto LISTA, a propósito).
+Sigue pendiente conectar Hotmart — mientras tanto `signInWithOtp` usa `shouldCreateUser:true`
+(cualquier correo puede entrar), a endurecer cuando el webhook de Hotmart exista.
 
 ## Pantallas creadas
-- `/` — Landing de ventas (10 secciones canónicas completas: Hero, Problema, Agitación, Solución,
-  App por dentro, Oferta, Garantía, FAQ, CTA final, Footer legal). `app/page.tsx`.
-- `/onboarding` — Flujo real de 8 pantallas (4 preguntas + 2 reconocimientos + loading + resultado).
-  `app/onboarding/page.tsx`.
-- Placeholders creados para que ningún link rompa (contenido real pendiente en su etapa):
-  `/entrar`, `/privacidad`, `/terminos`, `/reembolsos`, `/aviso-ia`, `/paywall`.
+- `/` — Landing de ventas (10 secciones canónicas + video en Problema + imágenes en Agitación/
+  Solución/Garantía). `app/page.tsx`.
+- `/onboarding` — pregunta de intención inicial → ruta **duelo** (7 pasos) o ruta **somática**
+  (zona corporal, frecuencia, reconocimiento) → loading → resultado (lectura real de IA, 3 partes).
+- `/paywall` → `/entrar` (login real) + `/entrar/ayuda` → `/app`.
+- `/app` (Hoy/Duelo·Ritual/Diario/Perfil/Mecanismo) — nav inferior y todo el copy de Hoy/Duelo se
+  adaptan según `categoriaDuelo` (ruptura/pérdida/cambio/ansiedad/otro/**somática**).
+- Legales: `/privacidad`, `/terminos`, `/reembolsos`, `/aviso-ia` (placeholders, etapa dedicada
+  pendiente — skill `legal`).
 
-## Protagonista de cada pantalla
-- Landing (`/`): protagonista = la promesa de alivio físico en 3 minutos (Escaneo Somático);
-  acción primaria = CTA "Descubrir mi zona de tensión gratis" → `/onboarding`.
-- Onboarding (`/onboarding`): protagonista = el usuario auto-diagnosticándose (situación, zona de
-  tensión, momento del día, meta) y viendo su resultado personalizado antes de pagar.
+## Servicios externos — Paso 6
+- **Supabase**: esquema en `supabase/schema.sql` (4 tablas: `perfiles`, `escaneos`,
+  `diario_entradas`, `lecturas_diarias` — RLS con `(select auth.uid())`, trigger de creación de
+  perfil con `execute` revocado de `anon`/`authenticated`). `lib/supabase/{client,server,
+  middleware,admin}.ts` + `proxy.ts` protegiendo solo `/app`.
+- **Auth real**: `/entrar` usa `signInWithOtp`/`verifyOtp`/`signInWithOAuth` + `/auth/callback`.
+  El código de Supabase es de **8 dígitos**, no 6 (ya corregido en input/validación/copy).
+  **Correo real vía Resend** (`smtp.resend.com`, remitente de prueba `onboarding@resend.dev`) —
+  las plantillas de Supabase ("Confirm signup", "Reset Password") no traen `{{ .Token }}` por
+  defecto, se agregó a mano en el dashboard; pendiente confirmar si "Magic Link" también lo
+  necesita. El remitente de prueba cae en spam por no tener dominio propio — normal, se resuelve
+  verificando un dominio real en Resend antes de lanzar. **Login real confirmado de punta a punta**
+  por la usuaria misma.
+- **Datos reales**: `lib/appLocal.ts` migrado de localStorage a Supabase, mismo shape/firmas de
+  función — ninguna pantalla cambió su UI. `diaPrograma`/`rachaDias` se derivan por consulta.
+- **Motor astrológico + carta natal real**: `lib/astro/{zonas,motor,cartaNatal,useLecturaDiaria}.ts`
+  calcula el signo lunar del día Y la carta natal (Sol/Luna) de cada persona por su fecha de
+  nacimiento (mediodía UTC, sin pedir hora exacta). `app/api/lectura-diaria/route.ts` cruza ambos
+  en el prompt a Claude — el mensaje es POR USUARIO, no compartido (caché en `lecturas_diarias`
+  por `user_id`+`fecha`, el costo de IA ya no es casi nulo, crece con usuarios activos). Carta
+  visible en `/app/perfil` ("Sol en X · Luna en Y").
+- **Lectura diaria en 3 partes** (2026-09-23): `mensaje` + `porque` (conecta carta natal y
+  tránsito, tono SIMBÓLICO — nunca causa médica ni predicción) + `consejo` (práctico, más allá de
+  la respiración). La IA responde JSON estructurado (bug corregido: a veces lo envolvía en
+  ```` ```json ````, se limpia antes de parsear). Mostrado en Hoy y en el resultado del onboarding.
+- **Diario con pregunta del día** (2026-09-23): `app/api/prompt-diario/route.ts` genera una
+  pregunta específica (≤16 palabras) según categoría + semana del programa, cacheada en la misma
+  fila de `lecturas_diarias` (columna `prompt_diario`) — `zona`/`mensaje`/`signo_luna` de esa tabla
+  pasaron a nullable porque ahora dos endpoints distintos pueden crear la fila del día.
+- **Verificado con datos reales en cada pieza** (Regla dura 1): sesión real, RLS bloqueando leer
+  perfiles ajenos, lectura de IA citando la carta natal real de la usuaria, pregunta de diario
+  coherente — todo confirmado en pantalla y en la base de datos, no mocks. tsc ✓ build ✓ en cada
+  cambio.
+- **Pendiente**: conectar Hotmart; endurecer `shouldCreateUser` a `false` cuando exista el webhook;
+  verificar dominio propio en Resend antes de lanzar (ver `46-EMAIL-DELIVERABILITY.md`).
 
-## Acción primaria de cada pantalla
-- Landing: CTA repetido en hero/mid-page/oferta/CTA final/sticky mobile, todos al mismo destino
-  `/onboarding` (Modelo 2, onboarding-first, de `02C`).
-- Onboarding: una decisión por pantalla (auto-avance en preguntas de selección única); la pantalla
-  final tiene un solo CTA "Ver mi plan de liberación" → `/paywall`.
+## Landing: video + 3 imágenes integradas (2026-09-17 / 2026-09-23)
+- Video (mujer llorando de noche → cadenas en el pecho → silueta caminando a la luz, 8s, mudo) en
+  la sección "¿Te suena?" (`Problema.tsx`, prop `videoSrc`).
+- 3 imágenes nuevas de la usuaria en `public/images/` (una tanda anterior tenía marca de agua
+  ajena — descartada): `solucion-liberacion.jpg` (mujer soltando energía del pecho) en
+  `Solucion.tsx` entre los pasos y el antes/después; `agitacion-corte.jpg` (tijeras cortando un
+  hilo cósmico) en `Agitacion.tsx` bajo la frase puente; `garantia-sostenida.jpg` (mujer sostenida
+  por mano de estrellas) en `Garantia.tsx` como círculo de 60px reemplazando el ícono — probado
+  primero como fondo del CTA Final pero esa sección usa fondo CLARO invertido a propósito y la
+  foto quedaba invisible bajo la capa necesaria para el texto, se revirtió.
+- Verificado visualmente a 375px, tsc ✓ build ✓. Comprimidas con `sips` (redimensionadas +
+  calidad 75-80%): de 2-3MB cada una a 48-636KB (la de Garantía, mostrada a 60px, se redujo más
+  agresivamente). Calidad visual confirmada sin pérdida notable.
 
-## Qué NO se construyó aún
-Paywall real, login, app interna, servicios externos. El placeholder de `/paywall` solo evita un
-link roto — no es la construcción real de esa etapa.
+## Decisiones técnicas y de copy acumuladas
+- **Capa ornamental** (`components/landing/Ornamentos.tsx`): `EstrellasFondo`, `GlifosDivisor`,
+  `CajaOrnamentada` — en landing, onboarding, app interna y mockups.
+- **Copy generalizado** (sirve a ruptura, duelo Y otras causas, no solo "ex"): lenguaje neutro en
+  género, sin asumir una sola causa de dolor — en todos los archivos vivos.
+- Todo verificado con `tsc --noEmit` + `npm run build` limpios y capturas a 375px antes de
+  mostrarse al usuario (Puppeteer cuando el panel de preview del usuario falla).
 
 ## Problemas conocidos
-- `FICHA-MERCADO.md` tiene varios campos "NO ENCONTRADO" (medios de pago LATAM, conversión típica
-  del nicho, plazos exactos de garantía de Hotmart) — se completan al conectar Hotmart real (Paso 6).
-- El VoC de la ficha de avatar tiene solo 5 frases literales con URL propia (todas en inglés, de
-  Reddit sobre Co-Star/The Pattern); el resto de dolores/deseos en español son inferencias de
-  avatar bien fundamentadas pero no citas textuales con fuente propia.
-- Garantía: `FICHA-MERCADO §4` tiene Prueba 7 días / Garantía 15 días (decisión provisional del
-  agente para cumplir la regla dura garantía>prueba) — se confirma el límite exacto de la cuenta
-  real al conectar Hotmart (Paso 6). El copy de la landing (Garantía, FAQ, CTA final) usa una
-  única frase unificada: "7 días de prueba + 15 días de reembolso tras el cobro".
-- Footer legal: soporteEmail y enlaces son placeholder hasta definir dominio real y pasar por la
-  skill `legal`.
-- Visuales del Hero y del carrusel "La app por dentro": son mockups estáticos reales
-  (`public/mockups/*.png`, generados del tour de dirección de arte ya aprobado por el usuario,
-  con badge "Vista previa de diseño") — NO son screenshots de una app funcionando todavía; se
-  reemplazan por capturas reales cuando exista la app interna con su seed de datos (regla 32).
-- `[veredicto:landing]` EN CURSO — 4 rondas de revisor-visual + corrección, resumen:
-  - 1ª ronda (32/40, 13/20): defecto de "texto cortado" resultó ser un bug de la herramienta de
-    captura (Chrome headless sin emulación móvil daba overflow falso — confirmado
-    `scrollWidth===innerWidth===375` con emulación real vía Puppeteer), no del producto. Reales y
-    corregidos: presupuesto de copy de Oferta, CTA con verbo distinto entre planes, falta de demo
-    de tono (se agregó `MensajeContraste.tsx`, sección "La diferencia", AÑADIDO fuera de las 10
-    canónicas).
-  - 2ª ronda (32/40, 14/20): "Onboarding" en inglés crudo → "Bienvenida"; identidad ownable
-    ausente → grano + fase lunar agregados; 5 visuales seguían de placeholder → mockups reales
-    wireados; CTA mensual desalineado → unificado; nota redundante de Oferta → eliminada.
-  - 3ª ronda (34/40, 14/20): faltaba la motion signature de marca → animación `respirar` en el
-    hero; el grano no se veía → BUG real (mix-blend-mode en pseudo-elemento por debajo del
-    contenido, corregido a `body::after` z-index alto + opacidad 0.3 verificada visualmente);
-    comentario de fase lunar corregido (firma de marca, no espejo del módulo de Duelo); agregado
-    `:focus-visible` global; título de Oferta alineado al precio real mostrado.
-  - 4ª ronda (30/40, 13/20 — bajó por ruido normal de evaluación independiente, confirmó que los
-    fixes anteriores quedaron bien): plazos de garantía contradictorios → unificados; dos
-    secciones consecutivas con el mismo fondo → borde superior agregado a `MensajeContraste`;
-    4º uso de Hairline sobre el máximo de 3 recomendado por el kit → cambiado a borde simple;
-    badge de trial con bajo contraste → unificado a fondo sólido.
-  - 5ª ronda (29/40, 15/20 — confirmó explícitamente que los 4 fixes de la ronda anterior quedaron
-    bien implementados): sticky CTA mobile sin forma de cerrarse → agregado botón "X" de
-    descarte; el hero y el primer frame del carrusel repetían la misma imagen (hoy.png) → se quitó
-    el frame duplicado del carrusel (ahora empieza en "Bienvenida"); la fase lunar (8 puntos de
-    12px) era ilegible como tal → rehecha con `conic-gradient` (cada punto es una porción de
-    círculo llena según su fase, mucho más legible, con pulso "respira" en la fase llena); faltaba
-    un momento "vivo" propio y un ancla de navegación en el scroll largo → agregado botón flotante
-    "volver arriba" (aparece al salir del hero).
-  - 6ª ronda (32/40, 15/20, Copy 19/20 — confirmó que los 4 fixes de la ronda anterior quedaron
-    bien): la fase lunar con conic-gradient se leía como gráfico de pastel/progreso, no como luna
-    (cuñas angulares, no medias lunas) → rehecha con la técnica real de dos círculos superpuestos
-    (un disco "sombra" desliza sobre el disco iluminado, como el terminador lunar real — ahora sí
-    se ven crecientes/gibosas reconocibles); altura del botón de StickyCtaMobile (48px) no
-    coincidía con el resto de los CTA (52px) → unificada; contraste fondo/superficie muy sutil en
-    scroll largo → subido `--surface` de `#2E2013` a `#392616`.
-  - 7ª ronda (32/40, 14/20 — confirmó que los fixes de fase lunar/altura CTA/contraste de la
-    ronda anterior quedaron bien): quedan 2 hallazgos de mayor esfuerzo sin resolver (ring "72%"
-    del hero como SVG animado en vez de PNG; anclas de navegación a Precios/FAQ en el header) y
-    3 accionables rápidos, de los cuales se corrigieron 2 en esta pasada: claim de salud sin
-    respaldo clínico ("insomnio crónico y ansiedad diaria", contradecía la propia FAQ) → reescrito
-    como consecuencia conductual concreta; fase lunar con discos de 20px difícil de distinguir en
-    fases intermedias → subida a 32px. El tercer accionable (usar `--surface-2` en algún bloque
-    intermedio de FAQ/Garantía) queda pendiente.
-  **DECISIÓN DEL USUARIO (2026-09-04): avanzar a Onboarding con el nivel actual.** Tras 7
-  revisiones independientes (29-34/40 usabilidad, 13-15/20 craft, sin bajar nunca en código
-  verificado pero sin cruzar el umbral ≥36/≥16 de forma consistente) se presentó el estado al
-  usuario con 3 opciones — eligió aceptar el nivel actual y seguir a Onboarding, dejando la
-  landing para pulir más adelante con tráfico real. `[veredicto:landing]` queda NO LISTA en
-  `docs/revisiones/landing-veredicto.md` a propósito — es una decisión de negocio documentada, no
-  un olvido. Pendientes de mayor esfuerzo que quedan para una vuelta futura: ring "72%" del hero
-  como SVG animado (hoy PNG estático) y anclas de navegación a Precios/FAQ en el header.
-- `[hydration]` `components/landing/ui.tsx` (`useReveal`, pieza del KIT del SO, no tocada por este
-  proyecto) genera un warning de hidratación en consola del navegador (framer-motion/SSR, patrón
-  conocido: "This won't be patched up") — cosmético, no afecta el render final ni la interacción;
-  no se parchea aquí por ser código del kit compartido, fuera del alcance de este proyecto.
-- `[veredicto:onboarding]` NO LISTA tras 6 rondas de revisor-visual + corrección (30-32/40
-  usabilidad, oscilando; 15-16/20 craft, ya cruzó el umbral en la 5ª ronda). Corregidos en el
-  camino: `<a>`→`Link`/`useRouter` (bug real de build), centrado vertical, semántica de progreso,
-  modal propio de salida (reemplaza `window.confirm`), conteo animado del "72%", grano de papel
-  más perceptible, piso mínimo de la luna de progreso, CTA nunca disabled con hint accesible
-  (`aria-describedby`+foco), y un disparador real (aunque simulado) para el estado de error del
-  loading. Quedan 2 hallazgos de mayor esfuerzo sin resolver: (1) espacio vacío bajo el CTA en
-  reconocimientos/resultado — se intentó 2 veces, mejoró pero no desapareció; (2) sin forma de
-  editar una respuesta previa desde el resultado antes de pasar a `/paywall`. Igual que con la
-  landing, se pausan las rondas automáticas para consultar al usuario en vez de seguir iterando
-  sin convergencia clara.
+- `[veredicto:landing]`/`[veredicto:onboarding]`/`[veredicto:paywall]`/`[veredicto:entrar]` **NO
+  LISTA** a propósito (decisión de negocio): landing 7 rondas sin cruzar umbral; onboarding 4
+  rondas llegó a 33/40·18/20 (craft pasa, usabilidad no — defectos ligados al backend, ya
+  conectado, retomar con revisión formal cuando se quiera). paywall/entrar nunca pasaron por el
+  revisor (revisión directa desde el 2026-09-06). Pendiente en landing: ring del hero como SVG
+  animado, anclas de navegación a Precios/FAQ.
+- `FICHA-MERCADO.md` tiene campos "NO ENCONTRADO" (medios de pago LATAM, conversión típica,
+  plazos de Hotmart) — se completan al conectar Hotmart real.
+- Footer legal: `soporteEmail` y enlaces son placeholder hasta definir dominio real.
+- `[hydration]` `components/landing/ui.tsx` (`useReveal`) genera un warning cosmético de
+  hidratación (framer-motion/SSR) — no se parchea, es código compartido fuera de alcance.
+- Ejercicio de respiración: se repite igual sin importar la zona — variantes por zona quedaron
+  **definidas para más adelante** (decisión del usuario, no ahora).
+
+## Notificaciones diarias — planeado, no construido (2026-09-20)
+Plan acordado: (1) conectar el interruptor "Notificaciones" de `/app/perfil` (hoy decorativo) a un
+permiso real del navegador, (2) guardar la suscripción de cada usuario en Supabase, (3) un
+disparador diario que arme el micro-consejo (motor de IA + carta natal) y lo envíe. **Requisito
+bloqueante**: las notificaciones push reales necesitan la app publicada en internet (Vercel) — la
+usuaria decidió publicar primero, pero pidió PAUSAR antes de arrancar ese paso.
 
 ## Siguiente paso exacto
-Esperando decisión del usuario sobre el onboarding (mismas 3 opciones que se usaron para la
-landing: seguir iterando / aceptar el nivel actual y avanzar a Paywall / verlo primero). Una vez
-decidido, actualizar este archivo con la decisión y, si se avanza, construir el Paywall (Paso 3
-de la Secuencia Maestra) derivado de `FICHA-MERCADO.md` (Anual $49.99, Mensual $8.99, trial 7
-días, garantía 15 días) con el mismo kit de tokens ya aprobado.
+Publicar la app en internet (Vercel, decisión ya tomada, solo pausada). Después: notificaciones
+diarias (plan ya acordado, ver arriba), y conectar Hotmart cuando la usuaria tenga esa cuenta.
+
+## Auditoría cerrada (2026-09-23)
+Reporte de la FASE 3 aprobado por la usuaria (4 hallazgos) y ejecutado en FASE 4:
+- **Corregido** — el copy ya no dice "cifrado" en ningún lugar (landing, paywall, pantalla de
+  diario): el diario es privado (protegido por RLS) pero NO estaba cifrado de verdad, y decirlo
+  era un claim falso. Cambiado a lenguaje honesto ("privado, solo tú lo lees").
+- **Corregido** — el paywall ya no promete un aviso de "Día 5" que no existe como función real;
+  el texto ahora solo describe el paso sin prometer una notificación activa.
+- **Corregido** — vacío grande en la primera pregunta del onboarding (mitad de la pantalla sin
+  nada): contenido ahora empieza arriba (no centrado a mitad de pantalla) + resplandor de
+  profundidad + más estrellas de fondo, mismo lenguaje visual ya aprobado (`app/onboarding/
+  page.tsx`, componente `PantallaPregunta`).
+- **Corregido** — las dos funciones de IA (lectura del día, pregunta de diario) ya tienen un
+  límite simple de repeticiones por usuario (`lib/rateLimit.ts`, 10 llamadas/minuto) — antes
+  cualquiera podía llamarlas sin freno.
+Verificado: tsc ✓ · build ✓ · render 375px confirmado visualmente para el ajuste puntual (glow +
+estrellas, vacío ya no se lee como pantalla rota) · paywall confirmado con el copy nuevo. Sin
+revisor-visual formal en esta ronda (fue un ajuste puntual, no un rediseño). El veredicto pendiente
+de onboarding NO LISTA sigue pendiente igual que antes — no cambia con este ajuste, ver
+`[veredicto:onboarding]` en Problemas conocidos.

@@ -9,6 +9,7 @@
 
 import { motion } from 'motion/react';
 import { Accent, Hairline, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
+import { CajaOrnamentada, GlifosDivisor } from './Ornamentos';
 import { MarkedCopy, warnCopy } from './MarkedCopy';
 
 export interface PasoMecanismo {
@@ -36,6 +37,8 @@ export interface SolucionProps {
     labelDespues: string;
     despues: string;
   };
+  /** Imagen opcional que ilustra el momento de liberación — entre los pasos y el antes/después. */
+  imagenSrc?: string;
   id?: string;
 }
 
@@ -46,6 +49,7 @@ export function Solucion({
   bigIdeaMarked,
   pasos,
   antesDespues,
+  imagenSrc,
   id,
 }: SolucionProps) {
   warnCopy('Solución → título', tituloMarked, 8);
@@ -78,6 +82,10 @@ export function Solucion({
           </Hairline>
         </motion.div>
 
+        <motion.div variants={item} className="mt-4 flex justify-start">
+          <GlifosDivisor />
+        </motion.div>
+
         <motion.p variants={item} className="mt-5 max-w-[620px] text-[17px] leading-relaxed text-[var(--text-secondary)] md:text-[18px]">
           <MarkedCopy text={bigIdeaMarked} />
         </motion.p>
@@ -100,6 +108,12 @@ export function Solucion({
           ))}
         </ol>
 
+        {imagenSrc && (
+          <motion.div variants={item} className="respira-marco relative mt-10 overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-2)]">
+            <img src={imagenSrc} alt="" aria-hidden="true" className="aspect-[4/3] w-full object-cover md:aspect-[16/7]" />
+          </motion.div>
+        )}
+
         {antesDespues && (
           <motion.div variants={item} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-[var(--radius-card)] bg-[var(--surface-2)] p-5">
@@ -108,15 +122,15 @@ export function Solucion({
               </p>
               <p className="mt-2 text-[15px] leading-snug text-[var(--text-secondary)]">{antesDespues.antes}</p>
             </div>
-            {/* El "después" con acento sutil de fondo (4-6%) */}
-            <div className="rounded-[var(--radius-card)] bg-[color-mix(in_oklab,var(--accent)_6%,transparent)] p-5">
+            {/* El "después" con la caja ornamentada — dispositivo ownable de FICHA-ARTE.md */}
+            <CajaOrnamentada>
               <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
                 {antesDespues.labelDespues}
               </p>
               <p className="mt-2 text-[15px] font-medium leading-snug text-[var(--text-primary)]">
                 {antesDespues.despues}
               </p>
-            </div>
+            </CajaOrnamentada>
           </motion.div>
         )}
       </motion.div>

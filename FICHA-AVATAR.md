@@ -63,6 +63,26 @@
 - Palabras que el copy DEBE usar: "nudo", "opresión", "alivio", "tránsito", "carta natal", "3 minutos" · Prohibidas: "sanación holística" vacía, "energía positiva" sin acción concreta
 - Ancla emocional: opresión en el pecho/nudo en la garganta → alivio físico real en 3 minutos (se repite en landing, onboarding y paywall)
 
+## Segundo avatar — Malestar somático sin duelo (adenda 2026-09-14)
+Aprobada por el usuario como AMPLIACIÓN del avatar principal, no reemplazo — Camila sigue siendo
+el avatar central. Este segundo perfil entra por la ruta "Salud Somática" del onboarding.
+- Nombre/arquetipo: alguien con molestias físicas recurrentes asociadas a estrés (migraña, nudo
+  en el cuello, gastritis) SIN un evento de pérdida o ruptura de por medio — busca alivio físico
+  y comprensión, no consuelo emocional de un duelo.
+- Problema urgente: el mismo mecanismo de opresión/tensión que Camila, pero disparado por estrés
+  cotidiano o ansiedad general, no por una pérdida puntual.
+- Deseo principal: alivio físico real y rápido + una explicación que le dé sentido al malestar,
+  sin promesas místicas ni lenguaje clínico (evitar sonar a diagnóstico médico — la app no es
+  tratamiento ni terapia, mismo límite que ya rige toda la FAQ).
+- Lenguaje: el mismo léxico permitido de arriba (nudo, opresión, alivio, tránsito, 3 minutos)
+  SIN el vocabulario específico de duelo/ruptura ("soltar", "sanar una pérdida", "ex").
+- Objeción propia: "no creo que esto sea solo astrología sin sustento" → respuesta: mecanismo
+  somático explicado igual que para Camila, sin prometer diagnóstico.
+- Tamaño de mercado (razón para abrir esta ruta): el universo de personas con dolor físico ligado
+  a estrés es mucho mayor que el de personas en duelo activo en un momento dado — hipótesis del
+  usuario, sin cifra propia verificada todavía (pendiente si se decide invertir en adquisición
+  específica para esta ruta).
+
 ## Cierre
 - INVENTARIO DE PRUEBA DÍA-1: N/A — sin beta previa; se construye demo con seed de datos realistas del avatar (Camila) antes de mostrar screenshots
 - ¿Hubo entrevistas del 44?: NO → hallazgos clave: N/A, se usó investigación secundaria (Reddit, reviews, research académico de astrología médica)

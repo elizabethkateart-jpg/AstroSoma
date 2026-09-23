@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Fraunces, Karla } from "next/font/google";
+import { Cormorant_Garamond, Karla } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Serif ornamentada tipo "carta astral" — referencia visual del usuario (2026-09-06):
+// wheel de zodiaco sol/luna, tipografía elegante de alto contraste. Reemplaza a Fraunces
+// manteniendo el mismo rol (--font-fraunces) para no tocar todo el kit de landing.
+const cormorant = Cormorant_Garamond({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["500", "600", "700"],
 });
 
 const karla = Karla({
@@ -24,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es"
-      className={`${fraunces.variable} ${karla.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${karla.variable} h-full antialiased`}
     >
       <body className="min-h-dvh flex flex-col">{children}</body>
     </html>

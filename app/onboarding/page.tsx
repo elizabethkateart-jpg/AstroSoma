@@ -2,23 +2,36 @@
 
 // ONBOARDING DE ASTROSOMA — Paso 2 de la Secuencia Maestra.
 // Deriva de FICHA-AVATAR.md (57): cada pregunta ecoa un dolor/deseo real, nunca decorativa.
-// Estructura: 4 preguntas (02B regla 1: una decisión por pantalla) + 2 reconocimientos (A5) +
-// loading "armando tu plan" (B) + resultado personalizado. Categoría bienestar/hábito → 4-8
-// pasos de alto rendimiento (02B).
+// Estructura (ampliada 2026-09-08 a pedido del usuario, comparando contra el patrón de
+// Nebula/The Pattern/Noom): 6 preguntas (02B regla 1: una decisión por pantalla) + 2
+// reconocimientos (A5, el 2º ahora dinámico — sirve de diferenciador si el usuario ya usó
+// otra app) + loading "armando tu plan" (B) + resultado personalizado = 10 pantallas.
+// Categoría bienestar/hábito → 4-8 pasos de alto rendimiento (02B); 10 se justifica por el
+// patrón de diferenciación (pregunta 5) sin inventar datos ni pedir fecha/hora/ciudad de
+// nacimiento real — eso requiere el motor de cálculo astrológico real, que es Paso 6
+// (servicios externos) y todavía no existe. Pedir esos datos ahora sin usarlos rompería la
+// promesa de privacidad de la propia app.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { ChevronLeft, X, HeartCrack, Waves, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles } from 'lucide-react';
+import { ChevronLeft, X, HeartCrack, Waves, HelpCircle, Sunrise, Sun, MoonStar, Moon, MessageCircleHeart, BedDouble, Sparkles, Briefcase, Brain, Weight, Zap, Lightbulb } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { CajaOrnamentada, GlifosDivisor, EstrellasFondo } from '@/components/landing/Ornamentos';
+import { useLecturaDiaria } from '@/lib/astro/useLecturaDiaria';
+import { guardarCategoriaDuelo, guardarCategoriaSomatica } from '@/lib/appLocal';
+
+type Intent = 'duelo' | 'somatica';
 
 type Respuestas = {
+  frecuencia?: string;
   situacion?: string;
   zona?: string;
   momento?: string;
+  experiencia?: string;
   meta?: string;
 };
 
-const TOTAL_PREGUNTAS = 4;
+const TOTAL_PREGUNTAS = 6;
 
 /* Dispositivo ownable de FICHA-ARTE.md: fase lunar como indicador de progreso —
    mismo disco-sombra-sobre-disco-iluminado de la landing (MensajeContraste.tsx),
@@ -39,8 +52,8 @@ function LunaProgreso({ frac }: { frac: number }) {
   );
 }
 
-function BarraProgreso({ paso }: { paso: number }) {
-  const frac = Math.min(1, paso / TOTAL_PREGUNTAS);
+function BarraProgreso({ paso, total = TOTAL_PREGUNTAS }: { paso: number; total?: number }) {
+  const frac = Math.min(1, paso / total);
   const pct = Math.max(8, Math.round(frac * 100));
   return (
     <div className="flex flex-1 items-center gap-3">
@@ -94,7 +107,7 @@ function ModalSalir({ onCancelar, onSalir }: { onCancelar: () => void; onSalir: 
   );
 }
 
-function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
+function Header({ paso, total, onAtras }: { paso: number; total?: number; onAtras?: () => void }) {
   const router = useRouter();
   const [modalAbierto, setModalAbierto] = useState(false);
   return (
@@ -107,7 +120,7 @@ function Header({ paso, onAtras }: { paso: number; onAtras?: () => void }) {
       >
         <ChevronLeft size={22} aria-hidden="true" />
       </button>
-      <BarraProgreso paso={paso} />
+      <BarraProgreso paso={paso} total={total} />
       <button
         type="button"
         aria-label="Salir del escaneo"
@@ -132,6 +145,7 @@ interface Opcion {
 
 function PantallaPregunta({
   paso,
+  total,
   pregunta,
   subcopy,
   opciones,
@@ -140,6 +154,7 @@ function PantallaPregunta({
   onAtras,
 }: {
   paso: number;
+  total?: number;
   pregunta: string;
   subcopy?: string;
   opciones: Opcion[];
@@ -160,14 +175,23 @@ function PantallaPregunta({
   }
 
   return (
-    <div className="flex min-h-dvh flex-col px-5">
-      <Header paso={paso} onAtras={onAtras} />
+    <div className="relative flex min-h-dvh flex-col overflow-hidden px-5">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(680px 680px at 50% 82%, color-mix(in oklab, var(--accent-2) 20%, transparent) 0%, transparent 65%)',
+        }}
+      />
+      <EstrellasFondo cantidad={22} opacidad={0.3} />
+      <Header paso={paso} total={total} onAtras={onAtras} />
       <motion.div
         initial={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         exit={reduce ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
         transition={{ duration: reduce ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-1 flex-col justify-start pt-[8vh]"
+        className="mt-12 flex flex-1 flex-col"
       >
         <h1 className="text-balance text-[30px] font-bold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)] [font-family:var(--font-display)]">
           {pregunta}
@@ -262,14 +286,18 @@ function PantallaPregunta({
 
 function PantallaReconocimiento({
   paso,
+  total,
   titulo,
   cuerpo,
+  notaCaja,
   onContinuar,
   onAtras,
 }: {
   paso: number;
+  total?: number;
   titulo: string;
   cuerpo: string;
+  notaCaja?: string;
   onContinuar: () => void;
   onAtras?: () => void;
 }) {
@@ -277,11 +305,12 @@ function PantallaReconocimiento({
   const d = (n: number) => (reduce ? 0 : n);
   return (
     <div className="flex min-h-dvh flex-col px-5">
-      <Header paso={paso} onAtras={onAtras} />
+      <Header paso={paso} total={total} onAtras={onAtras} />
+      <div className="flex flex-1 flex-col justify-center">
       <motion.div
         initial={{ opacity: reduce ? 1 : 0 }}
         animate={{ opacity: 1 }}
-        className="mt-[8vh] flex flex-col items-center text-center"
+        className="flex flex-col items-center text-center"
       >
         <motion.span
           initial={reduce ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
@@ -299,6 +328,14 @@ function PantallaReconocimiento({
         >
           {titulo}
         </motion.h1>
+        <motion.div
+          initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: d(0.25) }}
+          className="mt-3"
+        >
+          <GlifosDivisor />
+        </motion.div>
         <motion.p
           initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -307,6 +344,18 @@ function PantallaReconocimiento({
         >
           {cuerpo}
         </motion.p>
+        {notaCaja && (
+          <motion.div
+            initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: d(0.35) }}
+            className="mt-5 w-full max-w-[335px]"
+          >
+            <CajaOrnamentada>
+              <p className="text-[14px] font-semibold text-[var(--accent)]">{notaCaja}</p>
+            </CajaOrnamentada>
+          </motion.div>
+        )}
       </motion.div>
       <motion.button
         initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
@@ -319,7 +368,7 @@ function PantallaReconocimiento({
       >
         Continuar
       </motion.button>
-      <div className="flex-1" />
+      </div>
     </div>
   );
 }
@@ -378,6 +427,9 @@ function PantallaLoading({ onListo }: { onListo: () => void }) {
       <h1 className="mt-8 text-[22px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)]">
         Armando tu Escaneo Somático
       </h1>
+      <div className="mt-3">
+        <GlifosDivisor />
+      </div>
       <div className="mt-8 flex flex-col gap-3">
         {pasos.map((p, i) => (
           <p
@@ -414,9 +466,33 @@ function ConteoNumero({ hasta, reduce }: { hasta: number; reduce: boolean | null
   return <>{valor}</>;
 }
 
-function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
+function PantallaResultado({
+  respuestas,
+  intent,
+  onEditar,
+}: {
+  respuestas: Respuestas;
+  intent: Intent;
+  onEditar: () => void;
+}) {
   const reduce = useReducedMotion();
-  const zona = respuestas.zona ?? 'tu cuerpo';
+  const { estado: estadoLectura, lectura } = useLecturaDiaria();
+  // El título muestra la zona que el usuario sintió al responder; en cuanto el tránsito real
+  // (IA) resuelve, se actualiza a la zona astrológica — es el "revelado" que prometió la
+  // pantalla de carga ("Leyendo tu carta natal...").
+  const zona = (lectura?.zona ?? respuestas.zona ?? 'tu cuerpo').toLowerCase();
+
+  // Persistimos la categoría una sola vez — el Programa de Sanación (pantalla Duelo) la usa
+  // para no asumir que todos vienen de una ruptura de pareja, ni que todos vienen de un duelo.
+  useEffect(() => {
+    if (intent === 'somatica') {
+      guardarCategoriaSomatica();
+    } else {
+      guardarCategoriaDuelo(respuestas.situacion);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex min-h-dvh flex-col px-5 pt-10">
       <motion.div
@@ -428,8 +504,11 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
           Tu escaneo de hoy
         </p>
         <h1 className="mt-3 text-balance text-[30px] font-bold leading-[1.1] text-[var(--text-primary)] [font-family:var(--font-display)]">
-          Hoy tu tensión vive en {zona.toLowerCase()}
+          Hoy tu tensión vive en {zona}
         </h1>
+        <div className="mt-3">
+          <GlifosDivisor />
+        </div>
         <div className="respira-marco relative mt-8 flex size-40 items-center justify-center">
           <svg width="160" height="160" viewBox="0 0 160 160" className="-rotate-90" role="img" aria-label="72 por ciento de tensión detectada">
             <circle cx="80" cy="80" r="70" fill="none" strokeWidth="10" stroke="color-mix(in oklab, var(--accent) 16%, transparent)" />
@@ -447,13 +526,46 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
               transition={{ duration: reduce ? 0 : 1.1, ease: [0.16, 1, 0.3, 1], delay: reduce ? 0 : 0.2 }}
             />
           </svg>
-          <span className="absolute text-[40px] font-bold tabular-nums text-[var(--text-primary)] [font-family:var(--font-display)]">
+          <span className="absolute text-[40px] font-bold text-[var(--text-primary)] [font-family:var(--font-display)] [font-variant-numeric:lining-nums_tabular-nums]">
             <ConteoNumero hasta={72} reduce={reduce} />%
           </span>
         </div>
         <p className="mt-3 text-[13px] text-[var(--text-secondary)]">tensión detectada — lista para liberar</p>
 
         <div className="mt-8 w-full rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)] p-4 text-left">
+          {estadoLectura === 'cargando' && (
+            <div className="flex flex-col gap-2" aria-live="polite" aria-label="Preparando tu lectura de hoy">
+              <div className="h-3 w-24 animate-pulse rounded-full bg-[color-mix(in_oklab,var(--text-tertiary)_20%,transparent)]" />
+              <div className="h-4 w-full animate-pulse rounded-full bg-[color-mix(in_oklab,var(--text-tertiary)_20%,transparent)]" />
+              <div className="h-4 w-3/4 animate-pulse rounded-full bg-[color-mix(in_oklab,var(--text-tertiary)_20%,transparent)]" />
+            </div>
+          )}
+          {estadoLectura === 'lista' && lectura && (
+            <>
+              <p className="text-[11px] font-semibold text-[var(--accent-2)]">Tu tránsito de hoy</p>
+              <p className="mt-2 text-[15px] leading-snug text-[var(--text-primary)]">{lectura.mensaje}</p>
+
+              <div className="mt-4 border-t border-[color-mix(in_oklab,var(--text-tertiary)_18%,transparent)] pt-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[var(--text-tertiary)]">
+                  ¿Por qué hoy?
+                </p>
+                <p className="mt-1 text-[13.5px] leading-snug text-[var(--text-secondary)]">{lectura.porque}</p>
+              </div>
+
+              <div className="mt-4 flex items-start gap-2 rounded-[var(--radius-card)] bg-[color-mix(in_oklab,var(--accent)_8%,transparent)] p-3">
+                <Lightbulb size={16} color="var(--accent)" className="mt-0.5 shrink-0" aria-hidden="true" />
+                <p className="text-[13.5px] leading-snug text-[var(--text-primary)]">{lectura.consejo}</p>
+              </div>
+            </>
+          )}
+          {estadoLectura === 'error' && (
+            <p className="text-[13px] text-[var(--text-secondary)]" role="alert">
+              No pudimos preparar tu lectura de hoy. Tu escaneo sigue disponible igual.
+            </p>
+          )}
+        </div>
+
+        <div className="mt-4 w-full rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)] bg-[var(--surface)] p-4 text-left">
           <p className="text-[13px] text-[var(--text-secondary)]">
             {respuestas.meta
               ? `Tu meta de los próximos 30 días: `
@@ -473,15 +585,29 @@ function PantallaResultado({ respuestas }: { respuestas: Respuestas }) {
       >
         Ver mi plan de liberación
       </motion.a>
+      <motion.button
+        type="button"
+        initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: reduce ? 0 : 0.25 }}
+        onClick={onEditar}
+        className="mt-3 flex h-11 w-full items-center justify-center text-[13px] text-[var(--text-tertiary)] underline [touch-action:manipulation]"
+      >
+¿Algo no encajó? Vuelve a empezar el escaneo
+      </motion.button>
       <div className="flex-1" />
     </div>
   );
 }
 
-const PASOS = [
+// Ruta "Duelo" (rupturas/pérdidas/cambios/ansiedad) — la ruta original, sin tocar. Ver ESTADO.md
+// 2026-09-14: es adicional, no reemplazo — el duelo se queda, solo se amplía con una segunda ruta.
+const PASOS_DUELO = [
+  'pregunta-frecuencia',
   'pregunta-situacion',
   'pregunta-zona',
   'pregunta-momento',
+  'pregunta-experiencia',
   'reconocimiento-1',
   'pregunta-meta',
   'reconocimiento-2',
@@ -489,49 +615,150 @@ const PASOS = [
   'resultado',
 ] as const;
 
+// Ruta "Salud Somática" (malestar físico constante, sin duelo de por medio) — más corta:
+// zona corporal + frecuencia, directo al reconocimiento/revelación con el mismo motor de IA.
+const PASOS_SOMATICA = [
+  'pregunta-zona-somatica',
+  'pregunta-frecuencia-somatica',
+  'reconocimiento-1',
+  'loading',
+  'resultado',
+] as const;
+
+type PasoId = 'pregunta-intent' | (typeof PASOS_DUELO)[number] | (typeof PASOS_SOMATICA)[number];
+
+function pasosPara(intent: Intent | null): PasoId[] {
+  if (intent === 'somatica') return ['pregunta-intent', ...PASOS_SOMATICA];
+  if (intent === 'duelo') return ['pregunta-intent', ...PASOS_DUELO];
+  return ['pregunta-intent'];
+}
+
 export default function Onboarding() {
   const [indice, setIndice] = useState(0);
+  const [intent, setIntent] = useState<Intent | null>(null);
   const [respuestas, setRespuestas] = useState<Respuestas>({});
-  const paso = PASOS[indice];
+  const pasos = useMemo(() => pasosPara(intent), [intent]);
+  const paso = pasos[indice];
 
   function avanzar() {
-    setIndice((i) => Math.min(i + 1, PASOS.length - 1));
+    setIndice((i) => Math.min(i + 1, pasos.length - 1));
   }
   function retroceder() {
     setIndice((i) => Math.max(i - 1, 0));
+  }
+  function reiniciar() {
+    setIntent(null);
+    setRespuestas({});
+    setIndice(0);
   }
 
   return (
     <div className="min-h-dvh bg-[var(--bg)] text-[var(--text-primary)] [font-family:var(--font-body)]">
       <AnimatePresence mode="wait">
+        {paso === 'pregunta-intent' && (
+          <PantallaPregunta
+            key="intent"
+            paso={0}
+            total={intent === 'somatica' ? 3 : 7}
+            pregunta="¿Qué te trae por acá hoy?"
+            opciones={[
+              { icon: HeartCrack, label: 'Estoy procesando una pérdida o un cambio' },
+              { icon: Sparkles, label: 'Tengo un malestar físico constante' },
+            ]}
+            onElegir={(v) => {
+              setIntent(v.startsWith('Tengo un malestar') ? 'somatica' : 'duelo');
+              setIndice(1);
+            }}
+          />
+        )}
+        {paso === 'pregunta-zona-somatica' && (
+          <PantallaPregunta
+            key="zona-somatica"
+            paso={1}
+            total={3}
+            pregunta="¿En qué zona de tu cuerpo sientes mayor tensión o malestar recurrente?"
+            opciones={[
+              { icon: Brain, label: 'Cabeza / Rostro' },
+              { icon: MessageCircleHeart, label: 'Cuello / Garganta' },
+              { icon: HeartCrack, label: 'Pecho / Corazón' },
+              { icon: Waves, label: 'Estómago / Intestinos' },
+              { icon: Weight, label: 'Hombros / Espalda' },
+            ]}
+            onElegir={(v) => {
+              setRespuestas((r) => ({ ...r, zona: v }));
+              avanzar();
+            }}
+            onAtras={retroceder}
+          />
+        )}
+        {paso === 'pregunta-frecuencia-somatica' && (
+          <PantallaPregunta
+            key="frecuencia-somatica"
+            paso={2}
+            total={3}
+            pregunta="¿Con qué frecuencia experimentas esta molestia?"
+            opciones={[
+              { icon: Sunrise, label: 'Casi todos los días al despertar o antes de dormir' },
+              { icon: Zap, label: 'Aparece de golpe cuando me estreso o me abrumo' },
+              { icon: MoonStar, label: 'Es un malestar silencioso que no me deja estar en paz' },
+            ]}
+            onElegir={(v) => {
+              setRespuestas((r) => ({ ...r, frecuencia: v }));
+              avanzar();
+            }}
+            onAtras={retroceder}
+          />
+        )}
+        {paso === 'pregunta-frecuencia' && (
+          <PantallaPregunta
+            key="frecuencia"
+            paso={1}
+            total={7}
+            pregunta="¿Sientes una opresión en el pecho o un nudo en la garganta?"
+            opciones={[
+              { icon: HeartCrack, label: 'Sí, a diario' },
+              { icon: Waves, label: 'A veces' },
+              { icon: Moon, label: 'Solo por las noches' },
+            ]}
+            onElegir={(v) => {
+              setRespuestas((r) => ({ ...r, frecuencia: v }));
+              avanzar();
+            }}
+            onAtras={retroceder}
+          />
+        )}
         {paso === 'pregunta-situacion' && (
           <PantallaPregunta
             key="situacion"
-            paso={0}
+            paso={2}
+            total={7}
             pregunta="¿Qué está pasando en tu vida ahora mismo?"
             opciones={[
-              { icon: HeartCrack, label: 'Estoy pasando una ruptura o pérdida' },
-              { icon: Moon, label: 'Siento estrés o ansiedad sostenida' },
-              { icon: Sunrise, label: 'Quiero conocerme mejor a través de mi carta' },
+              { icon: HeartCrack, label: 'Rompí con mi pareja' },
+              { icon: MoonStar, label: 'Perdí a alguien que quería' },
+              { icon: Briefcase, label: 'Viví un cambio fuerte (trabajo, mudanza...)' },
+              { icon: Waves, label: 'Siento estrés o ansiedad sostenida' },
             ]}
             otraCosa
             onElegir={(v) => {
               setRespuestas((r) => ({ ...r, situacion: v }));
               avanzar();
             }}
+            onAtras={retroceder}
           />
         )}
         {paso === 'pregunta-zona' && (
           <PantallaPregunta
             key="zona"
-            paso={1}
+            paso={3}
+            total={7}
             pregunta="¿Dónde sientes la tensión ahora mismo?"
             subcopy="Esto define tu primer ejercicio de hoy"
             opciones={[
               { icon: HeartCrack, label: 'Pecho' },
               { icon: MessageCircleHeart, label: 'Garganta' },
               { icon: Waves, label: 'Estómago' },
-              { icon: HelpCircle, label: 'No estoy segura' },
+              { icon: HelpCircle, label: 'No lo tengo claro' },
             ]}
             onElegir={(v) => {
               setRespuestas((r) => ({ ...r, zona: v }));
@@ -543,7 +770,8 @@ export default function Onboarding() {
         {paso === 'pregunta-momento' && (
           <PantallaPregunta
             key="momento"
-            paso={2}
+            paso={4}
+            total={7}
             pregunta="¿Cuándo te pega más fuerte?"
             opciones={[
               { icon: Sunrise, label: 'Al despertar' },
@@ -558,15 +786,48 @@ export default function Onboarding() {
             onAtras={retroceder}
           />
         )}
+        {paso === 'pregunta-experiencia' && (
+          <PantallaPregunta
+            key="experiencia"
+            paso={5}
+            total={7}
+            pregunta="¿Ya usaste otras apps de astrología antes?"
+            opciones={[
+              { icon: Sparkles, label: 'Sí, ya probé otras' },
+              { icon: HelpCircle, label: 'No, esta es la primera' },
+            ]}
+            onElegir={(v) => {
+              setRespuestas((r) => ({ ...r, experiencia: v }));
+              avanzar();
+            }}
+            onAtras={retroceder}
+          />
+        )}
         {paso === 'reconocimiento-1' && (
           <PantallaReconocimiento
             key="reco1"
-            paso={3}
-            titulo="Ese nudo no es casualidad"
+            paso={intent === 'somatica' ? 3 : 6}
+            total={intent === 'somatica' ? 3 : 7}
+            titulo={
+              intent === 'somatica'
+                ? 'Tu cuerpo está procesando algo que tu mente aún no ha integrado'
+                : respuestas.experiencia?.includes('Sí')
+                  ? 'AstroSoma es distinto'
+                  : 'Ese nudo no es casualidad'
+            }
             cuerpo={
-              respuestas.situacion?.includes('ruptura')
-                ? 'Tu cuerpo guarda lo que tu cabeza no suelta. Aquí vas a soltarlo.'
-                : 'Esa tensión tiene un patrón. Hoy vas a soltarla.'
+              intent === 'somatica'
+                ? 'Ese malestar no es al azar. Vamos a mostrarte de dónde viene y cómo aliviarlo hoy.'
+                : respuestas.experiencia?.includes('Sí')
+                  ? 'Entendemos. Aquí no hay promesas vacías — solo tu tránsito de hoy y un ejercicio real de 3 minutos.'
+                  : respuestas.situacion === 'Rompí con mi pareja' || respuestas.situacion === 'Perdí a alguien que quería'
+                    ? 'Tu cuerpo guarda lo que tu cabeza no suelta. Aquí vas a soltarlo.'
+                    : 'Esa tensión tiene un patrón. Hoy vas a soltarla.'
+            }
+            notaCaja={
+              intent !== 'somatica' && respuestas.experiencia?.includes('Sí')
+                ? 'Un espacio privado y seguro para sanar.'
+                : undefined
             }
             onContinuar={avanzar}
             onAtras={retroceder}
@@ -575,10 +836,11 @@ export default function Onboarding() {
         {paso === 'pregunta-meta' && (
           <PantallaPregunta
             key="meta"
-            paso={3}
+            paso={6}
+            total={7}
             pregunta="¿Qué te gustaría lograr en 30 días?"
             opciones={[
-              { icon: HeartCrack, label: 'Dejar de contactar a mi ex' },
+              { icon: HeartCrack, label: 'Dejar de contactar a quien me duele' },
               { icon: BedDouble, label: 'Dormir sin darle vueltas' },
               { icon: Waves, label: 'Sentir calma todos los días' },
               { icon: Sparkles, label: 'Entender mi carta natal' },
@@ -594,7 +856,8 @@ export default function Onboarding() {
         {paso === 'reconocimiento-2' && (
           <PantallaReconocimiento
             key="reco2"
-            paso={4}
+            paso={7}
+            total={7}
             titulo="Ya diste el paso que la mayoría evita"
             cuerpo="Nombrar tu dolor y tu meta es lo que otras apps nunca preguntan."
             onContinuar={avanzar}
@@ -602,7 +865,9 @@ export default function Onboarding() {
           />
         )}
         {paso === 'loading' && <PantallaLoading key="loading" onListo={avanzar} />}
-        {paso === 'resultado' && <PantallaResultado key="resultado" respuestas={respuestas} />}
+        {paso === 'resultado' && (
+          <PantallaResultado key="resultado" respuestas={respuestas} intent={intent ?? 'duelo'} onEditar={reiniciar} />
+        )}
       </AnimatePresence>
     </div>
   );

@@ -8,6 +8,7 @@
 
 import { motion } from 'motion/react';
 import { Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
+import { CajaOrnamentada, GlifosDivisor } from './Ornamentos';
 
 /* Dispositivo ownable de FICHA-ARTE.md: fase lunar como firma visual de marca —
    8 fases, de creciente a llena y de vuelta. Motivo decorativo propio de AstroSoma
@@ -56,6 +57,9 @@ export function MensajeContraste() {
           <h2 className="text-balance text-3xl font-bold leading-tight text-[var(--text-primary)] [font-family:var(--font-display)] md:text-4xl">
             Mismo tránsito, otro tono
           </h2>
+          <div className="mt-4">
+            <GlifosDivisor />
+          </div>
         </motion.div>
 
         <motion.div variants={item} className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
@@ -67,14 +71,14 @@ export function MensajeContraste() {
               &ldquo;Mercurio retrógrado en tu casa 7 anuncia conflictos y traiciones. Cuidado hoy.&rdquo;
             </p>
           </div>
-          <div className="rounded-[var(--radius-card)] border border-[color-mix(in_oklab,var(--accent)_35%,transparent)] bg-[var(--surface)] p-4">
+          <CajaOrnamentada>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--accent)]">
               AstroSoma
             </p>
             <p className="mt-2 text-sm leading-snug text-[var(--text-primary)] italic">
               &ldquo;Hoy tu tránsito acumula tensión en el pecho. Aquí tienes 3 minutos para soltarla.&rdquo;
             </p>
-          </div>
+          </CajaOrnamentada>
         </motion.div>
       </motion.div>
     </SectionShell>

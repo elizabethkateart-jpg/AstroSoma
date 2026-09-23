@@ -11,6 +11,7 @@
 
 import { motion } from 'motion/react';
 import { CtaButton, useReveal, VIEWPORT_ONCE } from './ui';
+import { EstrellasFondo } from './Ornamentos';
 import { MarkedCopy, warnCopy } from './MarkedCopy';
 
 export interface CtaFinalProps {
@@ -25,6 +26,8 @@ export interface CtaFinalProps {
   recap?: string;
   /** El PS de la oferta Hormozi — máx 4 líneas (~55 palabras, warn). */
   psMarked?: string;
+  /** Imagen atmosférica opcional de fondo — nunca compite con el CTA (overlay oscuro encima). */
+  imagenFondoSrc?: string;
   /** default 'cta-final' — lo observa StickyCtaMobile para ocultarse. */
   id?: string;
 }
@@ -36,6 +39,7 @@ export function CtaFinal({
   ctaHref,
   recap,
   psMarked,
+  imagenFondoSrc,
   id = 'cta-final',
 }: CtaFinalProps) {
   warnCopy('CtaFinal → h2', h2Marked, 8);
@@ -50,6 +54,22 @@ export function CtaFinal({
       className="relative overflow-hidden py-20 md:py-24"
       style={{ background: 'var(--text-primary)' }}
     >
+      {imagenFondoSrc && (
+        <>
+          <img
+            src={imagenFondoSrc}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+          />
+          {/* Overlay oscuro — la imagen nunca puede bajar el contraste del CTA */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+            style={{ background: 'color-mix(in oklab, var(--text-primary) 78%, transparent)' }}
+          />
+        </>
+      )}
       {/* Profundidad también en el bloque invertido: radial sutil del acento */}
       <div
         aria-hidden="true"
@@ -59,6 +79,7 @@ export function CtaFinal({
             'radial-gradient(720px 420px at 50% 0%, color-mix(in oklab, var(--accent) 16%, transparent) 0%, transparent 60%)',
         }}
       />
+      <EstrellasFondo cantidad={16} opacidad={0.55} />
 
       <motion.div
         variants={contenedor}

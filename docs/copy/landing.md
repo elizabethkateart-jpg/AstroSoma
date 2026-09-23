@@ -20,7 +20,7 @@
 1. (HeartCrack) `¿Sientes un nudo en el pecho o la garganta que no baja?` — Dolor #1
 2. (BellOff) `¿Las apps de astrología te llenan de ansiedad en vez de calma?` — Dolor #2 / objeción #1
 3. (Moon) `¿Te despiertas de madrugada con ganas de escribirle a tu ex?` — Dolor #2 (pánico nocturno)
-4. (Anchor) `¿Sientes miedo de quedarte estancada en este dolor para siempre?` — Dolor #5 (identidad)
+4. (Anchor) `¿Sientes miedo de que este dolor se quede para siempre?` — Dolor #5 (identidad; lenguaje neutro en género, 2026-09-08)
 
 ## 3. AGITACIÓN
 - `Cada noche que pasa sin liberar esa tensión, [b]se acumula más estrés en tu cuerpo[/b].`
@@ -36,14 +36,14 @@
   — traza a FICHA-MODELO §7 (mecanismo derivado de Co-Star + queja #1 corregida)
 - Pasos: 1) Escaneas — "Un tránsito de tu carta natal revela tu zona de tensión de hoy."
   2) Liberas — "Sigues un ejercicio guiado de respiración de exactamente 3 minutos."
-  3) Avanzas — "Ves tu progreso día a día en tu Programa de Ruptura."
+  3) Avanzas — "Ves tu progreso día a día en tu Programa de Sanación."
 - Antes/Después: Antes "Un nudo en el pecho y una notificación que te asusta más."
   Después "Sabes exactamente dónde soltarlo y ya lo hiciste en 3 minutos."
 
 ## 5. LA APP POR DENTRO
 - tituloMarked: `Tu ritual de cada noche, [acento]ya decidido[/acento]`
 - Frames: Hoy (tu escaneo de hoy) · Bienvenida (cómo te pregunta al empezar) ·
-  Mecanismo (tu ejercicio de 3 minutos) · Duelo (tu Programa de Ruptura día a día) ·
+  Mecanismo (tu ejercicio de 3 minutos) · Duelo (tu Programa de Sanación día a día) ·
   Plan (así eliges tu plan)
 - Visuales: mockups estáticos reales en `public/mockups/*.png` (generados desde el tour de
   dirección de arte ya aprobado, `vista-previa-app.html`), con badge "Vista previa de diseño" en

@@ -17,19 +17,26 @@
    ============================================================================ */
 
 :root {
-  /* ── SUPERFICIES (3 niveles: base / elevada / hundida) — FICHA-ARTE.md AstroSoma, Opción B "Ritual Nocturno" ── */
-  --bg: #211609;              /* café oscuro (ajustado de negro puro a pedido del usuario) */
-  --surface: #392616;         /* superficie elevada — cards (contraste subido tras hallazgo del revisor) */
-  --surface-2: #160e05;       /* hundido */
+  /* ── SUPERFICIES (3 niveles: base / elevada / hundida) — FICHA-ARTE.md AstroSoma, Opción B
+     "Ritual Nocturno", repaletizada a azul marino a pedido del usuario (2026-09-09) tras probar
+     una referencia de carta natal — el dorado se mantiene EXACTO, solo cambia la base. ── */
+  --bg: #0f2436;               /* azul marino oscuro (antes café #211609) */
+  --surface: #1b3a4d;          /* superficie elevada — cards */
+  --surface-2: #081420;        /* hundido */
 
   /* ── TEXTO ── */
   --text-primary: #f0eae2;
-  --text-secondary: #a9977f;
-  --text-tertiary: #93816a;   /* ≥4.5:1 sobre --bg #211609 (texto claro sobre fondo muy oscuro) */
+  --text-secondary: #9fb4c2;   /* azul-gris cálido (antes beige #a9977f, ajustado para AA sobre azul) */
+  --text-tertiary: #7f97a8;    /* ≥4.5:1 sobre --bg #0f2436 */
 
-  /* ── MARCA ── */
-  --accent: #c4a177;          /* beige-dorado (aclarado de ámbar a pedido del usuario) */
-  --accent-2: #8c4a3c;        /* burdeos — 2ª nota (Programa de Duelo/Ruptura) */
+  /* ── MARCA (sin cambios — el mismo dorado ya aprobado) ── */
+  --accent: #c4a177;          /* beige-dorado */
+  --accent-2: #d08b5e;        /* ámbar-terracota aclarado (antes #8c4a3c, muy poco contraste sobre el nuevo azul marino) — 2ª nota (Programa de Duelo/Ruptura) */
+
+  /* ── SEMÁNTICOS (documentados en FICHA-ARTE.md, nunca cableados a tokens.css hasta ahora) ── */
+  --success: #7a9e6e;         /* verde salvia — celebraciones de logro (nunca verde chillón) */
+  --error: #b85c4d;           /* terracota-rojo */
+  --warning: #d4a24c;
 
   /* ── FORMA ── */
   --radius-card: 20px;
@@ -39,12 +46,13 @@
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-body: var(--font-karla), 'Segoe UI', sans-serif;
 
-  /* ── SOMBRAS con el tinte café de la marca ── */
-  --shadow-1: 0 1px 2px rgb(33 22 9 / 0.35);
-  --shadow-2: 0 12px 32px -12px rgb(33 22 9 / 0.55);
+  /* ── SOMBRAS con el tinte azul de la marca (antes café) ── */
+  --shadow-1: 0 1px 2px rgb(5 12 20 / 0.4);
+  --shadow-2: 0 12px 32px -12px rgb(5 12 20 / 0.6);
 
   /* ── DERIVADOS (no se tocan: se recalculan solos desde --accent) ── */
   --chip-bg: color-mix(in oklab, var(--accent) 10%, transparent);
+
 }
 
 /* ============================================================================

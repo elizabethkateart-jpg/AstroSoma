@@ -42,3 +42,4 @@ next-env.d.ts
 
 # tsc incremental build cache (SO hooks)
 .tsbuildinfo-hook
+.claude/scheduled_tasks.lock

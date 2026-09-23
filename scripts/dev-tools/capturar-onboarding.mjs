@@ -26,39 +26,49 @@ async function clickText(txt) {
 }
 
 await new Promise(r => setTimeout(r, 400));
-await page.screenshot({ path: 'docs/revisiones/onboarding-1-situacion.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-01-frecuencia.png' });
+
+await clickText('a diario');
+await waitForButton('ruptura');
+await new Promise(r => setTimeout(r, 300));
+await page.screenshot({ path: 'docs/revisiones/onboarding-02-situacion.png' });
 
 await clickText('ruptura');
 await waitForButton('Pecho');
 await new Promise(r => setTimeout(r, 300));
-await page.screenshot({ path: 'docs/revisiones/onboarding-2-zona.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-03-zona.png' });
 
 await clickText('Pecho');
 await waitForButton('madrugada');
 await new Promise(r => setTimeout(r, 300));
-await page.screenshot({ path: 'docs/revisiones/onboarding-3-momento.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-04-momento.png' });
 
 await clickText('madrugada');
+await waitForButton('probé otras');
+await new Promise(r => setTimeout(r, 300));
+await page.screenshot({ path: 'docs/revisiones/onboarding-05-experiencia.png' });
+
+await clickText('probé otras');
 await waitForButton('Continuar');
 await new Promise(r => setTimeout(r, 300));
-await page.screenshot({ path: 'docs/revisiones/onboarding-4-reconocimiento1.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-06-reconocimiento1.png' });
 
 await clickText('Continuar');
 await waitForButton('Dejar de contactar');
 await new Promise(r => setTimeout(r, 300));
-await page.screenshot({ path: 'docs/revisiones/onboarding-5-meta.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-07-meta.png' });
 
 await clickText('Dejar de contactar');
 await waitForButton('Continuar');
 await new Promise(r => setTimeout(r, 300));
-await page.screenshot({ path: 'docs/revisiones/onboarding-6-reconocimiento2.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-08-reconocimiento2.png' });
 
 await clickText('Continuar');
 await new Promise(r => setTimeout(r, 400));
-await page.screenshot({ path: 'docs/revisiones/onboarding-7-loading.png' });
+await page.screenshot({ path: 'docs/revisiones/onboarding-09-loading.png' });
 
-await new Promise(r => setTimeout(r, 3200));
-await page.screenshot({ path: 'docs/revisiones/onboarding-8-resultado.png' });
+await new Promise(r => setTimeout(r, 1200));
+await page.screenshot({ path: 'docs/revisiones/onboarding-10-resultado.png' });
 
 await browser.close();
 console.log('done');

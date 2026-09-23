@@ -23,10 +23,12 @@ export interface ProblemaProps {
   titulo?: string;
   /** 3-5 preguntas, cada una trazada a un dolor de FICHA-AVATAR.md. */
   preguntas: PreguntaProblema[];
+  /** Video corto (silencioso, loop) que ilustra el dolor antes de las preguntas — opcional. */
+  videoSrc?: string;
   id?: string;
 }
 
-export function Problema({ titulo, preguntas, id }: ProblemaProps) {
+export function Problema({ titulo, preguntas, videoSrc, id }: ProblemaProps) {
   warnRango('Problema → preguntas', preguntas.length, 3, 5);
   preguntas.forEach((p, i) => warnCopy(`Problema → pregunta ${i + 1}`, p.textoMarked, 12));
   const { contenedor, item } = useReveal();
@@ -47,6 +49,22 @@ export function Problema({ titulo, preguntas, id }: ProblemaProps) {
           >
             {titulo}
           </motion.h2>
+        )}
+        {videoSrc && (
+          <motion.div
+            variants={item}
+            className="respira-marco relative mb-8 overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-2)]"
+          >
+            <video
+              src={videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden="true"
+              className="aspect-video w-full object-cover"
+            />
+          </motion.div>
         )}
         <ul className="flex flex-col gap-4">
           {preguntas.map((p, i) => (

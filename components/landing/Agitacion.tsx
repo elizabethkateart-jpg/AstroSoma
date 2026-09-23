@@ -8,6 +8,7 @@
 // (un solo movimiento visual, sin separador). Cero decoración de miedo.
 
 import { motion } from 'motion/react';
+import { ArrowDown } from 'lucide-react';
 import { SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
 import { MarkedCopy, warnCopy, warnRango } from './MarkedCopy';
 
@@ -20,6 +21,10 @@ export interface AgitacionProps {
     hoy: string;
     labelFuturo: string;
     futuro: string;
+    /** Línea corta que cierra la caja empujando hacia el cambio — no es botón, es puente a §4. */
+    puente?: string;
+    /** Imagen opcional bajo el puente — el momento de "cortar" y decidir soltar. */
+    imagenSrc?: string;
   };
   id?: string;
 }
@@ -51,20 +56,35 @@ export function Agitacion({ frases, contraste, id }: AgitacionProps) {
         </div>
 
         {contraste && (
-          <motion.div variants={item} className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="rounded-[var(--radius-card)] bg-[var(--bg)] p-5">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
-                {contraste.labelHoy}
-              </p>
-              <p className="mt-2 text-[15px] leading-snug text-[var(--text-primary)]">{contraste.hoy}</p>
+          <motion.div variants={item} className="mt-8 rounded-[var(--radius-card)] bg-[var(--bg)] p-5">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
+              {contraste.labelHoy}
+            </p>
+            <p className="mt-2 text-[15px] leading-snug text-[var(--text-primary)]">{contraste.hoy}</p>
+
+            <div className="my-4 flex items-center gap-3" aria-hidden="true">
+              <span className="h-px flex-1 bg-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)]" />
+              <ArrowDown size={16} className="shrink-0 text-[var(--text-tertiary)]" />
+              <span className="h-px flex-1 bg-[color-mix(in_oklab,var(--text-tertiary)_25%,transparent)]" />
             </div>
-            {/* "si nada cambia": más apagado/frío — el peso lo pone el copy, no el rojo */}
-            <div className="rounded-[var(--radius-card)] bg-[var(--surface-2)] p-5">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
-                {contraste.labelFuturo}
+
+            {/* "si nada cambia": mismo tono apagado — el peso lo pone el copy, no el rojo */}
+            <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--text-tertiary)]">
+              {contraste.labelFuturo}
+            </p>
+            <p className="mt-2 text-[15px] leading-snug text-[var(--text-secondary)]">{contraste.futuro}</p>
+
+            {contraste.puente && (
+              <p className="mt-5 border-t border-[color-mix(in_oklab,var(--text-tertiary)_20%,transparent)] pt-4 text-[15px] font-semibold text-[var(--accent)]">
+                {contraste.puente}
               </p>
-              <p className="mt-2 text-[15px] leading-snug text-[var(--text-secondary)]">{contraste.futuro}</p>
-            </div>
+            )}
+
+            {contraste.imagenSrc && (
+              <div className="respira-marco relative mt-4 overflow-hidden rounded-[var(--radius-card)]">
+                <img src={contraste.imagenSrc} alt="" aria-hidden="true" className="aspect-[16/10] w-full object-cover" />
+              </div>
+            )}
           </motion.div>
         )}
       </motion.div>

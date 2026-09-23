@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Camera } from 'lucide-react';
 import { CtaButton } from './ui';
+import { EstrellasFondo } from './Ornamentos';
+import { Isotipo } from './Isotipo';
 import { MarkedCopy, truncarMarcado, warnCopy } from './MarkedCopy';
 
 export interface HeroProps {
@@ -66,12 +68,13 @@ export function Hero({
             'radial-gradient(640px 420px at 100% 0%, color-mix(in oklab, var(--accent-2) 6%, transparent) 0%, transparent 55%)',
         }}
       />
+      <EstrellasFondo cantidad={22} />
 
       <div className="mx-auto w-full max-w-[1140px] px-5">
         {/* Header 64px: marca a la izquierda, SOLO "Entrar" terciario a la derecha (19) */}
         <header className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-[16px] font-semibold text-[var(--text-primary)]">
-            {logo ?? <span aria-hidden="true" className="size-6 rounded-[8px] bg-[var(--accent)]" />}
+            {logo ?? <Isotipo size={24} />}
             {appName}
           </Link>
           {loginHref && (
@@ -88,8 +91,10 @@ export function Hero({
           transition={{ duration: 0.3 }}
           className="mx-auto flex max-w-[820px] flex-col items-center pt-10 text-center md:pt-16"
         >
+          <Isotipo size={56} />
+
           {/* H1: bold completo por defecto; el acento lo pone el [acento] del copy */}
-          <h1 className="text-balance text-[40px] font-bold leading-[1.08] tracking-[-0.01em] text-[var(--text-primary)] [font-family:var(--font-display)] md:text-[60px]">
+          <h1 className="mt-4 text-balance text-[40px] font-bold leading-[1.08] tracking-[-0.01em] text-[var(--text-primary)] [font-family:var(--font-display)] md:text-[60px]">
             <MarkedCopy text={h1Marked} />
           </h1>
 

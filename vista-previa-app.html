@@ -6,7 +6,7 @@
 <title>Tour de la app — AstroSoma (Opción B · Ritual Nocturno)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Karla:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Karla:wght@400..700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -31,9 +31,9 @@
   .rotulo { text-align: center; font-size: 12.5px; font-weight: 700; color: #3a3a40; }
 
   :root {
-    --bg: #211609; --surface: #2E2013; --text-1: #F0EAE2; --text-2: #A9977F;
-    --accent: #C4A177; --accent2: #8C4A3C; --radius-card: 16px; --radius-btn: 12px;
-    --font-display: 'Fraunces', serif; --font-body: 'Karla', sans-serif;
+    --bg: #0F2436; --surface: #1B3A4D; --text-1: #F0EAE2; --text-2: #9FB4C2;
+    --accent: #C4A177; --accent2: #D08B5E; --radius-card: 16px; --radius-btn: 12px;
+    --font-display: 'Cormorant Garamond', serif; --font-body: 'Karla', sans-serif;
   }
   .telefono { width: 300px; margin: 0 auto; aspect-ratio: 9 / 19.5; border: 10px solid #101014; border-radius: 44px; box-shadow: 0 24px 60px rgb(20 18 24 / 0.28); overflow: hidden; position: relative; display: flex; flex-direction: column; background: var(--bg); }
   .statusbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px 6px; font-size: 12.5px; font-weight: 600; color: var(--text-1); }
@@ -44,7 +44,7 @@
   .tabbar .tab-chip { display: flex; align-items: center; justify-content: center; width: 34px; height: 24px; border-radius: 8px; }
   .tabbar a.activa { color: var(--accent); }
   .tabbar a.activa .tab-chip { background: color-mix(in oklab, var(--accent) 14%, transparent); }
-  .cta { display: flex; align-items: center; justify-content: center; height: 46px; font-size: 14.5px; font-weight: 700; letter-spacing: 0.01em; border-radius: var(--radius-btn); background: var(--accent); color: #241a0d; box-shadow: 0 8px 22px color-mix(in oklab, var(--accent) 30%, transparent); }
+  .cta { display: flex; align-items: center; justify-content: center; text-align: center; height: 46px; font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: 0.01em; border-radius: var(--radius-btn); background: var(--accent); color: #241a0d; box-shadow: 0 8px 22px color-mix(in oklab, var(--accent) 30%, transparent); }
 
   /* Vista 1 — HOY */
   .encabezado-b { margin-top: 12px; text-align: center; }
@@ -52,14 +52,21 @@
   h3.titulo-b { font-family: var(--font-display); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; margin-top: 2px; }
   .anillo-wrap { margin: 12px auto 0; position: relative; width: 116px; height: 116px; }
   .anillo-wrap .centro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .anillo-wrap .pct { font-family: var(--font-display); font-size: 23px; font-weight: 700; }
+  .anillo-wrap .pct { font-family: var(--font-display); font-size: 23px; font-weight: 700; font-variant-numeric: lining-nums; }
   .anillo-wrap .pct-label { font-size: 9.5px; color: var(--text-2); font-weight: 600; text-align: center; max-width: 84px; }
   .grid2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
   .tile { background: var(--surface); border-radius: var(--radius-card); border: 1px solid rgb(255 255 255 / 0.07); padding: 10px; }
   .tile.destacada { border: 1.5px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, linear-gradient(135deg, color-mix(in oklab, var(--accent2) 55%, transparent), transparent 60%) border-box; }
   .tile .t-label { font-size: 9.5px; font-weight: 600; color: var(--text-2); }
-  .tile .t-dato { margin-top: 5px; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  .tile .t-dato { margin-top: 5px; font-family: var(--font-display); font-size: 17px; font-weight: 700; font-variant-numeric: lining-nums; }
   .tile .t-dato small { font-size: 10px; color: var(--text-2); font-weight: 600; }
+
+  /* Ornamentos astrológicos compartidos (glifos + caja) — mismo lenguaje visual
+     de components/landing/Ornamentos.tsx, adaptado a la escala del teléfono. */
+  .glifos-mini { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; font-size: 11px; letter-spacing: 0.2em; color: var(--accent); }
+  .glifos-mini .linea { width: 20px; height: 1px; background: color-mix(in oklab, var(--accent) 45%, transparent); }
+  .caja-mini { position: relative; margin-top: 16px; border-radius: var(--radius-card); border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent); background: color-mix(in oklab, var(--surface) 92%, transparent); padding: 14px 16px; }
+  .caja-mini::before { content: ''; position: absolute; top: -4px; left: 50%; width: 7px; height: 7px; transform: translateX(-50%) rotate(45deg); background: var(--bg); border-top: 1px solid color-mix(in oklab, var(--accent) 60%, transparent); border-left: 1px solid color-mix(in oklab, var(--accent) 60%, transparent); }
 
   /* Vista 2 — ONBOARDING */
   .ob-progreso { display: flex; gap: 5px; margin-top: 14px; }
@@ -94,7 +101,7 @@
     border: 1.5px solid color-mix(in oklab, var(--accent) 45%, transparent); }
   .respiro span { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--accent); }
   .mec-instruccion { margin-top: 18px; text-align: center; font-size: 12.5px; color: var(--text-2); line-height: 1.6; }
-  .mec-tiempo { margin-top: 10px; text-align: center; font-family: var(--font-display); font-size: 26px; font-weight: 700; }
+  .mec-tiempo { margin-top: 10px; text-align: center; font-family: var(--font-display); font-size: 26px; font-weight: 700; font-variant-numeric: lining-nums; }
 
   /* Vista 5 — MÓDULO DE DUELO */
   .duelo-header { margin-top: 14px; }
@@ -129,8 +136,9 @@
       <div class="statusbar"><span>23:14</span><span>●●●</span></div>
       <div class="pantalla">
         <div class="encabezado-b">
-          <p class="periodo">Noche 12 · Programa de Ruptura</p>
+          <p class="periodo">Noche 12 · Programa de Sanación</p>
           <h3 class="titulo-b">Tu ritual de esta noche</h3>
+          <div class="glifos-mini" aria-hidden="true"><span class="linea"></span>♋︎ ☽︎ ♓︎<span class="linea"></span></div>
         </div>
         <div class="anillo-wrap">
           <svg width="116" height="116" viewBox="0 0 116 116" role="img" aria-label="72 por ciento">
@@ -140,7 +148,7 @@
           <div class="centro"><span class="pct">72%</span><span class="pct-label">tensión liberada hoy</span></div>
         </div>
         <div class="grid2x2">
-          <div class="tile destacada"><p class="t-label">Sin contactar a tu ex</p><p class="t-dato">12<small> días</small></p></div>
+          <div class="tile destacada"><p class="t-label">Distancia de lo que duele</p><p class="t-dato">12<small> días</small></p></div>
           <div class="tile"><p class="t-label">Respiración hoy</p><p class="t-dato">6<small> min</small></p></div>
           <div class="tile"><p class="t-label">Fase del duelo</p><p class="t-dato">12<small>/30</small></p></div>
           <div class="tile"><p class="t-label">Calma esta noche</p><p class="t-dato">Alta</p></div>
@@ -184,7 +192,7 @@
       <div class="statusbar"><span>9:41</span><span>●●●</span></div>
       <div class="pantalla">
         <p class="pw-badge">Tu resultado está listo</p>
-        <p class="pw-titulo">Desbloquea tu Programa de Ruptura completo</p>
+        <p class="pw-titulo">Desbloquea tu Programa de Sanación completo</p>
         <div class="pw-beneficios">
           <div class="pw-beneficio">✦ <span><b>Programa guiado de 30 días</b> para tu duelo actual</span></div>
           <div class="pw-beneficio">✦ <span><b>Ejercicios ilimitados</b> de liberación somática</span></div>
@@ -210,10 +218,13 @@
         <div class="mec-cabecera">
           <p class="fase">Liberación somática · Pecho</p>
           <h3 class="mec-titulo">Respira conmigo</h3>
+          <div class="glifos-mini" aria-hidden="true"><span class="linea"></span>☉︎ ☽︎ ♏︎<span class="linea"></span></div>
         </div>
         <div class="respiro"><span>Inhala…</span></div>
         <p class="mec-tiempo">1:48</p>
-        <p class="mec-instruccion">Deja que el aire baje hasta donde sientes<br>la opresión. Suelta despacio, sin forzar.</p>
+        <div class="caja-mini">
+          <p class="mec-instruccion" style="margin-top:0">Deja que el aire baje hasta donde<br>sientes la opresión. Suelta despacio,<br>sin forzar.</p>
+        </div>
       </div>
       <div class="home-indicator"></div>
     </div>
@@ -226,11 +237,11 @@
       <div class="statusbar"><span>9:41</span><span>●●●</span></div>
       <div class="pantalla">
         <div class="duelo-header">
-          <p class="etapa">Programa de Ruptura</p>
+          <p class="etapa">Programa de Sanación</p>
           <h3 class="duelo-titulo">Día 12 de 30</h3>
         </div>
         <div class="duelo-barra"><div></div></div>
-        <p class="duelo-nota">12 días sin contactar a tu ex · vas bien</p>
+        <p class="duelo-nota">12 días sin contacto · vas bien</p>
         <div class="duelo-lista">
           <div class="duelo-item"><span class="num">✓</span> Semana 1 · Reconocer dónde vive el dolor</div>
           <div class="duelo-item"><span class="num">2</span> Semana 2 · Soltar el impulso de contacto</div>

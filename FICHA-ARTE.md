@@ -18,8 +18,15 @@
 - Compilación: spring bounce 0.15 (suave, sin rebote juguetón) · duración base 320ms (ritmo de respiración, más lento que un app de productividad) · exclamaciones máx 1/pantalla · celebración nivel N1 (sutil — un fade cálido, no confetti) · radio tendencial 20px (suave, orgánico)
 
 ## Brand kit final
-- Fondo: `#211609` (café oscuro — ajustado a pedido del usuario, más cálido que negro puro; ritual nocturno, coherente con la escena de la 1AM/3AM del avatar) · Superficie: `#392616` (contraste subido tras hallazgo del revisor visual — el valor original `#2E2013` se leía casi igual al fondo en scroll largo) · Hundido: `#160E05` · Texto 1º: `#F0EAE2` · Texto 2º: `#A9977F`
-- Acento: `#C4A177` (beige-dorado — derivado del ámbar candela del banco 54 "Journaling/diario", aclarado y desaturado a pedido del usuario; SOLO en CTAs, progreso y momentos de logro) · 2ª nota: `#8C4A3C` (burdeos — porqué: pedido explícito del usuario en la dirección "mística cálida"; se usa solo en el módulo de Duelo/Ruptura para diferenciar ese contexto emocional del resto de la app)
+- **Repaletizado a azul marino (2026-09-09, adenda aprobada por el usuario):** Fondo: `#0F2436`
+  (azul marino oscuro — antes café `#211609`; el usuario probó una referencia de app de carta
+  natal, comparó lado a lado en `docs/revisiones/prueba-color-azul.png`, primero lo aplicó solo a
+  la app interna y después de confirmarlo pidió llevarlo a todo el sitio) · Superficie: `#1B3A4D`
+  (antes `#392616`) · Hundido: `#081420` (antes `#160E05`) · Texto 1º: `#F0EAE2` (sin cambio) ·
+  Texto 2º: `#9FB4C2` (azul-gris cálido, antes beige `#A9977F` — reajustado para seguir cumpliendo
+  AA sobre el nuevo fondo azul). El dorado se mantiene EXACTO, sin cambios (ver abajo) — el
+  usuario pidió explícitamente combinarlo "tal cual" con el azul.
+- Acento: `#C4A177` (beige-dorado — SIN CAMBIOS en el repaletizado a azul del 2026-09-09; SOLO en CTAs, progreso y momentos de logro) · 2ª nota: `#D08B5E` (ámbar-terracota — antes `#8C4A3C` burdeos; aclarado el 2026-09-09 porque el burdeos original casi no se distinguía sobre el nuevo fondo azul marino, mismo uso: solo en el módulo de Duelo/Programa de Sanación)
 - Semánticos: éxito `#7A9E6E` (verde salvia, no verde chillón) · error `#B85C4D` (terracota-rojo, coherente con la paleta) · aviso `#D4A24C`
 - Display: serif humanista cálida (ej. familia tipo Fraunces/Lora — se confirma candidata final en la sesión de código) pesos 400/600 · Body: sans humanista (ej. tipo Inter/Karla) pesos 400/500 · Escala: display 32px / title 22px / body 16px / label 13px
 - Radio: 20px · Profundidad: sombras sutiles de 1 nivel (nada de glass ni glow) · Espaciado base: escala 4·8·12·16·24·32·48·64
@@ -42,4 +49,22 @@
 - Registro anti-repetición: paleta ámbar-terracota-burdeos oscura + par serif humanista/sans humanista — vetados para el próximo proyecto del SO
 - Modo (claro/oscuro) DERIVADO por: naturaleza nocturna del ritual del avatar (crisis a las 3 AM, "ritual antes de dormir" tomado de Calm) — nunca asumido por defecto
 
+## Logo oficial (2026-09-10, adenda aprobada por el usuario)
+El usuario entregó el logo real: un isotipo (luna protectora + estrella de luz somática, degradé
+dorado `#F4E0C8`→`#D29E68`→`#B37D46`, mismos tonos ya aprobados) y un lockup completo con el
+wordmark "BEYOND ASTROSOMA" en serif. Reemplaza en TODO el sitio el sello sol/luna provisional
+(`SelloSolLuna`, inventado por el agente antes de que existiera un logo real — ya eliminado de
+`Ornamentos.tsx`): ahora vive como `components/landing/Isotipo.tsx`, usado en el logo del header
+de la landing, el centro del Hero, Oferta, login y paywall, y como ícono de pestaña
+(`app/icon.svg`). El lockup completo con el wordmark ("BEYOND ASTROSOMA") todavía NO se usó en
+ningún lugar — pendiente de confirmar con el usuario si el nombre de marca pasa a ser
+"Beyond: AstroSoma" en el copy visible (hoy el sitio dice solo "AstroSoma").
+
 ## Idioma UI: Español (tuteo) · Fecha de cierre de la ficha: 2026-09-04 · Aprobada por el usuario: SÍ — tour confirmado ("me encanta") tras 2 ajustes (fondo a café oscuro `#211609`, acento aclarado a beige-dorado `#C4A177`). COSA JUZGADA: no se re-decide a mitad de proyecto.
+
+**Adenda 2026-09-09 (SÍ afecta cosa juzgada, con aprobación explícita del usuario):** repaletizado
+de café a azul marino en TODO el sitio (landing, onboarding, paywall, login, app interna) — ver
+"Brand kit final" arriba. Cambio de un solo archivo (`components/landing/tokens.css`, más su
+espejo en `vista-previa-app.html`), sin tocar estructura ni componentes. El dorado, la tipografía,
+los radios y el motion signature NO cambiaron — solo la base de color. Verificado con
+tsc+eslint+build limpios y capturas de landing/onboarding/paywall/entrar/app mostradas al usuario.

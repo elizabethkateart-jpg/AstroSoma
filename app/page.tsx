@@ -16,6 +16,7 @@ import { Garantia } from '@/components/landing/Garantia';
 import { Faq } from '@/components/landing/Faq';
 import { CtaFinal } from '@/components/landing/CtaFinal';
 import { FooterLegal } from '@/components/landing/FooterLegal';
+import { LogoCompleto } from '@/components/landing/LogoCompleto';
 import { StickyCtaMobile, VolverArriba } from '@/components/landing/ui';
 
 const CTA_HREF = '/onboarding';
@@ -50,11 +51,12 @@ export default function LandingAstroSoma() {
       {/* 2. PROBLEMA */}
       <Problema
         titulo="¿Te suena?"
+        videoSrc="/videos/problema-liberacion.mp4"
         preguntas={[
           { icon: HeartCrack, textoMarked: '¿Sientes un nudo en el pecho o la garganta que no baja?' },
           { icon: BellOff, textoMarked: '¿Las apps de astrología te llenan de ansiedad en vez de calma?' },
           { icon: Moon, textoMarked: '¿Te despiertas de madrugada con ganas de escribirle a tu ex?' },
-          { icon: Anchor, textoMarked: '¿Sientes miedo de quedarte estancada en este dolor para siempre?' },
+          { icon: Anchor, textoMarked: '¿Sientes miedo de que este dolor se quede para siempre?' },
         ]}
       />
 
@@ -69,7 +71,9 @@ export default function LandingAstroSoma() {
           labelHoy: 'Hoy',
           hoy: 'Opresión en el pecho y ganas de revisar sus redes a las 3 AM.',
           labelFuturo: 'En 6 meses, si nada cambia',
-          futuro: 'El mismo nudo — solo que ahora ya perdiste 6 meses de paz.',
+          futuro: 'El mismo nudo en el pecho — pero ahora con 6 meses más de cansancio encima.',
+          puente: 'No tiene que ser así. Puedes empezar a soltarlo esta misma noche.',
+          imagenSrc: '/images/agitacion-corte.jpg',
         }}
       />
 
@@ -81,8 +85,9 @@ export default function LandingAstroSoma() {
         pasos={[
           { titulo: 'Escaneas', detalle: 'Un tránsito de tu carta natal revela tu zona de tensión de hoy.' },
           { titulo: 'Liberas', detalle: 'Sigues un ejercicio guiado de respiración de exactamente 3 minutos.' },
-          { titulo: 'Avanzas', detalle: 'Ves tu progreso día a día en tu Programa de Ruptura.' },
+          { titulo: 'Avanzas', detalle: 'Ves tu progreso día a día en tu Programa de Sanación.' },
         ]}
+        imagenSrc="/images/solucion-liberacion.jpg"
         antesDespues={{
           labelAntes: 'Antes',
           antes: 'Un nudo en el pecho y una notificación que te asusta más.',
@@ -97,7 +102,7 @@ export default function LandingAstroSoma() {
         frames={[
           { label: 'Cómo te pregunta al empezar', nombrePantalla: 'Bienvenida', src: '/mockups/onboarding.png', alt: 'Vista previa de diseño: pregunta de bienvenida del onboarding' },
           { label: 'Tu ejercicio de 3 minutos', nombrePantalla: 'Mecanismo', src: '/mockups/mecanismo.png', alt: 'Vista previa de diseño: ejercicio de respiración en curso' },
-          { label: 'Tu Programa de Ruptura, día a día', nombrePantalla: 'Duelo', src: '/mockups/duelo.png', alt: 'Vista previa de diseño: programa de ruptura de 30 días' },
+          { label: 'Tu Programa de Sanación, día a día', nombrePantalla: 'Duelo', src: '/mockups/duelo.png', alt: 'Vista previa de diseño: programa de ruptura de 30 días' },
           { label: 'Así eliges tu plan', nombrePantalla: 'Plan', src: '/mockups/paywall.png', alt: 'Vista previa de diseño: pantalla de planes y precio' },
         ]}
         ctaLabel={CTA_LABEL}
@@ -115,8 +120,8 @@ export default function LandingAstroSoma() {
         stack={{
           lineas: [
             { resultado: 'AstroSoma Pro — Escaneo Somático ilimitado (12 meses)', valor: '$107' },
-            { resultado: 'Programa de Ruptura guiado de 30 días', valor: '$29' },
-            { resultado: 'Diario privado cifrado', valor: '$19' },
+            { resultado: 'Programa de Sanación guiado de 30 días', valor: '$29' },
+            { resultado: 'Diario privado', valor: '$19' },
           ],
           totalTachado: '$155',
         }}
@@ -131,9 +136,9 @@ export default function LandingAstroSoma() {
           ctaHref: CTA_HREF,
           features: [
             'Escaneo somático ilimitado cada día',
-            'Programa de Ruptura guiado de 30 días',
+            'Programa de Sanación guiado de 30 días',
             'Ejercicios de liberación de 3 minutos',
-            'Diario privado cifrado, solo tuyo',
+            'Diario privado, solo tuyo',
           ],
         }}
         mensual={{
@@ -143,7 +148,7 @@ export default function LandingAstroSoma() {
           ctaHref: CTA_HREF,
           features: [
             'Escaneo somático ilimitado cada día',
-            'Programa de Ruptura guiado de 30 días',
+            'Programa de Sanación guiado de 30 días',
             'Ejercicios de liberación de 3 minutos',
             'Cancelas cuando quieras',
           ],
@@ -155,6 +160,7 @@ export default function LandingAstroSoma() {
         nombre="la Garantía del Primer Alivio"
         condicionMarked="7 días de prueba gratis y, si tras tu cobro el Escaneo Somático no te da [b]alivio real[/b], 15 días para tu reembolso. Sin preguntas."
         pisoLegal="Respaldada por la política de reembolsos de Hotmart"
+        imagenSrc="/images/garantia-sostenida.jpg"
       />
 
       {/* 8. FAQ */}
@@ -173,7 +179,7 @@ export default function LandingAstroSoma() {
           {
             pregunta: '¿Mis diarios y pensamientos quedan guardados en algún lado?',
             respuestaMarked:
-              'Tu diario es privado y cifrado. Nadie más lo lee, y [b]nunca se comparte ni se vende[/b].',
+              'Tu diario es privado. Nadie más lo lee, y [b]nunca se comparte ni se vende[/b].',
           },
           {
             pregunta: '¿Cuánto tardo en ver resultados?',
@@ -201,6 +207,8 @@ export default function LandingAstroSoma() {
       {/* 10. FOOTER LEGAL */}
       <FooterLegal
         appName="AstroSoma"
+        logo={<LogoCompleto width={200} />}
+        logoIncluyeTexto
         soporteEmail="soporte@astrosoma.app"
         enlaces={[
           { label: 'Privacidad', href: '/privacidad' },

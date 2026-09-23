@@ -11,6 +11,7 @@
 import { motion } from 'motion/react';
 import { Star } from 'lucide-react';
 import { CheckCustom, CtaButton, Hairline, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
+import { Isotipo } from './Isotipo';
 import { MarkedCopy, warnCopy, warnRango } from './MarkedCopy';
 
 export interface PlanOferta {
@@ -64,7 +65,7 @@ function Precio({ plan }: { plan: PlanOferta }) {
   return (
     <div>
       <p className="flex items-baseline gap-1">
-        <span className="text-[36px] font-bold leading-none tabular-nums text-[var(--text-primary)] [font-family:var(--font-display)]">
+        <span className="text-[36px] font-bold leading-none text-[var(--text-primary)] [font-family:var(--font-display)] [font-variant-numeric:lining-nums_tabular-nums]">
           {plan.precioMes}
         </span>
         <span className="text-[14px] text-[var(--text-secondary)]">{plan.sufijo ?? '/mes'}</span>
@@ -107,6 +108,9 @@ export function Oferta({
     <SectionShell id={id} elevacion="base" ariaLabel="Planes y precios">
       <motion.div variants={contenedor} initial="hidden" whileInView="visible" viewport={VIEWPORT_ONCE}>
         <motion.div variants={item} className="mx-auto max-w-[620px] text-center">
+          <div className="mb-2 flex justify-center">
+            <Isotipo size={40} />
+          </div>
           <Kicker>{kicker}</Kicker>
           <h2 className="text-balance text-[30px] font-bold leading-[1.15] text-[var(--text-primary)] [font-family:var(--font-display)] md:text-[40px]">
             <MarkedCopy text={tituloMarked} />
