@@ -14,6 +14,7 @@ const PUBLIC_PATHS = [
   '/reembolsos',
   '/aviso-ia',
   '/api/lectura-diaria', // se usa durante el onboarding, antes de crear cuenta
+  '/api/version', // verificación técnica de publicación, sin datos de usuario
 ];
 
 export async function updateSession(request: NextRequest) {
