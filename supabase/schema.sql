@@ -76,7 +76,21 @@ alter table public.lecturas_diarias enable row level security;
 create policy "select_own" on public.lecturas_diarias for select using ((select auth.uid()) = user_id);
 -- Solo el servidor (service_role, que ignora RLS) inserta — sin policy de insert para el cliente.
 
--- 5) Trigger: crea la fila de perfiles automáticamente al crear un usuario (magic link / OAuth).
+-- 5) Preguntas libres — límite diario de 3 contado en el servidor (2026-09-29).
+create table public.preguntas_libres (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid not null references auth.users(id) on delete cascade,
+  fecha       date not null,
+  pregunta    text not null check (length(pregunta) between 1 and 400),
+  respuesta   text not null,
+  created_at  timestamptz not null default now()
+);
+create index preguntas_libres_user_fecha_idx on public.preguntas_libres (user_id, fecha);
+alter table public.preguntas_libres enable row level security;
+create policy "select_own" on public.preguntas_libres for select using ((select auth.uid()) = user_id);
+create policy "insert_own" on public.preguntas_libres for insert with check ((select auth.uid()) = user_id);
+
+-- 6) Trigger: crea la fila de perfiles automáticamente al crear un usuario (magic link / OAuth).
 create function public.crear_perfil_nuevo_usuario()
 returns trigger
 language plpgsql

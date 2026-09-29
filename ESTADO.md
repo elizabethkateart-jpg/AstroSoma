@@ -132,9 +132,34 @@ disparador diario que arme el micro-consejo (motor de IA + carta natal) y lo env
 bloqueante**: las notificaciones push reales necesitan la app publicada en internet (Vercel) — la
 usuaria decidió publicar primero, pero pidió PAUSAR antes de arrancar ese paso.
 
+## App publicada en internet (2026-09-25)
+Tu app ya está en línea: **https://astrosoma.vercel.app** — conectada a GitHub
+(`github.com/elizabethkateart-jpg/AstroSoma`, rama `master`) de forma que cada cambio que
+guardemos se publica solo en un par de minutos, sin pasos manuales. Confirmado con 2 publicaciones
+automáticas seguidas (mismo commit en GitHub y en la app) y las páginas públicas responden bien.
+Las 5 claves necesarias (Supabase x3, la de IA, el modelo) ya están configuradas en Vercel.
+**Pendiente menor**: la clave de Supabase para escritura de datos (`SUPABASE_SERVICE_ROLE_KEY`) no
+quedó marcada para el entorno "Preview" — solo importa si en el futuro probamos ramas antes de
+publicarlas; retomar cuando se necesite probar una rama nueva antes de fusionarla a `master`.
+
+## Pantalla nueva — "Preguntas" (2026-09-29)
+5ª sección de la app interna: la usuaria escribe un malestar puntual del día ("me duele la cabeza,
+no dormí bien") y recibe una lectura + un consejo de la IA — máximo 3 preguntas por día (contado en
+la base de datos, no en memoria, para que el límite aguante que Vercel use varias instancias).
+Mismo patrón BFF que las otras funciones de IA (`app/api/pregunta-libre/route.ts`, tabla
+`preguntas_libres` con RLS). Si la pregunta suena a algo médicamente serio, la respuesta siempre
+sugiere ver a un profesional real (doble seguro: instrucción a la IA + revisión de palabras clave
+en el servidor). Verificado de punta a punta con un script que crea una cuenta real, hace la
+pregunta, confirma que la IA respondió bien, que se guardó, que el conteo diario funciona, y que
+otra cuenta NO puede ver esas preguntas (aislamiento de datos) — `scripts/dev-tools/
+test-pregunta-libre.mjs`. Durante la prueba la IA usó "vos" en vez de "tú" una vez — corregido
+reforzando la instrucción de idioma. Render a 375px confirmado; sin revisor-visual formal (pantalla
+secundaria, no es de las 4 del dinero).
+
 ## Siguiente paso exacto
-Publicar la app en internet (Vercel, decisión ya tomada, solo pausada). Después: notificaciones
-diarias (plan ya acordado, ver arriba), y conectar Hotmart cuando la usuaria tenga esa cuenta.
+Con la app ya publicada: notificaciones diarias (plan ya acordado, ver arriba), y conectar Hotmart
+cuando la usuaria tenga esa cuenta. También pendiente: dominio propio (hoy usa la dirección gratis
+de Vercel) y verificar un dominio real en Resend para que los correos no caigan en spam.
 
 ## Auditoría cerrada (2026-09-23)
 Reporte de la FASE 3 aprobado por la usuaria (4 hallazgos) y ejecutado en FASE 4:

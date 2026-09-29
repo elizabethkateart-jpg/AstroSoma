@@ -1,12 +1,12 @@
 'use client';
 
-// NAV INFERIOR de la app interna — 4 secciones (Hoy/Duelo/Diario/Perfil). Pill flotante ancha con
-// sombra + etiquetas de texto (a pedido del usuario, 2026-09-09): el ícono activo se resalta en
-// un círculo dorado sólido.
+// NAV INFERIOR de la app interna — 5 secciones (Hoy/Duelo/Preguntas/Diario/Perfil). Pill flotante
+// ancha con sombra + etiquetas de texto (a pedido del usuario, 2026-09-09): el ícono activo se
+// resalta en un círculo dorado sólido.
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Heart, BookOpen, User } from 'lucide-react';
+import { Home, Heart, BookOpen, User, MessageCircleHeart } from 'lucide-react';
 import { useEstadoApp } from '@/lib/appLocal';
 
 export function TabBar() {
@@ -16,6 +16,7 @@ export function TabBar() {
   const TABS = [
     { href: '/app', label: 'Hoy', icon: Home },
     { href: '/app/duelo', label: estado.categoriaDuelo === 'somatica' ? 'Ritual' : 'Duelo', icon: Heart },
+    { href: '/app/preguntas', label: 'Preguntas', icon: MessageCircleHeart },
     { href: '/app/diario', label: 'Diario', icon: BookOpen },
     { href: '/app/perfil', label: 'Perfil', icon: User },
   ];
