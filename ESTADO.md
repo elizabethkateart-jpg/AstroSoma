@@ -175,6 +175,15 @@ Reporte de la FASE 3 aprobado por la usuaria (4 hallazgos) y ejecutado en FASE 4
   antes no había ninguna forma de ver cuánta gente entra ni dónde se va.
 - Verificado: tsc ✓ · build ✓ · render 375px de landing (las 4 imágenes) y perfil confirmados.
 
+## Preguntas libres ahora usan la carta natal real (2026-09-30)
+Bug real reportado por la usuaria: una pregunta sobre relaciones hizo que la IA se extendiera más
+de lo normal y la respuesta se cortó antes de terminar (el límite de longitud de 300 era muy
+justo) — mostraba un error técnico feo. Corregido: límite subido a 500 + instrucción de brevedad
+reforzada (probado 5/5 con la misma pregunta), y los mensajes de error de esa pantalla ahora son
+en lenguaje humano. Además, a pedido de la usuaria, `/api/pregunta-libre` ahora cruza el Sol/Luna
+natal real de la persona y el tránsito lunar de hoy en cada respuesta (antes era 100% genérico,
+igual que Hoy y el resultado del onboarding) — probado de punta a punta con una cuenta real.
+
 ## Siguiente paso exacto
 Con la app ya publicada: notificaciones diarias (plan ya acordado, ver arriba), y conectar Hotmart
 cuando la usuaria tenga esa cuenta — al conectarlo, también cerrar el acceso gratis pendiente de

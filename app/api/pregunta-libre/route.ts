@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 import { excedeLimite } from '@/lib/rateLimit';
+import { zonaDeHoy } from '@/lib/astro/motor';
 
 // ENDPOINT BFF — preguntas libres del día ("me duele X, ¿cómo lo alivio?"). Mismo patrón que
 // lectura-diaria/prompt-diario (30-INTEGRACION-IA.md): clave solo en servidor, modelo en env var,
@@ -33,6 +34,9 @@ const SYSTEM_PROMPT =
   'Si lo que describe suena a algo médicamente serio o urgente (dolor muy fuerte, dificultad para ' +
   'respirar, pensamientos de hacerse daño, etc.), tu consejo debe incluir con calidez que busque ' +
   'ayuda de un profesional de salud real — sin alarmar, pero sin omitirlo. ' +
+  'Si te paso su carta natal y el tránsito de hoy, cruza brevemente lo que cuenta con esos datos ' +
+  '(tono SIMBÓLICO, nunca como causa real ni certeza) — si no te los paso, responde igual de bien ' +
+  'sin mencionar que faltan. ' +
   'Responde ÚNICAMENTE con un objeto JSON válido (sin texto antes ni después, sin markdown), con ' +
   'exactamente estas 2 claves de texto: "lectura" (MÁXIMO 1 frase corta conectando lo que cuenta ' +
   'con su cuerpo, tono simbólico) y "consejo" (MÁXIMO 1 frase corta con algo concreto que pueda ' +
@@ -113,12 +117,22 @@ export async function POST(request: Request) {
     );
   }
 
+  const { data: perfil } = await admin.from('perfiles').select('sol_natal, luna_natal').eq('id', user.id).single();
+  const { signo, zona } = zonaDeHoy();
+
+  const contexto =
+    perfil?.sol_natal && perfil?.luna_natal
+      ? `Carta natal de esta persona: Sol en ${perfil.sol_natal}, Luna en ${perfil.luna_natal}. ` +
+        `Tránsito lunar de hoy: ${signo} (zona "${zona}" del Escaneo Somático). ` +
+        `Lo que cuenta hoy: ${pregunta}`
+      : pregunta;
+
   try {
     const respuesta = await client.messages.create({
       model: process.env.AI_MODEL || 'claude-sonnet-5',
       max_tokens: 500,
       system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: pregunta }],
+      messages: [{ role: 'user', content: contexto }],
     });
 
     const bloque = respuesta.content.find((b) => b.type === 'text');
