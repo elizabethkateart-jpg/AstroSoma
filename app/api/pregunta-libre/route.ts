@@ -34,8 +34,9 @@ const SYSTEM_PROMPT =
   'respirar, pensamientos de hacerse daño, etc.), tu consejo debe incluir con calidez que busque ' +
   'ayuda de un profesional de salud real — sin alarmar, pero sin omitirlo. ' +
   'Responde ÚNICAMENTE con un objeto JSON válido (sin texto antes ni después, sin markdown), con ' +
-  'exactamente estas 2 claves de texto: "lectura" (1-2 frases conectando lo que cuenta con su ' +
-  'cuerpo, tono simbólico) y "consejo" (1-2 frases con algo concreto que pueda hacer ahora).';
+  'exactamente estas 2 claves de texto: "lectura" (MÁXIMO 1 frase corta conectando lo que cuenta ' +
+  'con su cuerpo, tono simbólico) y "consejo" (MÁXIMO 1 frase corta con algo concreto que pueda ' +
+  'hacer ahora). Sé breve — cada frase de máximo 25 palabras.';
 
 type RespuestaJSON = { lectura: string; consejo: string };
 
@@ -115,7 +116,7 @@ export async function POST(request: Request) {
   try {
     const respuesta = await client.messages.create({
       model: process.env.AI_MODEL || 'claude-sonnet-5',
-      max_tokens: 300,
+      max_tokens: 500,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: pregunta }],
     });
@@ -128,11 +129,11 @@ export async function POST(request: Request) {
     try {
       datos = JSON.parse(textoJSON);
     } catch {
-      return NextResponse.json({ error: 'La IA no devolvió un formato válido.' }, { status: 502 });
+      return NextResponse.json({ error: 'No se pudo generar tu lectura. Intenta de nuevo.' }, { status: 502 });
     }
 
     if (!datos.lectura || !datos.consejo) {
-      return NextResponse.json({ error: 'La IA no devolvió una respuesta completa.' }, { status: 502 });
+      return NextResponse.json({ error: 'No se pudo generar tu lectura. Intenta de nuevo.' }, { status: 502 });
     }
 
     let respuestaFinal = `${datos.lectura} ${datos.consejo}`;
