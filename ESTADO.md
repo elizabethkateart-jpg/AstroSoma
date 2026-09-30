@@ -156,10 +156,30 @@ test-pregunta-libre.mjs`. Durante la prueba la IA usó "vos" en vez de "tú" una
 reforzando la instrucción de idioma. Render a 375px confirmado; sin revisor-visual formal (pantalla
 secundaria, no es de las 4 del dinero).
 
+## Auditoría cerrada (2026-09-30)
+Reporte de la FASE 3 aprobado por la usuaria (4 hallazgos) y ejecutado en FASE 4:
+- **Corregido (crítico)** — Next.js tenía una vulnerabilidad de seguridad grave ya conocida
+  (RCE). Actualizado de 16.3.4 a 16.3.8. `npm audit` queda en 0 vulnerabilidades.
+- **Decisión consciente, NO corregido** — cualquier persona puede crear cuenta gratis y usar la
+  app completa sin pagar (no hay verificación de plan activo antes de `/app`). La usuaria decidió
+  dejarlo abierto mientras termina de conectar Hotmart, como estaba planeado desde el principio —
+  no es un olvido, es la misma decisión original. Retomar: endurecer `shouldCreateUser` a `false`
+  y/o agregar una verificación de plan activo antes de dar acceso a `/app`, en cuanto Hotmart esté
+  conectado.
+- **Corregido** — el perfil decía "Notificaciones: Activadas" sin que ese sistema exista todavía
+  (afirmación falsa). Cambiado a "Próximamente" ([app/app/perfil/page.tsx:133](app/app/perfil/page.tsx:133)).
+- **Corregido** — las 4 imágenes de la landing (mockup del hero + 3 fotos) pasaron de `<img>` a
+  `next/image` (carga más rápida y liviana en celulares, mismo resultado visual, verificado a
+  375px).
+- **Corregido** — se instaló medición básica (Vercel Analytics, cero configuración adicional) —
+  antes no había ninguna forma de ver cuánta gente entra ni dónde se va.
+- Verificado: tsc ✓ · build ✓ · render 375px de landing (las 4 imágenes) y perfil confirmados.
+
 ## Siguiente paso exacto
 Con la app ya publicada: notificaciones diarias (plan ya acordado, ver arriba), y conectar Hotmart
-cuando la usuaria tenga esa cuenta. También pendiente: dominio propio (hoy usa la dirección gratis
-de Vercel) y verificar un dominio real en Resend para que los correos no caigan en spam.
+cuando la usuaria tenga esa cuenta — al conectarlo, también cerrar el acceso gratis pendiente de
+arriba. También pendiente: dominio propio (hoy usa la dirección gratis de Vercel) y verificar un
+dominio real en Resend para que los correos no caigan en spam.
 
 ## Auditoría cerrada (2026-09-23)
 Reporte de la FASE 3 aprobado por la usuaria (4 hallazgos) y ejecutado en FASE 4:

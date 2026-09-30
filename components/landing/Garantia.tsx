@@ -7,6 +7,7 @@
 // Nunca placeholders ("garantía visible"): se nombra la política concreta o la
 // sección no se monta (52 §5). El plazo = el configurado en Hotmart (19 §7).
 
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { Lock, ShieldCheck } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -46,8 +47,8 @@ export function Garantia({ nombre, condicionMarked, pisoLegal, icon: Icono = Shi
           <Hairline surface="surface" className="shadow-[var(--shadow-1)]">
             <div className="flex flex-col items-center gap-4 px-6 py-10 text-center">
               {imagenSrc ? (
-                <span className="respira-marco block size-15 overflow-hidden rounded-full border border-[color-mix(in_oklab,var(--accent)_35%,transparent)]">
-                  <img src={imagenSrc} alt="" aria-hidden="true" className="size-full object-cover" />
+                <span className="respira-marco relative block size-15 overflow-hidden rounded-full border border-[color-mix(in_oklab,var(--accent)_35%,transparent)]">
+                  <Image src={imagenSrc} alt="" aria-hidden="true" fill sizes="60px" className="object-cover" />
                 </span>
               ) : (
                 <span

@@ -130,7 +130,7 @@ export default function Perfil() {
         transition={{ delay: reduce ? 0 : 0.15 }}
         className="mt-6 flex flex-col gap-2"
       >
-        <FilaEstado icon={Bell} label="Notificaciones" estado="Activadas" />
+        <FilaEstado icon={Bell} label="Notificaciones" estado="Próximamente" />
         <Fila icon={ShieldCheck} label="Privacidad" href="/privacidad" />
         <Fila icon={FileText} label="Términos y condiciones" href="/terminos" />
       </motion.div>

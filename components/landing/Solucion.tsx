@@ -7,6 +7,7 @@
 // (tupla en el tipo: ni 2 ni 4) + antes/después opcional. Pasos entran
 // escalonados (whileInView + stagger, reduced-motion respetado).
 
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { Accent, Hairline, Kicker, SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
 import { CajaOrnamentada, GlifosDivisor } from './Ornamentos';
@@ -109,8 +110,8 @@ export function Solucion({
         </ol>
 
         {imagenSrc && (
-          <motion.div variants={item} className="respira-marco relative mt-10 overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-2)]">
-            <img src={imagenSrc} alt="" aria-hidden="true" className="aspect-[4/3] w-full object-cover md:aspect-[16/7]" />
+          <motion.div variants={item} className="respira-marco relative mt-10 aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-2)] md:aspect-[16/7]">
+            <Image src={imagenSrc} alt="" aria-hidden="true" fill sizes="(min-width: 768px) 780px, 100vw" className="object-cover" />
           </motion.div>
         )}
 

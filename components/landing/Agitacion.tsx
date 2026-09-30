@@ -7,6 +7,7 @@
 // el copy marcado (es el dato héroe de la sección). MISMO fondo elevado que §2
 // (un solo movimiento visual, sin separador). Cero decoración de miedo.
 
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { ArrowDown } from 'lucide-react';
 import { SectionShell, useReveal, VIEWPORT_ONCE } from './ui';
@@ -81,8 +82,8 @@ export function Agitacion({ frases, contraste, id }: AgitacionProps) {
             )}
 
             {contraste.imagenSrc && (
-              <div className="respira-marco relative mt-4 overflow-hidden rounded-[var(--radius-card)]">
-                <img src={contraste.imagenSrc} alt="" aria-hidden="true" className="aspect-[16/10] w-full object-cover" />
+              <div className="respira-marco relative mt-4 aspect-[16/10] w-full overflow-hidden rounded-[var(--radius-card)]">
+                <Image src={contraste.imagenSrc} alt="" aria-hidden="true" fill sizes="(min-width: 640px) 620px, 100vw" className="object-cover" />
               </div>
             )}
           </motion.div>

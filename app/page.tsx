@@ -4,6 +4,7 @@
 // Copy trazado a FICHA-AVATAR.md, ver docs/copy/landing.md. Tokens desde FICHA-ARTE.md
 // (components/landing/tokens.css). Modelo onboarding-first (02C): CTA → /onboarding.
 
+import Image from 'next/image';
 import { HeartCrack, BellOff, Moon, Anchor } from 'lucide-react';
 import { Hero } from '@/components/landing/Hero';
 import { Problema } from '@/components/landing/Problema';
@@ -36,9 +37,12 @@ export default function LandingAstroSoma() {
         socialProof={<span>Prueba gratis 7 días · cancela cuando quieras</span>}
         visual={
           <div className="respira-marco relative">
-            <img
+            <Image
               src="/mockups/hoy.png"
               alt="Vista previa de diseño de la pantalla principal de AstroSoma"
+              width={600}
+              height={1300}
+              priority
               className="h-full w-full object-cover"
             />
             <span className="absolute left-3 top-3 rounded-full bg-[color-mix(in_oklab,var(--bg)_70%,transparent)] px-3 py-1 text-xs font-semibold text-[var(--text-primary)]">
